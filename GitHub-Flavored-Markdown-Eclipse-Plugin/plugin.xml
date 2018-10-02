@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Markdown"
+            id="GitHub-Flavored-Markdown-Eclipse-Plugin">
+      </category>
+      <view
+            id="githubflavoredmarkdowneclipseplugin.views.GitMarkdownPreview"
+            name="GitMarkdown Preview"
+            icon="icons/sample.png"
+            class="githubflavoredmarkdowneclipseplugin.views.GitMarkdownPreview"
+            category="GitHub-Flavored-Markdown-Eclipse-Plugin"
+            inject="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="githubflavoredmarkdowneclipseplugin.views.GitMarkdownPreview"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               ratio="0.5">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
