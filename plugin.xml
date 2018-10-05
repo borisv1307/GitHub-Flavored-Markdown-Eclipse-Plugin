@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            id="githubflavoredmarkdowneclipseplugin.project"
+            name="githubflavoredmarkdowneclipseplugin.project"
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="project">
+      </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editorContentTypeBinding
+            contentTypeId="githubflavoredmarkdowneclipseplugin.project"
+            editorId="org.eclipse.ui.genericeditor.GenericEditor">
+      </editorContentTypeBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="githubflavoredmarkdowneclipseplugin.ProjectPresentationReconciler"
+            contentType="githubflavoredmarkdowneclipseplugin.project">
+      </presentationReconciler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.hoverProviders">
+      <hoverProvider
+            class="githubflavoredmarkdowneclipseplugin.ProjectHoverProvider"
+            contentType="githubflavoredmarkdowneclipseplugin.project">
+      </hoverProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
+      <contentAssistProcessor
+            class="githubflavoredmarkdowneclipseplugin.ProjectContentAssistProcessor"
+            contentType="githubflavoredmarkdowneclipseplugin.project">
+      </contentAssistProcessor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.autoEditStrategies">
+      <autoEditStrategy
+            class="githubflavoredmarkdowneclipseplugin.ProjectAutoEditStrategy"
+            contentType="githubflavoredmarkdowneclipseplugin.project">
+      </autoEditStrategy>
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.reconcilers">
+      <reconciler
+            class="githubflavoredmarkdowneclipseplugin.ProjectReconciler"
+            contentType="githubflavoredmarkdowneclipseplugin.project">
+      </reconciler>
+   </extension>
+   <extension
+         point="org.eclipse.core.filebuffers.documentSetup">
+      <participant
+            class="githubflavoredmarkdowneclipseplugin.ValidatorDocumentSetupParticipant"
+            contentTypeId="githubflavoredmarkdowneclipseplugin.project"
+            extensions="project">
+      </participant>
+   </extension>
+
+</plugin>
