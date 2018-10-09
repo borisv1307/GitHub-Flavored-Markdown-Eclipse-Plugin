@@ -7,6 +7,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GitHub-Flavored-Markdown-Eclipse-Plugin</name>
 
+	<packaging>eclipse-plugin</packaging>
+
 
 	<properties>
 		<tycho-version>1.2.0</tycho-version>
