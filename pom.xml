@@ -38,6 +38,11 @@
 			<artifactId>commands</artifactId>
 			<version>3.3.0-I20070605-0010</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
