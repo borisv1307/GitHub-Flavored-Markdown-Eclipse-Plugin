@@ -1,2 +1,5 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=5dc250f624e03e6104a66f4ce562d0f905a8c7a1b4037c8c447ac8e7e86ba263
 language: java
 bundler_args: --retry 1
