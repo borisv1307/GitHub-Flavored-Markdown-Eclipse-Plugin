@@ -8,7 +8,7 @@
 	<name>GitHub-Flavored-Markdown-Eclipse-Plugin</name>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
