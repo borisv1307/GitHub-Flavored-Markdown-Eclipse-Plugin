@@ -1,2 +1,12 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=5dc250f624e03e6104a66f4ce562d0f905a8c7a1b4037c8c447ac8e7e86ba263
 language: java
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+before_deploy:
+  - ./cc-test-reporter format-coverage -d -t jacoco /home/travis/build/lapots/judge-rule-engine/build/reports/jacoco/test/jacocoTestReport.xml
+  - ./cc-test-reporter upload-coverage -d
 bundler_args: --retry 1
