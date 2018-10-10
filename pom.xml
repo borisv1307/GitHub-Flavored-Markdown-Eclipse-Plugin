@@ -46,9 +46,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.eclipse.platform</groupId>
-			<artifactId>org.eclipse.ui.genericeditor</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.eclipse</groupId>
+			<artifactId>ui</artifactId>
+			<version>3.3.0-I20070614-0800</version>
 		</dependency>
 	</dependencies>
 </project>
