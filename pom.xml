@@ -44,4 +44,11 @@
 		</repository>
 	</repositories>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.ui.genericeditor</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
 </project>
