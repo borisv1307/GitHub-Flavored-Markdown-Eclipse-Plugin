@@ -3,47 +3,49 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 public class MarkdownRenderer {
-	private StringBuffer rbuf = new StringBuffer();
-	private StringBuffer mbuf = new StringBuffer();
-	private GithubMarkdownAPIConnection gmac = null;
+	private StringBuffer rawBuffer;
+	private StringBuffer markdownBuffer;
+	private GithubMarkdownAPIConnection githubMarkdownAPIConnection;
 
-	MarkdownRenderer() {
-		gmac = new GithubMarkdownAPIConnection();
+	MarkdownRenderer(GithubMarkdownAPIConnection githubMarkdownAPIConnection) {
+		this.githubMarkdownAPIConnection = githubMarkdownAPIConnection;
+		this.markdownBuffer = new StringBuffer();
+		this.rawBuffer = new StringBuffer();
 	}
 
 	public void setAPIEndpointURL(String url) {
-		gmac.setEndpointURL(url);
+		githubMarkdownAPIConnection.setEndpointURL(url);
 	}
 
 	public void setRawBuf(String text) {
-		rbuf.append(text);
+		rawBuffer.append(text);
 	}
 
 	public boolean renderMarkdown() {
-		if (rbuf.length() < 1) {
+		if (rawBuffer.length() < 1) {
 			return false;
 		}
 
 		HttpURLConnection con;
 
 		try {
-			gmac.connect();
-			gmac.post(rbuf.toString());
+			githubMarkdownAPIConnection.connect();
+			githubMarkdownAPIConnection.post(rawBuffer.toString());
 		} catch (IOException e) {
 			return false;
 		}
 
-		con = gmac.getConnection();
+		con = githubMarkdownAPIConnection.getConnection();
 
 		APIDataRetriever dr = new APIDataRetriever();
-		mbuf.append(dr.getDataFromConnection(con));
+		markdownBuffer.append(dr.getDataFromConnection(con));
 
 		con.disconnect();
 		return true;
 	}
 
 	public String getRenderedMarkdown() {
-		return mbuf.toString();
+		return markdownBuffer.toString();
 	}
 
 }
