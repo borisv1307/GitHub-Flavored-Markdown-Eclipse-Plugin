@@ -9,7 +9,7 @@ public class CommonmarkRendererTest {
 	@Test
 	public void test_italics() {
 		CommonmarkRenderer cr = new CommonmarkRenderer();
-		assertEquals(cr.render("*test*"), "<p><em>test</em></p>\n");
+		assertEquals("<p><em>test</em></p>\n", cr.render("*test*"));
 	}
 
 }
