@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CommonmarkRendererTest {
 
 	@Test
-	public void test_italics() {
+	public void italics() {
 		CommonmarkRenderer cr = new CommonmarkRenderer();
 		assertEquals("<p><em>test</em></p>\n", cr.render("*test*"));
 	}
