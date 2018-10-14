@@ -10,11 +10,7 @@ import java.io.InputStreamReader;
 public class FileReaderHelper {
 	public static String readFileToBuffer(String filename) throws FileNotFoundException, IOException {
 		try {
-			// InputStream is = FileReaderHelper.class.getResourceAsStream(filename);
 			InputStream is = new FileInputStream(filename);
-			/*
-			 * if (is == null) { throw new FileNotFoundException(filename); }
-			 */
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 			String line = null;
 			StringBuffer sb = new StringBuffer();
