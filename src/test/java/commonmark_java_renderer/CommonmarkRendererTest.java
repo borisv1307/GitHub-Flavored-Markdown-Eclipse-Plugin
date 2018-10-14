@@ -14,7 +14,7 @@ public class CommonmarkRendererTest {
 		CommonmarkRenderer cr = new CommonmarkRenderer();
 
 		try {
-			String buffer = FileReaderHelper.readFileToBuffer("resources/italics.html");
+			String buffer = FileReaderHelper.readFileToBuffer("../resources/commonmark/italics.html");
 			assertEquals(buffer, cr.render("*test*"));
 		} catch (IOException e) {
 			fail();
