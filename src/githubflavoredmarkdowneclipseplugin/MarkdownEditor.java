@@ -12,8 +12,6 @@ import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
-import com.sun.tools.sjavac.Log;
-
 public class MarkdownEditor extends AbstractTextEditor implements IResourceChangeListener {
 	public MarkdownEditor() {
 
@@ -24,8 +22,9 @@ public class MarkdownEditor extends AbstractTextEditor implements IResourceChang
 		IWebBrowser browser;
 		try {
 			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser("prump");
+			Activator.getDefault().log("prump");
 			try {
-				browser.openURL(new URL("http://www.google.com"));
+				browser.openURL(new URL(new URL("http:"), "google.com"));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,6 +43,6 @@ public class MarkdownEditor extends AbstractTextEditor implements IResourceChang
 
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
-		Log.info(event.toString());
+		Activator.getDefault().log(event.toString());
 	}
 }
