@@ -11,6 +11,7 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 public class MarkdownEditor extends AbstractTextEditor {
+
 	public MarkdownEditor() {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
@@ -25,5 +26,4 @@ public class MarkdownEditor extends AbstractTextEditor {
 			e.printStackTrace();
 		}
 	}
-
 }
