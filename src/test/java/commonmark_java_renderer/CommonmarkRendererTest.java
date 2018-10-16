@@ -21,4 +21,15 @@ public class CommonmarkRendererTest {
 		}
 	}
 
+	@Test
+	public void bold() {
+		CommonmarkRenderer cr = new CommonmarkRenderer();
+
+		try {
+			String buffer = FileReaderHelper.readFileToBuffer("src/test/resources/commonmark/bold.html");
+			assertEquals(buffer, cr.render("**test**"));
+		} catch (IOException e) {
+			fail();
+		}
+	}
 }
