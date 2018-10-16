@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
+//Junit 4
 public class StringFormatterTest {
 
 	@Test
