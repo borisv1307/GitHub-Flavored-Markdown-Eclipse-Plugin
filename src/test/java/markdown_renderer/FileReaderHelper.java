@@ -1,4 +1,4 @@
-package commonmark_java_renderer;
+package markdown_renderer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
