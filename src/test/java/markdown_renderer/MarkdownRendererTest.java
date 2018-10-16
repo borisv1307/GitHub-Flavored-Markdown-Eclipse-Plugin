@@ -38,6 +38,11 @@ public class MarkdownRendererTest {
 		readAndAssertFileContents("two-paragraphs.html", "test\n\ntest");
 	}
 
+	@Test
+	public void Header3() {
+		readAndAssertFileContents("header3.html", "### H3 Test");
+	}
+
 	private void readAndAssertFileContents(String filename, String contents) {
 		try {
 			String buffer = FileReaderHelper.readFileToBuffer(RESOURCE_LOCATION + filename);
