@@ -76,10 +76,11 @@ public class PipeTableFormat {
 	}
 
 	private String addSpaces(int numberOfSpaces) {
-		String spaces = "";
+		StringBuilder strB = new StringBuilder();
 		for (int i = 0; i < numberOfSpaces; i++) {
-			spaces += " ";
+
+			strB.append(" ");
 		}
-		return spaces;
+		return strB.toString();
 	}
 }
