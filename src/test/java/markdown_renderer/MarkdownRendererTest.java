@@ -38,6 +38,17 @@ public class MarkdownRendererTest {
 		readAndAssertFileContents("two-paragraphs.html", "test\n\ntest");
 	}
 
+//	CSS of gfm blockquote
+//	.markdown-body blockquote {
+//		padding: 0 1em;
+//		color: #6a737d;
+//    	border-left: 0.25em solid #dfe2e5;
+//	}
+	@Test
+	public void blockquote() {
+		readAndAssertFileContents("blockquote.html", "> test");
+	}
+
 	private void readAndAssertFileContents(String filename, String contents) {
 		try {
 			String buffer = FileReaderHelper.readFileToBuffer(RESOURCE_LOCATION + filename);
