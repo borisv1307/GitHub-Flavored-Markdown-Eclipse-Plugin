@@ -1,4 +1,4 @@
-package commonmark_java_renderer;
+package markdown_renderer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
-public class CommonmarkRenderer {
+public class MarkdownRenderer {
 
 	private List<Extension> extensions = null;
 	private Parser parser = null;
@@ -20,7 +20,7 @@ public class CommonmarkRenderer {
 		return renderer.render(document);
 	}
 
-	CommonmarkRenderer() {
+	MarkdownRenderer() {
 		this.extensions = Arrays.asList(TablesExtension.create());
 		this.parser = Parser.builder().extensions(extensions).build();
 		this.renderer = HtmlRenderer.builder().extensions(extensions).build();
