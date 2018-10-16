@@ -1,13 +1,10 @@
 package githubflavoredmarkdowneclipseplugin;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -15,8 +12,11 @@ import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
+import java.util.logging.Logger;
+
+
 public class MarkdownEditor extends AbstractTextEditor implements IResourceChangeListener {
-	public MarkdownEditor() throws MalformedURLException {
+	public MarkdownEditor() {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
 
@@ -25,15 +25,13 @@ public class MarkdownEditor extends AbstractTextEditor implements IResourceChang
 		IWebBrowser browser;
 		try {
 			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser("prump");
-			Activator activator = Activator.getDefault();
-			URL url = FileLocator.find(activator.getBundle(), new Path("index.html"));
-			URL file = FileLocator.toFileURL(url);
-			activator.log(file.toString());
-			browser.openURL(file);
+			try {
+				browser.openURL(new URL("http://www.google.com"));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -47,6 +45,6 @@ public class MarkdownEditor extends AbstractTextEditor implements IResourceChang
 
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
-		Activator.getDefault().log(event.toString());
+		Log.info(event.toString());
 	}
 }
