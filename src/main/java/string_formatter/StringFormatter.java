@@ -1,4 +1,4 @@
-package onePipeLineFormat;
+package string_formatter;
 
 public class StringFormatter {
 
@@ -6,12 +6,12 @@ public class StringFormatter {
 		if (string.isEmpty()) { // input nothing
 			return "";
 		}
-		String original_line = string;
+		String originalLine = string;
 		string = string.trim();
-		String formatted_line = "";
+		String formattedLine = "";
 		String[] temp = string.split("\\|", -1);
 		if (!temp[0].isEmpty()) { // no beginning pipe
-			return original_line;
+			return originalLine;
 		}
 		for (int i = 1; i < temp.length - 1; i++) {
 			if (!temp[i].isEmpty()) {
@@ -23,7 +23,7 @@ public class StringFormatter {
 		if (!temp[temp.length - 1].isEmpty()) { // no closing pipe
 			temp[temp.length - 1] = " " + temp[temp.length - 1].trim();
 		}
-		formatted_line = String.join("|", temp);
-		return formatted_line;
+		formattedLine = String.join("|", temp);
+		return formattedLine;
 	}
 }

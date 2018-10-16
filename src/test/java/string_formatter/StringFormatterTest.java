@@ -1,8 +1,10 @@
-package onePipeLineFormat;
+package string_formatter;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import string_formatter.StringFormatter;
 
 public class StringFormatterTest {
 
