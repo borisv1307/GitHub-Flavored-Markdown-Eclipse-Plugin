@@ -39,6 +39,11 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void unorderedList() {
+		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
+  }
+  
+  @Test
 	public void horizontalRule() {
 		readAndAssertFileContents("horizontalRule.html", "***");
   }
