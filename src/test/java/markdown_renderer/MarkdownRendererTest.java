@@ -46,6 +46,58 @@ public class MarkdownRendererTest {
 	@Test
 	public void indented_code_block_first_line() {
 		readAndAssertFileContents("indented-code-block-e85.html", "        foo\n    bar");
+  }
+  
+  @Test
+	public void unorderedList() {
+		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
+  }
+  
+  @Test
+	public void horizontalRule() {
+		readAndAssertFileContents("horizontalRule.html", "***");
+  }
+  
+  @Test
+	public void code() {
+		readAndAssertFileContents("code.html", "`test`");
+  }
+  
+  @Test
+	public void header1() {
+		readAndAssertFileContents("header1.html", "# H1 Test");
+  }
+  
+  @Test
+	public void header2() {
+		readAndAssertFileContents("header2.html", "## H2 Test");
+  }
+  
+  @Test
+	public void header3() {
+		readAndAssertFileContents("header3.html", "### H3 Test");
+  }
+  
+  @Test
+	public void header4() {
+		readAndAssertFileContents("header4.html", "#### H4 Test");
+  }
+  
+  @Test
+	public void orderedList() {
+		readAndAssertFileContents("orderedList.html", "1. test\n1. test\n1. test\n");
+  }
+  
+//	TODO add CSS of gfm blockquote
+//	.markdown-body blockquote {
+//		padding: 0 1em;
+//		color: #6a737d;
+//    	border-left: 0.25em solid #dfe2e5;
+//	}
+  
+	@Test
+	public void blockquote() {
+		readAndAssertFileContents("blockquote.html", "> test");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
