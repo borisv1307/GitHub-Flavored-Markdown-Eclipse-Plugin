@@ -39,6 +39,21 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void indented_code_block() {
+		readAndAssertFileContents("indented-code-block-e76.html", "    a simple\n      indented code block");
+	}
+
+	@Test
+	public void indented_code_block_first_line() {
+		readAndAssertFileContents("indented-code-block-e85.html", "        foo\n    bar");
+  }
+  
+  @Test
+	public void unorderedList() {
+		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
+  }
+   
+  @Test
 	public void simple_table() {
 		readAndAssertFileContents("simple-table.html",
 				"| First Header  | Second Header |\n" + "| ------------- | ------------- |\n"
