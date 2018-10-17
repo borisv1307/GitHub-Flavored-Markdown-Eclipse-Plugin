@@ -38,7 +38,11 @@ public class MarkdownRendererTest {
 		readAndAssertFileContents("two-paragraphs.html", "test\n\ntest");
 	}
 
-//	CSS of gfm blockquote
+	@Test
+	public void orderedList() {
+		readAndAssertFileContents("orderedList.html", "1. test\n1. test\n1. test\n");
+  }
+//	TODO add CSS of gfm blockquote
 //	.markdown-body blockquote {
 //		padding: 0 1em;
 //		color: #6a737d;
