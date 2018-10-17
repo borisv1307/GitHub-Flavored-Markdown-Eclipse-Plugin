@@ -38,6 +38,16 @@ public class MarkdownRendererTest {
 		readAndAssertFileContents("two-paragraphs.html", "test\n\ntest");
 	}
 
+	@Test
+	public void indented_code_block() {
+		readAndAssertFileContents("indented-code-block-e76.html", "    a simple\n      indented code block");
+	}
+
+	@Test
+	public void indented_code_block_first_line() {
+		readAndAssertFileContents("indented-code-block-e85.html", "        foo\n    bar");
+	}
+
 	private void readAndAssertFileContents(String filename, String contents) {
 		try {
 			String buffer = FileReaderHelper.readFileToBuffer(RESOURCE_LOCATION + filename);
