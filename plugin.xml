@@ -13,10 +13,13 @@
    </extension>
    <extension
          point="org.eclipse.ui.editors">
-      <editorContentTypeBinding
-            contentTypeId="githubflavoredmarkdowneclipseplugin.project"
-            editorId="org.eclipse.ui.genericeditor.GenericEditor">
-      </editorContentTypeBinding>
+         <editor
+      name="Markdown Editor"
+      extensions="md"
+      icon="icons/sample.gif"
+      class="githubflavoredmarkdowneclipseplugin.MarkdownEditor"
+      id="githubflavoredmarkdowneclipseplugin.MarkdownEditor">
+   </editor>
    </extension>
    <extension
          point="org.eclipse.ui.genericeditor.presentationReconcilers">
