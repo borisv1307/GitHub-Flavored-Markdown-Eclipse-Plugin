@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GitHub-Flavored-Markdown-Eclipse-Plugin
 Bundle-SymbolicName: GitHub-Flavored-Markdown-Eclipse-Plugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: githubflavoredmarkdowneclipseplugin.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.jface.text,
@@ -10,6 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.genericeditor,
  org.eclipse.core.filebuffers,
  org.eclipse.core.resources,
+ org.eclipse.equinox.registry,
  org.junit,
  org.junit.jupiter.api,
  org.junit.jupiter.engine,
@@ -27,3 +29,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Automatic-Module-Name: GitHub-Flavored-Markdown-Eclipse-Plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: githubflavoredmarkdowneclipseplugin
+Bundle-ActivationPolicy: lazy

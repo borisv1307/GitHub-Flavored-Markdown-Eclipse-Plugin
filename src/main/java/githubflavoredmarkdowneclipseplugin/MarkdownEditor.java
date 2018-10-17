@@ -1,8 +1,10 @@
 package githubflavoredmarkdowneclipseplugin;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -11,6 +13,7 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 public class MarkdownEditor extends AbstractTextEditor {
+
 	public MarkdownEditor() {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
@@ -19,11 +22,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 		IWebBrowser browser;
 		try {
-			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser("prump");
-			browser.openURL(new URL("http://www.google.com"));
-		} catch (MalformedURLException | PartInitException e) {
+			Activator activator = Activator.getDefault();
+			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(activator.PLUGIN_ID);
+			URL url = FileLocator.find(activator.getBundle(), new Path("index.html"));
+			URL file = FileLocator.toFileURL(url);
+			browser.openURL(file);
+		} catch (PartInitException | IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }
