@@ -39,6 +39,11 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void horizontalRule() {
+		readAndAssertFileContents("horizontalRule.html", "***");
+  }
+  
+  @Test
 	public void code() {
 		readAndAssertFileContents("code.html", "`test`");
   }
