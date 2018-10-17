@@ -39,6 +39,22 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void simple_table() {
+		readAndAssertFileContents("simple-table.html",
+				"| First Header  | Second Header |\n" + "| ------------- | ------------- |\n"
+						+ "| Content Cell  | Content Cell  |\n" + "| Content Cell  | Content Cell  |");
+	}
+
+	@Test
+	public void align_attributed_table() {
+		readAndAssertFileContents("align-attributed-table.html",
+				"| Left-aligned | Center-aligned | Right-aligned |\n"
+						+ "| :---         |     :---:      |          ---: |\n"
+						+ "| git status   | git status     | git status    |\n"
+						+ "| git diff     | git diff       | git diff      |");
+  }
+  
+  @Test
 	public void unorderedList() {
 		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
 	}
