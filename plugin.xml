@@ -16,7 +16,6 @@
          <editor
       name="Markdown Editor"
       extensions="md"
-      icon="icons/sample.gif"
       class="githubflavoredmarkdowneclipseplugin.MarkdownEditor"
       id="githubflavoredmarkdowneclipseplugin.MarkdownEditor">
    </editor>
