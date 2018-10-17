@@ -39,6 +39,11 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void code() {
+		readAndAssertFileContents("code.html", "`test`");
+  }
+  
+  @Test
 	public void header1() {
 		readAndAssertFileContents("header1.html", "# H1 Test");
   }
