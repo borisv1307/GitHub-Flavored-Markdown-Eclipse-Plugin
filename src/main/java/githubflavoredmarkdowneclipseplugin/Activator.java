@@ -20,10 +20,11 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
+		/* Required if we need some initialization for the plugin */
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * /* (non-Javadoc)
 	 * 
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
 	 * BundleContext)
