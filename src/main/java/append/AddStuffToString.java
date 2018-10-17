@@ -33,7 +33,7 @@ public class AddStuffToString {
 	}
 
 	public String linkToURL(String str) {
-		str = "[" + str + "](Replace with Link)";
+		str = "[" + str + "](url \"Title\")";
 		return str;
 	}
 
@@ -42,8 +42,9 @@ public class AddStuffToString {
 		return str;
 	}
 
-	public String addLinkToImage() {
-		return "![Alt Text](url)";
+	public String addLinkToImage(String str) {
+		str = "![" + str + "](url)";
+		return str;
 	}
 
 	public String orderedList(String str) {

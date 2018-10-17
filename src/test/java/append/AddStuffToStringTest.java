@@ -80,7 +80,7 @@ public class AddStuffToStringTest {
 	public void addLink() {
 		AddStuffToString addStuffToString = new AddStuffToString();
 		String actual = addStuffToString.linkToURL("word");
-		assertEquals("[word](Replace with Link)", actual);
+		assertEquals("[word](url \"Title\")", actual);
 	}
 
 	@Test
@@ -93,8 +93,8 @@ public class AddStuffToStringTest {
 	@Test
 	public void addPicture() {
 		AddStuffToString addStuffToString = new AddStuffToString();
-		String actual = addStuffToString.addLinkToImage();
-		assertEquals("![Alt Text](url)", actual);
+		String actual = addStuffToString.addLinkToImage("word");
+		assertEquals("![word](url)", actual);
 	}
 
 	@Test
