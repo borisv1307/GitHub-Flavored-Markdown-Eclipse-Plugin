@@ -43,8 +43,7 @@ public class AddStuffToString {
 	}
 
 	public String addLinkToImage() {
-		String str = "![Alt Text](url)";
-		return str;
+		return "![Alt Text](url)";
 	}
 
 	public String orderedList(String str) {
