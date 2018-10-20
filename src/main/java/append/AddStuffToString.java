@@ -27,6 +27,21 @@ public class AddStuffToString {
 		return str;
 	}
 
+	public String addFourCharacter(String str, String character) {
+		str = character + character + character + character + str;
+		return str;
+	}
+
+	public String addFiveCharacter(String str, String character) {
+		str = character + character + character + character + character + str;
+		return str;
+	}
+
+	public String addSixCharacter(String str, String character) {
+		str = character + character + character + character + character + character + str;
+		return str;
+	}
+
 	public String horizontalRule(String str) {
 		str = str + "\n***\n";
 		return str;
