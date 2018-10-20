@@ -49,6 +49,11 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void unorderedList() {
+		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
+	}
+
+	@Test
 	public void simple_table() {
 		readAndAssertFileContents("simple-table.html",
 				"| First Header  | Second Header |\n" + "| ------------- | ------------- |\n"
@@ -169,6 +174,11 @@ public class MarkdownRendererTest {
 	@Test
 	public void closing_fence_cannot_contain_strings() {
 		readAndAssertFileContents("closingFenceContainStrings.html", "```\n``` aaa\n```");
+	}
+
+	@Test
+	public void strikethrough() {
+		readAndAssertFileContents("strikethrough.html", "~~test~~");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
