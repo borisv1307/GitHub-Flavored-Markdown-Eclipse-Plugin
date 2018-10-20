@@ -46,14 +46,14 @@ public class MarkdownRendererTest {
 	@Test
 	public void indented_code_block_first_line() {
 		readAndAssertFileContents("indented-code-block-e85.html", "        foo\n    bar");
-  }
-  
-  @Test
+	}
+
+	@Test
 	public void unorderedList() {
 		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
-  }
-   
-  @Test
+	}
+
+	@Test
 	public void simple_table() {
 		readAndAssertFileContents("simple-table.html",
 				"| First Header  | Second Header |\n" + "| ------------- | ------------- |\n"
@@ -67,11 +67,6 @@ public class MarkdownRendererTest {
 						+ "| :---         |     :---:      |          ---: |\n"
 						+ "| git status   | git status     | git status    |\n"
 						+ "| git diff     | git diff       | git diff      |");
-  }
-  
-  @Test
-	public void unorderedList() {
-		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
 	}
 
 	@Test
@@ -164,6 +159,11 @@ public class MarkdownRendererTest {
 	@Test
 	public void closingFenceContainStrings() {
 		readAndAssertFileContents("closingFenceContainStrings.html", "```\n``` aaa\n```");
+	}
+
+	@Test
+	public void test_strikethrough() {
+		readAndAssertFileContents("strikethrough.html", "~~test~~");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {

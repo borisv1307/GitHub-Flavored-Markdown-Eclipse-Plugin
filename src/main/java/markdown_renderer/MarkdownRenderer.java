@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.commonmark.Extension;
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -21,7 +22,7 @@ public class MarkdownRenderer {
 	}
 
 	MarkdownRenderer() {
-		this.extensions = Arrays.asList(TablesExtension.create());
+		this.extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create());
 		this.parser = Parser.builder().extensions(extensions).build();
 		this.renderer = HtmlRenderer.builder().extensions(extensions).build();
 	}
