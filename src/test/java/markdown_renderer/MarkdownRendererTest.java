@@ -70,7 +70,12 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
-	public void horizontalRule() {
+	public void unordered_list() {
+		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
+	}
+
+	@Test
+	public void horizontal_rule() {
 		readAndAssertFileContents("horizontalRule.html", "***");
 	}
 
@@ -100,7 +105,17 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
-	public void orderedList() {
+	public void header5() {
+		readAndAssertFileContents("header5.html", "##### H5 Test");
+	}
+
+	@Test
+	public void header6() {
+		readAndAssertFileContents("header6.html", "###### H6 Test");
+	}
+
+	@Test
+	public void ordered_list() {
 		readAndAssertFileContents("orderedList.html", "1. test\n1. test\n1. test\n");
 	}
 
@@ -127,42 +142,42 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
-	public void notEnoughBackticks() {
+	public void not_enough_backticks() {
 		readAndAssertFileContents("notEnoughBackticks.html", "``\nfoo\n``");
 	}
 
 	@Test
-	public void unclosedBlocks() {
+	public void unclosed_blocks() {
 		readAndAssertFileContents("unclosedBlocks.html", "> ```\n> aaa\n\nbbb");
 	}
 
 	// Four spaces indentation produces an indented code block
 	@Test
-	public void fourSpacesIndentation() {
+	public void four_spaces_indentation() {
 		readAndAssertFileContents("fourSpacesIndentation.html", "    ```\n    aaa\n    ```");
 	}
 
 	// Closing fences may be indented by 0-3 spaces, and their indentation need not
 	// match that of the opening fence
 	@Test
-	public void indentedClosingFence() {
+	public void closing_fence_intended_and_need_not_match_opening_fence() {
 		readAndAssertFileContents("indentedClosingFence.html", "   ```\naaa\n  ```");
 	}
 
 	// Code fences (opening and closing) cannot contain internal spaces
 	@Test
-	public void containingSpaces() {
+	public void code_fence_cannot_contain_internal_spaces() {
 		readAndAssertFileContents("containingSpaces.html", "``` ```\naaa");
 	}
 
 	// Closing code fences cannot have info strings
 	@Test
-	public void closingFenceContainStrings() {
+	public void closing_fence_cannot_contain_strings() {
 		readAndAssertFileContents("closingFenceContainStrings.html", "```\n``` aaa\n```");
 	}
 
 	@Test
-	public void test_strikethrough() {
+	public void strikethrough() {
 		readAndAssertFileContents("strikethrough.html", "~~test~~");
 	}
 
