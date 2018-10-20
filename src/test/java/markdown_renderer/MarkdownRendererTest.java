@@ -100,6 +100,16 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void header5() {
+		readAndAssertFileContents("header5.html", "##### H5 Test");
+	}
+
+	@Test
+	public void header6() {
+		readAndAssertFileContents("header6.html", "###### H6 Test");
+	}
+
+	@Test
 	public void ordered_list() {
 		readAndAssertFileContents("orderedList.html", "1. test\n1. test\n1. test\n");
 	}
