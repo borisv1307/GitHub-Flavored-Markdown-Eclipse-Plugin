@@ -70,6 +70,27 @@ public class AddStuffToStringTest {
 	}
 
 	@Test
+	public void pound_header4() {
+		AddStuffToString addStuffToString = new AddStuffToString();
+		String actual = addStuffToString.addFourCharacter("word", "#");
+		assertEquals("####word", actual);
+	}
+
+	@Test
+	public void pound_header5() {
+		AddStuffToString addStuffToString = new AddStuffToString();
+		String actual = addStuffToString.addFiveCharacter("word", "#");
+		assertEquals("#####word", actual);
+	}
+
+	@Test
+	public void pound_header6() {
+		AddStuffToString addStuffToString = new AddStuffToString();
+		String actual = addStuffToString.addSixCharacter("word", "#");
+		assertEquals("######word", actual);
+	}
+
+	@Test
 	public void horizontal_rule() {
 		AddStuffToString addStuffToString = new AddStuffToString();
 		String actual = addStuffToString.horizontalRule("word");

@@ -241,6 +241,41 @@ public class MarkdownRendererTest {
 	@Test
 	public void block_cannot_interrupt_paragraph() {
 		readAndAssertFileContents("cannotInterruptParagraph.html", "Foo\n" + "<a href=\"bar\">\n" + "baz");
+  }
+  
+  @Test
+	public void no_spaces_after_block_quote() {
+		readAndAssertFileContents("noSpacesAfterBlockQuote.html", "># Foo\n>bar\n> baz");
+	}
+
+	@Test
+	public void indented_one_to_three_spaces_block_quote() {
+		readAndAssertFileContents("indentedOneToThreeSpacesBlockQuote.html", "   > # Foo\n   > bar\n > baz");
+	}
+
+	@Test
+	public void omit_block_quote_before_paragraph_continuation_text() {
+		readAndAssertFileContents("omitBlockQuoteBeforeParagraph.html", "> # Foo\n> bar\nbaz");
+	}
+
+	@Test
+	public void contain_some_lazy_and_non_lazy_continuation_line() {
+		readAndAssertFileContents("containLazyAndNonLazyLine.html", "> bar\nbaz\n> foo");
+	}
+
+	@Test
+	public void cannot_omit_block_quote_before_indented_code_bloack() {
+		readAndAssertFileContents("omitBlockQuoteBeforeIndentedCodeBlock.html", ">     foo\n    bar");
+	}
+
+	@Test
+	public void cannot_omit_block_quote_before_fenced_code_bloack() {
+		readAndAssertFileContents("omitBlockQuoteBeforeFencedCodeBlock.html", "> ```\nfoo\n```");
+	}
+
+	@Test
+	public void two_paragraph_block_quote() {
+		readAndAssertFileContents("twoParagraphBlockQuote.html", "> foo\n>\n> bar");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
