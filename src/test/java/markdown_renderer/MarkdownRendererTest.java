@@ -225,9 +225,9 @@ public class MarkdownRendererTest {
 	@Test
 	public void case_insensitive() {
 		readAndAssertFileContents("caseInsensitive.html", "![Foo]\n" + "\n" + "[foo]: /url \"title\"");
-  }
-  
-  @Test
+	}
+
+	@Test
 	public void hmtl_table() {
 		readAndAssertFileContents("htmlTable.html", "<table>\n" + "  <tr>\n" + "    <td>\n" + "           hi\n"
 				+ "    </td>\n" + "  </tr>\n" + "</table>\n" + "\n" + "okay.");
@@ -287,9 +287,9 @@ public class MarkdownRendererTest {
 	@Test
 	public void block_cannot_interrupt_paragraph() {
 		readAndAssertFileContents("cannotInterruptParagraph.html", "Foo\n" + "<a href=\"bar\">\n" + "baz");
-  }
-  
-  @Test
+	}
+
+	@Test
 	public void no_spaces_after_block_quote() {
 		readAndAssertFileContents("noSpacesAfterBlockQuote.html", "># Foo\n>bar\n> baz");
 	}
@@ -322,6 +322,16 @@ public class MarkdownRendererTest {
 	@Test
 	public void two_paragraph_block_quote() {
 		readAndAssertFileContents("twoParagraphBlockQuote.html", "> foo\n>\n> bar");
+	}
+
+	@Test
+	public void links_proper() {
+		readAndAssertFileContents("link-proper.html", "[link](/uri)");
+	}
+
+	@Test
+	public void links_improper_space() {
+		readAndAssertFileContents("link-improper-space.html", "[link] (/uri)");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
