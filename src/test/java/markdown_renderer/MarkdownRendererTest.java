@@ -182,6 +182,52 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void standard_image_1() {
+		readAndAssertFileContents("standardImage1.html", "![foo](/url \"title\")");
+	}
+
+	@Test
+	public void standard_image_2() {
+		readAndAssertFileContents("standardImage2.html",
+				"![foo *bar*]\n" + "\n" + "[foo *bar*]: train.jpg \"train & tracks\"");
+	}
+
+	@Test
+	public void standard_image_3() {
+		readAndAssertFileContents("standardImage3.html", "![foo ![bar](/url)](/url2)");
+	}
+
+	@Test
+	public void standard_image_4() {
+		readAndAssertFileContents("standardImage3.html", "![foo [bar](/url)](/url2)");
+	}
+
+	@Test
+	public void reference_style() {
+		readAndAssertFileContents("referenceStyleImage.html", "![foo][bar]\n" + "\n" + "[bar]: /url");
+	}
+
+	@Test
+	public void collapsed() {
+		readAndAssertFileContents("collapsedImage.html", "![*foo* bar][]\n" + "\n" + "[*foo* bar]: /url \"title\"");
+	}
+
+	@Test
+	public void shortcut1() {
+		readAndAssertFileContents("standardImage1.html", "![foo]\n" + "\n" + "[foo]: /url \"title\"");
+	}
+
+	@Test
+	public void shortcut2() {
+		readAndAssertFileContents("collapsedImage.html", "![*foo* bar]\n" + "\n" + "[*foo* bar]: /url \"title\"");
+	}
+
+	@Test
+	public void case_insensitive() {
+		readAndAssertFileContents("caseInsensitive.html", "![Foo]\n" + "\n" + "[foo]: /url \"title\"");
+  }
+  
+  @Test
 	public void hmtl_table() {
 		readAndAssertFileContents("htmlTable.html", "<table>\n" + "  <tr>\n" + "    <td>\n" + "           hi\n"
 				+ "    </td>\n" + "  </tr>\n" + "</table>\n" + "\n" + "okay.");
