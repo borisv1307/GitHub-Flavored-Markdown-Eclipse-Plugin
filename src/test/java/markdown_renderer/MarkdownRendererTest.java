@@ -182,6 +182,68 @@ public class MarkdownRendererTest {
 	}
 
 	@Test
+	public void hmtl_table() {
+		readAndAssertFileContents("htmlTable.html", "<table>\n" + "  <tr>\n" + "    <td>\n" + "           hi\n"
+				+ "    </td>\n" + "  </tr>\n" + "</table>\n" + "\n" + "okay.");
+	}
+
+	@Test
+	public void partial_tag_for_firstline() {
+		readAndAssertFileContents("partialTagForFirstline.html", "<div id=\"foo\"\n" + "  class=\"bar\">\n" + "</div>");
+	}
+
+	@Test
+	public void pre_tag() {
+		readAndAssertFileContents("preTag.html", "<pre language=\"haskell\"><code>\n" + "import Text.HTML.TagSoup\n"
+				+ "\n" + "main :: IO ()\n" + "main = print $ parseTags tags\n" + "</code></pre>\n" + "okay");
+	}
+
+	@Test
+	public void script_tag() {
+		readAndAssertFileContents("scriptTag.html",
+				"<script type=\"text/javascript\">\n" + "// JavaScript example\n" + "\n"
+						+ "document.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n" + "</script>\n"
+						+ "okay");
+	}
+
+	@Test
+	public void style_tag() {
+		readAndAssertFileContents("styleTag.html", "<style\n" + "  type=\"text/css\">\n" + "h1 {color:red;}\n" + "\n"
+				+ "p {color:blue;}\n" + "</style>\n" + "okay");
+	}
+
+	// garbage in, garbage out
+	@Test
+	public void uncomplete_tag() {
+		readAndAssertFileContents("uncompleteTag.html", "<div id=\"foo\"\n" + "*hi*");
+	}
+
+	// anything on the last line after the end tag will be included in the
+	// HTML block:
+	@Test
+	public void anything_on_last_line_after_end_tag_will_be_included_in_HTML() {
+		readAndAssertFileContents("anythingOnLastLineAfterEndTag.html", "<script>\n" + "foo\n" + "</script>1. *bar*");
+	}
+
+	@Test
+	public void CDATA() {
+		readAndAssertFileContents("CDATA.html",
+				"<![CDATA[\n" + "function matchwo(a,b)\n" + "{\n" + "  if (a < b && a < 0) then {\n" + "    return 1;\n"
+						+ "\n" + "  } else {\n" + "\n" + "    return 0;\n" + "  }\n" + "}\n" + "]]>\n" + "okay");
+	}
+
+	// The opening tag can be indented 1-3 spaces, but not 4
+	@Test
+	public void indented_opening_tag() {
+		readAndAssertFileContents("indentedOpeningTag.html", "  <div>\n" + "\n" + "    <div>");
+	}
+
+	@Test
+	public void block_cannot_interrupt_paragraph() {
+		readAndAssertFileContents("cannotInterruptParagraph.html", "Foo\n" + "<a href=\"bar\">\n" + "baz");
+  }
+  
+  @Test
 	public void no_spaces_after_block_quote() {
 		readAndAssertFileContents("noSpacesAfterBlockQuote.html", "># Foo\n>bar\n> baz");
 	}
