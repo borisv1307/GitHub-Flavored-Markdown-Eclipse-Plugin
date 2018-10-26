@@ -21,7 +21,7 @@ public class MarkdownRenderer {
 		return renderer.render(document);
 	}
 
-	MarkdownRenderer() {
+	public MarkdownRenderer() {
 		this.extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create());
 		this.parser = Parser.builder().extensions(extensions).build();
 		this.renderer = HtmlRenderer.builder().extensions(extensions).build();

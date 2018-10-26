@@ -12,6 +12,8 @@ import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
+import markdown_renderer.MarkdownRenderer;
+
 public class MarkdownEditor extends AbstractTextEditor {
 
 	public MarkdownEditor() {
@@ -19,6 +21,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
 
 		setDocumentProvider(new TextFileDocumentProvider());
+
+		MarkdownRenderer markdownRenderer = new MarkdownRenderer();
 
 		IWebBrowser browser;
 		try {
