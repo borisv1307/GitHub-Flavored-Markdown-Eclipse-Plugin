@@ -32,10 +32,15 @@ public class ComplexMarkdownRendererTest {
 	public void combine_italics_with_bold() {
 		readAndAssertFileContents("edgeCase_CombineItalicsWithBold.html", "_**Test**_");
 	}
-	
+
 	@Test
 	public void combine_unordered_ordered_list() {
 		readAndAssertFileContents("edgeCase_CombineUnorderedOrderedList.html", "1. * Test");
+	}
+
+	@Test
+	public void triple_italics() {
+		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
