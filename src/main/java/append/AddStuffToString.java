@@ -6,6 +6,11 @@ public class AddStuffToString {
 		string = character + string + character;
 		return string;
 	}
+	
+	public String surroundDoubleCharacter(String string, String character1, String character2) {
+		string = character1 + string + character2;
+		return string;
+	}
 
 	public String surroundDoubleCharacter(String str, String character) {
 		str = character + character + str + character + character;
