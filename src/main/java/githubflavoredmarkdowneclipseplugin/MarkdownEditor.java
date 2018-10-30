@@ -52,7 +52,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 
-		activator.log(markdownRenderer.render(document.get()));
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project = root.getProject("markdown");
@@ -68,7 +67,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			if (file.exists())
 				file.delete(true, null);
 			if (!file.exists()) {
-				byte[] bytes = document.get().getBytes();
+				byte[] bytes = markdownRenderer.render(document.get()).getBytes();
 				InputStream source = new ByteArrayInputStream(bytes);
 				file.create(source, IResource.NONE, null);
 			}
