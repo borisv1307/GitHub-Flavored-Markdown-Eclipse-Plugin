@@ -7,11 +7,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -52,16 +50,16 @@ public class MarkdownEditor extends AbstractTextEditor {
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject project = root.getProject("markdown");
-		IFolder folder = project.getFolder("html");
-		IFile file = folder.getFile("markdown.html");
+		IProject project = editorInput.getAdapter(IProject.class);
+		if (project == null) {
+			IResource resource = editorInput.getAdapter(IResource.class);
+			if (resource != null) {
+				project = resource.getProject();
+			}
+		}
+		IFile file = project.getFile("markdown.html");
 		String markdownString = markdownRenderer.render(document.get());
 		try {
-			if (!project.exists())
-
-				project.create(progressMonitor);
-
 			if (!project.isOpen())
 				project.open(progressMonitor);
 			if (file.exists())
