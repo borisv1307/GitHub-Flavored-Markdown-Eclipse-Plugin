@@ -14,7 +14,7 @@ import append.AddStuffToString;
 public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
-	private JList<String> list = null;
+	private JList list = null;
 	private String[] str = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
 			"##### - Heading 5", "###### - Heading 6", "> - Block quote", "[] - Link(inlint) - [Text]",
 			"\t - Code block (indented with tab)", "'inline code' - A span of code inline", "**strong** - strong",
@@ -24,7 +24,7 @@ public class AutoComplete extends JFrame {
 		frame.setUndecorated(true);
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(point.x, point.y);
-		list = new JList<String>(str);
+		list = new JList(str);
 		container.add(list);
 		container.add(new JScrollPane(list));
 		frame.setSize(300, 200);
@@ -39,44 +39,43 @@ public class AutoComplete extends JFrame {
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String text = "";
 					AddStuffToString stuff = new AddStuffToString();
 					switch (list.getSelectedIndex()) {
 					case 0:
-						text = stuff.addSingleCharacter(selectedContent, "#");
+						stuff.addSingleCharacter(selectedContent, "#");
 						break;
 					case 1:
-						text = stuff.addDoubleCharacter(selectedContent, "#");
+						stuff.addDoubleCharacter(selectedContent, "#");
 						break;
 					case 2:
-						text = stuff.addTripleCharacter(selectedContent, "#");
+						stuff.addTripleCharacter(selectedContent, "#");
 						break;
 					case 3:
-						text = stuff.addFourCharacter(selectedContent, "#");
+						stuff.addFourCharacter(selectedContent, "#");
 						break;
 					case 4:
-						text = stuff.addFiveCharacter(selectedContent, "#");
+						stuff.addFiveCharacter(selectedContent, "#");
 						break;
 					case 5:
-						text = stuff.addSixCharacter(selectedContent, "#");
+						stuff.addSixCharacter(selectedContent, "#");
 						break;
 					case 6:
-						text = stuff.blockQuote(selectedContent);
+						stuff.blockQuote(selectedContent);
 						break;
 					case 7:
-						text = stuff.linkToURL(selectedContent);
+						stuff.linkToURL(selectedContent);
 						break;
 					case 8:
-						text = stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
+						stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 						break;
 					case 9:
-						text = stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
+						stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
 						break;
 					case 10:
-						text = stuff.surroundSingleCharacter(selectedContent, "**");
+						stuff.surroundSingleCharacter(selectedContent, "**");
 						break;
 					case 11:
-						text = stuff.surroundSingleCharacter(selectedContent, "_");
+						stuff.surroundSingleCharacter(selectedContent, "_");
 						break;
 					default:
 						break;
