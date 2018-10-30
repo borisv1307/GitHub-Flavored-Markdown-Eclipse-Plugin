@@ -1,4 +1,4 @@
-package autoComplete;
+package autocomplete;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -11,11 +11,10 @@ import javax.swing.JScrollPane;
 
 import append.AddStuffToString;
 
-public class autoComplete extends JFrame {
+public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private JList<String> list = null;
-	private String selectedContent = "";
 	private String text = "";
 	private String str[] = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
 			"##### - Heading 5", "###### - Heading 6", "> - Block quote", "[] - Link(inlint) - [Text]",
@@ -23,7 +22,7 @@ public class autoComplete extends JFrame {
 			"_emphasis_ - emphasis" };
 	private AddStuffToString stuff = new AddStuffToString();
 
-	public autoComplete() {
+	public AutoComplete() {
 		frame.setUndecorated(true);
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(point.x, point.y);
@@ -40,7 +39,7 @@ public class autoComplete extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					System.out.println("esc");
+//					System.out.println("esc");
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -81,8 +80,10 @@ public class autoComplete extends JFrame {
 					case 11:
 						text = stuff.surroundSingleCharacter(selectedContent, "_");
 						break;
+					default:
+						break;
 					}
-					System.out.println(text);
+//					System.out.println(text);
 					frame.dispose();
 				}
 
@@ -90,13 +91,11 @@ public class autoComplete extends JFrame {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -105,14 +104,12 @@ public class autoComplete extends JFrame {
 
 	public void show(final String selection) {
 		frame.setVisible(true);
-		selectedContent = selection;
-		addListener(selectedContent);
+		addListener(selection);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		autoComplete panel = new autoComplete();
+		AutoComplete panel = new AutoComplete();
 		panel.show("test");
 	}
 
