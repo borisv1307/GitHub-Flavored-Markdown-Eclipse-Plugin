@@ -41,6 +41,36 @@ public class ComplexMarkdownRendererTest {
 	@Test
 	public void triple_bold() {
 		readAndAssertFileContents("edgeCase_TripleBold.html", "******Strike******");
+  }
+  
+  @Test
+	public void combine_blockquote_with_emphasis() {
+		readAndAssertFileContents("edgeCase_CombineBlockquoteWithEmphasis.html", "> *text*");
+  }
+  
+  @Test
+	public void emphasis_plus_inline_code() {
+		readAndAssertFileContents("edgeCase_EmphasisPlusInlineCode.html", "*`text`*");
+  }
+  
+  @Test
+	public void combine_unordered_list_bold_strikethrough() {
+		readAndAssertFileContents("edgeCase_UnorderedListBoldStrikethrough.html", "* **~~Strike~~**");
+  }
+  
+  @Test
+	public void triple_italics() {
+		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
+  }
+  
+  @Test
+	public void emphasis_mismatch() {
+		readAndAssertFileContents("edgeCase_EmphasisMismatch.html", "_*___Test*__**");
+  }
+	
+  @Test
+  public void combine_triple_blockquote_double_inline_code() {
+		readAndAssertFileContents("edgeCase_TripleBlockquote_DoubleInlineCode.html", ">>> ``Hi``");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
