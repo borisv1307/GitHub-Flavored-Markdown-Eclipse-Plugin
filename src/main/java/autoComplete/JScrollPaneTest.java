@@ -11,24 +11,28 @@ import javax.swing.JScrollPane;
 import append.AddStuffToString;
 
 public class JScrollPaneTest extends JFrame{
-	private JFrame frame = new JFrame("hello world");
+	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private JList<String> list = null;
 	private String text = "";
+	private String str[] ={"# - Heading 1","## - Heading 2","### - Heading 3","#### - Heading 4",
+			"##### - Heading 5","###### - Heading 6","> - Block quote", "[] - Link(inlint) - [Text]",
+			"\t - Code block (indented with tab)","'inline code' - A span of code inline",
+			"**strong** - strong","_emphasis_ - emphasis"};
 	private AddStuffToString stuff = new AddStuffToString();
 	    public JScrollPaneTest(final String selectedContent){
 	    	frame.setUndecorated(true);  	
 	    	Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 	    	this.frame.setLocation(point.x, point.y);
-	    	String str[] ={"# - Heading 1","## - Heading 2","### - Heading 3","#### - Heading 4",
-	    			"##### - Heading 5","###### - Heading 6","> - Block quote", "[] - Link(inlint) - [Text]",
-	    			"\t - Code block (indented with tab)","'inline code' - A span of code inline",
-	    			"**strong** - strong","_emphasis_ - emphasis"};
-
 	    	list = new JList<String>(str);
-//	    	list.setBorder(BorderFactory.createTitledBorder("Markdown Grammer"));
-//	    	list.setSelectedIndex(0);
-	    	list.addKeyListener(new KeyListener() {
+	    	addListener(selectedContent);
+	    	container.add(list);
+	    	container.add(new JScrollPane(list));
+	    	frame.setSize(300,200);
+	    }
+
+		private void addListener(final String selectedContent) {
+			list.addKeyListener(new KeyListener() {
 
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -77,7 +81,7 @@ public class JScrollPaneTest extends JFrame{
 							break;
 						}
 						System.out.println(text);
-//						frame.dispose();
+						frame.dispose();
 					}
 					
 				}
@@ -95,10 +99,7 @@ public class JScrollPaneTest extends JFrame{
 				}
 	    		
 	    	});
-	    	container.add(list);
-	    	container.add(new JScrollPane(list));
-	    	frame.setSize(300,200);
-	    }
+		}
 	    
 	    public void show() {
 	    	frame.setVisible(true);
