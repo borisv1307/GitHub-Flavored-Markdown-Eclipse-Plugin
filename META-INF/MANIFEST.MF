@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.junit.vintage.engine,
  org.hamcrest.core,
  org.opentest4j,
- org.apiguardian
+ org.apiguardian,
+ org.eclipse.ui.workbench
 Automatic-Module-Name: GitHub-Flavored-Markdown-Eclipse-Plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: githubflavoredmarkdowneclipseplugin
