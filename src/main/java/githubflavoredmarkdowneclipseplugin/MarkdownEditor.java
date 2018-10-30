@@ -50,13 +50,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IProject project = editorInput.getAdapter(IProject.class);
-		if (project == null) {
-			IResource resource = editorInput.getAdapter(IResource.class);
-			if (resource != null) {
-				project = resource.getProject();
-			}
-		}
+		IProject project = getCurrentProject(editorInput);
 		IFile file = project.getFile("markdown.html");
 		String markdownString = markdownRenderer.render(document.get());
 		try {
@@ -123,4 +117,14 @@ public class MarkdownEditor extends AbstractTextEditor {
 		}
 	}
 
+	private IProject getCurrentProject(IEditorInput editorInput) {
+		IProject project = editorInput.getAdapter(IProject.class);
+		if (project == null) {
+			IResource resource = editorInput.getAdapter(IResource.class);
+			if (resource != null) {
+				project = resource.getProject();
+			}
+		}
+		return project;
+	}
 }
