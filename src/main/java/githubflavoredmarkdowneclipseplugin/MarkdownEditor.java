@@ -57,6 +57,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		IProject project = root.getProject("markdown");
 		IFolder folder = project.getFolder("html");
 		IFile file = folder.getFile("markdown.html");
+		String markdownString = markdownRenderer.render(document.get());
 		try {
 			if (!project.exists())
 
@@ -67,7 +68,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			if (file.exists())
 				file.delete(true, null);
 			if (!file.exists()) {
-				byte[] bytes = markdownRenderer.render(document.get()).getBytes();
+				byte[] bytes = markdownString.getBytes();
 				InputStream source = new ByteArrayInputStream(bytes);
 				file.create(source, IResource.NONE, null);
 			}
@@ -86,4 +87,5 @@ public class MarkdownEditor extends AbstractTextEditor {
 			e.printStackTrace();
 		}
 	}
+
 }
