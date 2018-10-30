@@ -15,12 +15,10 @@ public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private JList<String> list = null;
-	private String text = "";
-	private String str[] = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
+	private String[] str = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
 			"##### - Heading 5", "###### - Heading 6", "> - Block quote", "[] - Link(inlint) - [Text]",
 			"\t - Code block (indented with tab)", "'inline code' - A span of code inline", "**strong** - strong",
 			"_emphasis_ - emphasis" };
-	private AddStuffToString stuff = new AddStuffToString();
 
 	public AutoComplete() {
 		frame.setUndecorated(true);
@@ -37,12 +35,13 @@ public class AutoComplete extends JFrame {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 //					System.out.println("esc");
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String text = "";
+					AddStuffToString stuff = new AddStuffToString();
 					switch (list.getSelectedIndex()) {
 					case 0:
 						text = stuff.addSingleCharacter(selectedContent, "#");
@@ -90,12 +89,14 @@ public class AutoComplete extends JFrame {
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 
