@@ -39,6 +39,11 @@ public class ComplexMarkdownRendererTest {
 	}
 
 	@Test
+	public void emphasis_plus_inline_code() {
+		readAndAssertFileContents("edgeCase_EmphasisPlusInlineCode.html", "*`text`*");
+  }
+  
+  @Test
 	public void combine_unordered_list_bold_strikethrough() {
 		readAndAssertFileContents("edgeCase_UnorderedListBoldStrikethrough.html", "* **~~Strike~~**");
   }
