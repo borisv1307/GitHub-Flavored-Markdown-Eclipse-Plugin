@@ -36,7 +36,6 @@ public class AutoComplete extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-//					System.out.println("esc");
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -82,7 +81,6 @@ public class AutoComplete extends JFrame {
 					default:
 						break;
 					}
-//					System.out.println(text);
 					frame.dispose();
 				}
 
