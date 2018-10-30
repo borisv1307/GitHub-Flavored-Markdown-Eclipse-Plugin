@@ -39,6 +39,11 @@ public class ComplexMarkdownRendererTest {
 	}
 
 	@Test
+	public void triple_bold() {
+		readAndAssertFileContents("edgeCase_TripleBold.html", "******Strike******");
+  }
+  
+  @Test
 	public void combine_blockquote_with_emphasis() {
 		readAndAssertFileContents("edgeCase_CombineBlockquoteWithEmphasis.html", "> *text*");
   }
