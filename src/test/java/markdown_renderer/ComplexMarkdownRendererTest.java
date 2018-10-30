@@ -39,6 +39,11 @@ public class ComplexMarkdownRendererTest {
 	}
 
 	@Test
+	public void triple_italics() {
+		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
+  }
+  
+  @Test
 	public void emphasis_mismatch() {
 		readAndAssertFileContents("edgeCase_EmphasisMismatch.html", "_*___Test*__**");
   }
