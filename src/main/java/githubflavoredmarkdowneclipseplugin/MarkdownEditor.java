@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -33,6 +33,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
+	private IWebBrowser browser;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -46,12 +47,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 		markdownRenderer = new MarkdownRenderer();
 	}
 
-	@Override
-	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
-		super.init(site, editorInput);
+	private IFile saveMarkdown(IEditorInput editorInput, IProgressMonitor progressMonitor) {
+
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
-
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project = root.getProject("markdown");
@@ -61,30 +60,68 @@ public class MarkdownEditor extends AbstractTextEditor {
 		try {
 			if (!project.exists())
 
-				project.create(null);
+				project.create(progressMonitor);
 
 			if (!project.isOpen())
-				project.open(null);
+				project.open(progressMonitor);
 			if (file.exists())
-				file.delete(true, null);
+				file.delete(true, progressMonitor);
 			if (!file.exists()) {
 				byte[] bytes = markdownString.getBytes();
 				InputStream source = new ByteArrayInputStream(bytes);
-				file.create(source, IResource.NONE, null);
+				file.create(source, IResource.NONE, progressMonitor);
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return file;
+	}
 
-		IWebBrowser browser;
+	private void loadFileInBrowser(IFile file) {
 		try {
-			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(activator.PLUGIN_ID);
-			URL url = FileLocator.find(activator.getBundle(), new Path("index.html"));
+			if (browser == null)
+				browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
 			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
 			browser.openURL(htmlFile);
-		} catch (PartInitException | IOException e) {
+		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
+		super.init(site, editorInput);
+		IFile htmlFile = saveMarkdown(editorInput, null);
+		loadFileInBrowser(htmlFile);
+	}
+
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+
+		IDocumentProvider p = getDocumentProvider();
+		if (p == null)
+			return;
+		IEditorInput editorInput = getEditorInput();
+		if (p.isDeleted(getEditorInput())) {
+
+			if (isSaveAsAllowed()) {
+
+				/*
+				 * 1GEUSSR: ITPUI:ALL - User should never loose changes made in the editors.
+				 * Changed Behavior to make sure that if called inside a regular save (because
+				 * of deletion of input element) there is a way to report back to the caller.
+				 */
+				performSaveAs(progressMonitor);
+
+			} else {
+
+			}
+
+		} else {
+			IFile htmlFile = saveMarkdown(editorInput, progressMonitor);
+			loadFileInBrowser(htmlFile);
+			performSave(false, progressMonitor);
 		}
 	}
 
