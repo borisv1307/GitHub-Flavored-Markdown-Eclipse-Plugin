@@ -41,6 +41,11 @@ public class ComplexMarkdownRendererTest {
 	@Test
 	public void emphasis_mismatch() {
 		readAndAssertFileContents("edgeCase_EmphasisMismatch.html", "_*___Test*__**");
+  }
+	
+  @Test
+  public void combine_triple_blockquote_double_inline_code() {
+		readAndAssertFileContents("edgeCase_TripleBlockquote_DoubleInlineCode.html", ">>> ``Hi``");
 	}
 
 	private void readAndAssertFileContents(String filename, String contents) {
