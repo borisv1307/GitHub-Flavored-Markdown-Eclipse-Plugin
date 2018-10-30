@@ -39,6 +39,11 @@ public class ComplexMarkdownRendererTest {
 	}
 
 	@Test
+	public void combine_unordered_list_bold_strikethrough() {
+		readAndAssertFileContents("edgeCase_UnorderedListBoldStrikethrough.html", "* **~~Strike~~**");
+  }
+  
+  @Test
 	public void triple_italics() {
 		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
   }
