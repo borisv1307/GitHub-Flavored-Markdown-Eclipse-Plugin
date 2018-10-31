@@ -54,9 +54,9 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String htmlFileName = fileName + ".html";
 		IFile file = project.getFile(htmlFileName);
 
-		String markdownString = markdownRenderer.render(
-				"<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>" + htmlFileName
-						+ "</title>\n" + "</head>" + "<body>" + document.get() + "</body>\n" + "</html>");
+		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
+				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
+				+ "</body>\n" + "</html>";
 
 		try {
 			if (!project.isOpen())
