@@ -7,15 +7,11 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -33,6 +29,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
+	private IWebBrowser browser;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -46,46 +43,91 @@ public class MarkdownEditor extends AbstractTextEditor {
 		markdownRenderer = new MarkdownRenderer();
 	}
 
-	@Override
-	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
-		super.init(site, editorInput);
+	private IFile saveMarkdown(IEditorInput editorInput, IProgressMonitor progressMonitor) {
+
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
+		IProject project = getCurrentProject(editorInput);
 
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject project = root.getProject("markdown");
-		IFolder folder = project.getFolder("html");
-		IFile file = folder.getFile("markdown.html");
-		String markdownString = markdownRenderer.render(document.get());
+		String fileName = editorInput.getName();
+		IFile file = project.getFile(fileName + ".html");
+
+		String markdownString = markdownRenderer
+				.render("<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
+						+ fileName + "</title>\n" + "</head>" + "<body>" + document.get() + "</body>\n" + "</html>");
+
 		try {
-			if (!project.exists())
-
-				project.create(null);
-
 			if (!project.isOpen())
-				project.open(null);
+				project.open(progressMonitor);
 			if (file.exists())
-				file.delete(true, null);
+				file.delete(true, progressMonitor);
 			if (!file.exists()) {
 				byte[] bytes = markdownString.getBytes();
 				InputStream source = new ByteArrayInputStream(bytes);
-				file.create(source, IResource.NONE, null);
+				file.create(source, IResource.NONE, progressMonitor);
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return file;
+	}
 
-		IWebBrowser browser;
+	private void loadFileInBrowser(IFile file) {
 		try {
-			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(activator.PLUGIN_ID);
-			URL url = FileLocator.find(activator.getBundle(), new Path("index.html"));
+			if (browser == null)
+				browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
 			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
 			browser.openURL(htmlFile);
-		} catch (PartInitException | IOException e) {
+		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
+		super.init(site, editorInput);
+		IFile htmlFile = saveMarkdown(editorInput, null);
+		loadFileInBrowser(htmlFile);
+	}
+
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+
+		IDocumentProvider p = getDocumentProvider();
+		if (p == null)
+			return;
+		IEditorInput editorInput = getEditorInput();
+		if (p.isDeleted(getEditorInput())) {
+
+			if (isSaveAsAllowed()) {
+
+				/*
+				 * 1GEUSSR: ITPUI:ALL - User should never loose changes made in the editors.
+				 * Changed Behavior to make sure that if called inside a regular save (because
+				 * of deletion of input element) there is a way to report back to the caller.
+				 */
+				performSaveAs(progressMonitor);
+
+			} else {
+
+			}
+
+		} else {
+			IFile htmlFile = saveMarkdown(editorInput, progressMonitor);
+			loadFileInBrowser(htmlFile);
+			performSave(false, progressMonitor);
+		}
+	}
+
+	private IProject getCurrentProject(IEditorInput editorInput) {
+		IProject project = editorInput.getAdapter(IProject.class);
+		if (project == null) {
+			IResource resource = editorInput.getAdapter(IResource.class);
+			if (resource != null) {
+				project = resource.getProject();
+			}
+		}
+		return project;
+	}
 }
