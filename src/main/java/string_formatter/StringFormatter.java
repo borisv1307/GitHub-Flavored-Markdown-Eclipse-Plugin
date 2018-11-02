@@ -32,7 +32,7 @@ public class StringFormatter {
 	// replace String.join()
 	private String join(String formattedLine, String[] temp, int length) {
 		for(int i = 0;i<length;i++) {
-			formattedLine += temp[i]+"|";
+			formattedLine = formattedLine + temp[i]+"|";
 		}
 		return formattedLine;
 	}
