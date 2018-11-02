@@ -4,11 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>GitHub-Flavored-Markdown-Eclipse-Plugin</groupId>
 	<artifactId>GitHub-Flavored-Markdown-Eclipse-Plugin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<name>GitHub-Flavored-Markdown-Eclipse-Plugin</name>
 
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -56,5 +55,7 @@
 	  		<artifactId>commonmark-ext-gfm-strikethrough</artifactId>
 	  		<version>0.11.0</version>
 	  	</dependency>
+	  	
+
 	</dependencies>
 </project>

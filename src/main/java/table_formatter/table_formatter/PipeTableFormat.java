@@ -60,7 +60,7 @@ public class PipeTableFormat {
 			}
 		}
 		for (int i = 0; i < format.length; i++) {
-			string[i] = String.join("|", format[i]);
+			// string[i] = String.join("|", format[i]);
 		}
 		return string;
 	}

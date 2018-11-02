@@ -23,7 +23,7 @@ public class StringFormatter {
 		if (!temp[temp.length - 1].isEmpty()) { // no closing pipe
 			temp[temp.length - 1] = " " + temp[temp.length - 1].trim();
 		}
-		formattedLine = String.join("|", temp);
+		// formattedLine = String.join("|", temp);
 		return formattedLine;
 	}
 }
