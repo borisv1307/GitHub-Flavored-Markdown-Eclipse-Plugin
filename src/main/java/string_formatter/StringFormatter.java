@@ -24,12 +24,11 @@ public class StringFormatter {
 		if (!temp[length - 1].isEmpty()) { // no closing pipe
 			temp[length - 1] = " " + temp[length - 1].trim();
 		}
-//		formattedLine = String.join("|", temp);
 		formattedLine = join(formattedLine, temp, length);
 		return formattedLine.substring(0,formattedLine.length()-1);
 	}
 	
-	// replace String.join()
+	// replace formattedLine = String.join("|", temp);
 	private String join(String formattedLine, String[] temp, int length) {
 		for(int i = 0;i<length;i++) {
 			formattedLine = formattedLine + temp[i]+"|";

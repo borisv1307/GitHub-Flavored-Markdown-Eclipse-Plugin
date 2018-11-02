@@ -61,13 +61,12 @@ public class PipeTableFormat {
 			}
 		}
 		for (int i = 0; i < length; i++) {
-//			string[i] = String.join("|", format[i]);
 			join(string, format, i);
 		}
 		return string;
 	}
 	
-	// replace String.join()
+	// replace string[i] = String.join("|", format[i]);
 	private void join(String[] string, String[][] format, int i) {
 		string[i] = "";
 		int lengthOfFormatI = format[i].length;
