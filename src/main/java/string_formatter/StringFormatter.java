@@ -24,15 +24,17 @@ public class StringFormatter {
 		if (!temp[length - 1].isEmpty()) { // no closing pipe
 			temp[length - 1] = " " + temp[length - 1].trim();
 		}
-		formattedLine = join(formattedLine, temp, length);
+		formattedLine = join(temp, length);
 		return formattedLine.substring(0,formattedLine.length()-1);
 	}
 	
-	// replace formattedLine = String.join("|", temp);
-	private String join(String formattedLine, String[] temp, int length) {
+	// replace String.join("|", temp);
+	private String join(String[] temp, int length) {
+		StringBuilder str = new StringBuilder();
 		for(int i = 0;i<length;i++) {
-			formattedLine = formattedLine + temp[i]+"|";
+			str.append(temp[i]+"|");
 		}
+		String formattedLine = str.toString();
 		return formattedLine;
 	}
 }
