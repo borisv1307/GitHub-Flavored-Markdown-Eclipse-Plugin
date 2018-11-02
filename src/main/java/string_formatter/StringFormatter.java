@@ -28,13 +28,11 @@ public class StringFormatter {
 		return formattedLine.substring(0,formattedLine.length()-1);
 	}
 	
-	// replace String.join("|", temp);
 	private String join(String[] temp, int length) {
 		StringBuilder str = new StringBuilder();
 		for(int i = 0;i<length;i++) {
 			str.append(temp[i]+"|");
 		}
-		String formattedLine = str.toString();
-		return formattedLine;
+		return str.toString();
 	}
 }
