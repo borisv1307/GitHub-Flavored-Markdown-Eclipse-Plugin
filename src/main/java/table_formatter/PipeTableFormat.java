@@ -62,17 +62,22 @@ public class PipeTableFormat {
 		}
 		for (int i = 0; i < length; i++) {
 //			string[i] = String.join("|", format[i]);
-			string[i] = "";
-			int lengthOfFormatI = format[i].length;
-			for(int j = 0;j< lengthOfFormatI - 1;j++) {
-				string[i] += format[i][j]+"|";
-			}
-			if(!format[i][lengthOfFormatI-1].isEmpty()) {
-				string[i] += format[i][lengthOfFormatI-1]+"|";
-				string[i] = string[i].substring(0, string[i].length()-1);
-			}
+			join(string, format, i);
 		}
 		return string;
+	}
+	
+	// replace String.join()
+	private void join(String[] string, String[][] format, int i) {
+		string[i] = "";
+		int lengthOfFormatI = format[i].length;
+		for(int j = 0;j< lengthOfFormatI - 1;j++) {
+			string[i] += format[i][j]+"|";
+		}
+		if(!format[i][lengthOfFormatI-1].isEmpty()) {
+			string[i] += format[i][lengthOfFormatI-1]+"|";
+			string[i] = string[i].substring(0, string[i].length()-1);
+		}
 	}
 
 	private int getLengthOfColumn(String[][] format, int m) {
