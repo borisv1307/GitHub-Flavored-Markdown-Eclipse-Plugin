@@ -21,41 +21,6 @@
    </editor>
    </extension>
    <extension
-         point="org.eclipse.ui.genericeditor.presentationReconcilers">
-      <presentationReconciler
-            class="githubflavoredmarkdowneclipseplugin.ProjectPresentationReconciler"
-            contentType="githubflavoredmarkdowneclipseplugin.project">
-      </presentationReconciler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.hoverProviders">
-      <hoverProvider
-            class="githubflavoredmarkdowneclipseplugin.ProjectHoverProvider"
-            contentType="githubflavoredmarkdowneclipseplugin.project">
-      </hoverProvider>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.contentAssistProcessors">
-      <contentAssistProcessor
-            class="githubflavoredmarkdowneclipseplugin.ProjectContentAssistProcessor"
-            contentType="githubflavoredmarkdowneclipseplugin.project">
-      </contentAssistProcessor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.autoEditStrategies">
-      <autoEditStrategy
-            class="githubflavoredmarkdowneclipseplugin.ProjectAutoEditStrategy"
-            contentType="githubflavoredmarkdowneclipseplugin.project">
-      </autoEditStrategy>
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.reconcilers">
-      <reconciler
-            class="githubflavoredmarkdowneclipseplugin.ProjectReconciler"
-            contentType="githubflavoredmarkdowneclipseplugin.project">
-      </reconciler>
-   </extension>
-   <extension
          point="org.eclipse.core.filebuffers.documentSetup">
       <participant
             class="githubflavoredmarkdowneclipseplugin.ValidatorDocumentSetupParticipant"
