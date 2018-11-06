@@ -1,6 +1,5 @@
 package githubflavoredmarkdowneclipseplugin;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +24,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
@@ -39,7 +37,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import autocomplete.AutoComplete;
 import markdown_renderer.MarkdownRenderer;
 
-public class MarkdownEditor extends AbstractTextEditor{
+public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
@@ -50,34 +48,32 @@ public class MarkdownEditor extends AbstractTextEditor{
 	public MarkdownEditor() throws FileNotFoundException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
-		TextFileDocumentProvider provider = new TextFileDocumentProvider();
-		setDocumentProvider(provider);
+		setDocumentProvider(new TextFileDocumentProvider());
 
 		// Activator manages connections to the Workbench
 		activator = Activator.getDefault();
-		
+
 		markdownRenderer = new MarkdownRenderer();
 	}
-	
+
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
 		ISourceViewer fSourceViewer = super.getSourceViewer();
-		styledText= fSourceViewer.getTextWidget();
+		styledText = fSourceViewer.getTextWidget();
 		styledText.addKeyListener(new KeyListener() {
-
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if(e.stateMask == SWT.CTRL && e.keyCode == SWT.ALT) {
-					String text=styledText.getSelectionText();
+				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.ALT) {
+					String text = styledText.getSelectionText();
 					point = styledText.getSelectionRange();
 //					System.out.println("point:"+point);
 //					styledText.replaceTextRange(point.x, point.y, text+"test");
-					if(!text.isEmpty()) {
+					if (!text.isEmpty()) {
 						panel.show(text);
-						
+
 					}
 				}
 			}
@@ -85,14 +81,14 @@ public class MarkdownEditor extends AbstractTextEditor{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
-			}});
+
+			}
+		});
 	}
-	
+
 	public void getSelectedContent(String selectedContent) {
 //		styledText.replaceTextRange(point.x, point.y, selectedContent);
 	}
-
 
 	@Override
 	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
@@ -135,5 +131,5 @@ public class MarkdownEditor extends AbstractTextEditor{
 			e.printStackTrace();
 		}
 	}
-	
+
 }
