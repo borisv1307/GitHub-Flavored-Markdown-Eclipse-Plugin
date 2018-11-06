@@ -14,6 +14,8 @@ import append.AddStuffToString;
 public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
+	private KeyListener listener;
+	private String selectedContent = "";
 	private JList list = null;
 	private String[] str = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
 			"##### - Heading 5", "###### - Heading 6", "> - Block quote", "[] - Link(inlint) - [Text]",
@@ -28,10 +30,11 @@ public class AutoComplete extends JFrame {
 		container.add(list);
 		container.add(new JScrollPane(list));
 		frame.setSize(300, 200);
+		addListener();
 	}
 
-	private void addListener(final String selectedContent) {
-		list.addKeyListener(new KeyListener() {
+	private void addListener() {
+		listener = new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -40,47 +43,49 @@ public class AutoComplete extends JFrame {
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					AddStuffToString stuff = new AddStuffToString();
+					String result = "";
 					switch (list.getSelectedIndex()) {
 					case 0:
-						stuff.addSingleCharacter(selectedContent, "#");
+						result = stuff.addSingleCharacter(selectedContent, "#");
 						break;
 					case 1:
-						stuff.addDoubleCharacter(selectedContent, "#");
+						result = stuff.addDoubleCharacter(selectedContent, "#");
 						break;
 					case 2:
-						stuff.addTripleCharacter(selectedContent, "#");
+						result = stuff.addTripleCharacter(selectedContent, "#");
 						break;
 					case 3:
-						stuff.addFourCharacter(selectedContent, "#");
+						result = stuff.addFourCharacter(selectedContent, "#");
 						break;
 					case 4:
-						stuff.addFiveCharacter(selectedContent, "#");
+						result = stuff.addFiveCharacter(selectedContent, "#");
 						break;
 					case 5:
-						stuff.addSixCharacter(selectedContent, "#");
+						result = stuff.addSixCharacter(selectedContent, "#");
 						break;
 					case 6:
-						stuff.blockQuote(selectedContent);
+						result = stuff.blockQuote(selectedContent);
 						break;
 					case 7:
-						stuff.linkToURL(selectedContent);
+						result = stuff.linkToURL(selectedContent);
 						break;
 					case 8:
-						stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
+						result = stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 						break;
 					case 9:
-						stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
+						result = stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
 						break;
 					case 10:
-						stuff.surroundSingleCharacter(selectedContent, "**");
+						result = stuff.surroundSingleCharacter(selectedContent, "**");
 						break;
 					case 11:
-						stuff.surroundSingleCharacter(selectedContent, "_");
+						result = stuff.surroundSingleCharacter(selectedContent, "_");
 						break;
 					default:
 						break;
 					}
 					frame.dispose();
+					System.out.println(result);
 				}
 
 			}
@@ -88,21 +93,22 @@ public class AutoComplete extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
-		});
+			
+		};
+		list.addKeyListener(listener);
 	}
 
 	public void show(final String selection) {
 		frame.setVisible(true);
-		addListener(selection);
+		selectedContent = selection;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
