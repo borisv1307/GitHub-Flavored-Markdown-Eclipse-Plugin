@@ -23,6 +23,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -43,6 +44,8 @@ public class MarkdownEditor extends AbstractTextEditor{
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
 	private AutoComplete panel = new AutoComplete();
+	private StyledText styledText;
+	private Point point;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -53,8 +56,6 @@ public class MarkdownEditor extends AbstractTextEditor{
 		// Activator manages connections to the Workbench
 		activator = Activator.getDefault();
 		
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		
 		markdownRenderer = new MarkdownRenderer();
 	}
 	
@@ -62,7 +63,7 @@ public class MarkdownEditor extends AbstractTextEditor{
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
 		ISourceViewer fSourceViewer = super.getSourceViewer();
-		final StyledText styledText= fSourceViewer.getTextWidget();
+		styledText= fSourceViewer.getTextWidget();
 		styledText.addKeyListener(new KeyListener() {
 
 
@@ -71,8 +72,12 @@ public class MarkdownEditor extends AbstractTextEditor{
 				// TODO Auto-generated method stub
 				if(e.stateMask == SWT.CTRL && e.keyCode == SWT.ALT) {
 					String text=styledText.getSelectionText();
+					point = styledText.getSelectionRange();
+//					System.out.println("point:"+point);
+//					styledText.replaceTextRange(point.x, point.y, text+"test");
 					if(!text.isEmpty()) {
 						panel.show(text);
+						
 					}
 				}
 			}
@@ -82,6 +87,10 @@ public class MarkdownEditor extends AbstractTextEditor{
 				// TODO Auto-generated method stub
 				
 			}});
+	}
+	
+	public void getSelectedContent(String selectedContent) {
+//		styledText.replaceTextRange(point.x, point.y, selectedContent);
 	}
 
 
@@ -126,5 +135,5 @@ public class MarkdownEditor extends AbstractTextEditor{
 			e.printStackTrace();
 		}
 	}
-
+	
 }

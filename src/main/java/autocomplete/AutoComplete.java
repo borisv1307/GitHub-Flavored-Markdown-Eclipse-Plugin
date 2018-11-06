@@ -10,12 +10,13 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import append.AddStuffToString;
+import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 
 public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private KeyListener listener;
-	private String selectedContent = "";
+	public String selectedContent = "";
 	private JList list = null;
 	private String[] str = { "# - Heading 1", "## - Heading 2", "### - Heading 3", "#### - Heading 4",
 			"##### - Heading 5", "###### - Heading 6", "> - Block quote", "[] - Link(inlint) - [Text]",
@@ -30,6 +31,7 @@ public class AutoComplete extends JFrame {
 		container.add(list);
 		container.add(new JScrollPane(list));
 		frame.setSize(300, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
 	}
 
@@ -46,46 +48,45 @@ public class AutoComplete extends JFrame {
 					String result = "";
 					switch (list.getSelectedIndex()) {
 					case 0:
-						result = stuff.addSingleCharacter(selectedContent, "#");
+						selectedContent = stuff.addSingleCharacter(selectedContent, "#");
 						break;
 					case 1:
-						result = stuff.addDoubleCharacter(selectedContent, "#");
+						selectedContent = stuff.addDoubleCharacter(selectedContent, "#");
 						break;
 					case 2:
-						result = stuff.addTripleCharacter(selectedContent, "#");
+						selectedContent = stuff.addTripleCharacter(selectedContent, "#");
 						break;
 					case 3:
-						result = stuff.addFourCharacter(selectedContent, "#");
+						selectedContent = stuff.addFourCharacter(selectedContent, "#");
 						break;
 					case 4:
-						result = stuff.addFiveCharacter(selectedContent, "#");
+						selectedContent = stuff.addFiveCharacter(selectedContent, "#");
 						break;
 					case 5:
-						result = stuff.addSixCharacter(selectedContent, "#");
+						selectedContent = stuff.addSixCharacter(selectedContent, "#");
 						break;
 					case 6:
-						result = stuff.blockQuote(selectedContent);
+						selectedContent = stuff.blockQuote(selectedContent);
 						break;
 					case 7:
-						result = stuff.linkToURL(selectedContent);
+						selectedContent = stuff.linkToURL(selectedContent);
 						break;
 					case 8:
-						result = stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
+						selectedContent = stuff.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 						break;
 					case 9:
-						result = stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
+						selectedContent = stuff.surroundDoubleCharacter(selectedContent, "'", "' ");
 						break;
 					case 10:
-						result = stuff.surroundSingleCharacter(selectedContent, "**");
+						selectedContent = stuff.surroundSingleCharacter(selectedContent, "**");
 						break;
 					case 11:
-						result = stuff.surroundSingleCharacter(selectedContent, "_");
+						selectedContent = stuff.surroundSingleCharacter(selectedContent, "_");
 						break;
 					default:
 						break;
 					}
 					frame.dispose();
-					System.out.println(result);
 				}
 
 			}
@@ -105,16 +106,13 @@ public class AutoComplete extends JFrame {
 		};
 		list.addKeyListener(listener);
 	}
-
+	
+	public String getSelectedContent() {
+		return selectedContent;
+	}
+	
 	public void show(final String selection) {
 		frame.setVisible(true);
 		selectedContent = selection;
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-	public static void main(String[] args) {
-		AutoComplete panel = new AutoComplete();
-		panel.show("test");
-	}
-
 }
