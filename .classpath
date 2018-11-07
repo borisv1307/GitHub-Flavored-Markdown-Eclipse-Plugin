@@ -14,9 +14,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-0.11.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-ext-gfm-tables-0.10.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-ext-gfm-strikethrough-0.11.0.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="test" value="true"/>
@@ -29,5 +26,8 @@
 	<classpathentry kind="src" path="src/main/java/githubflavoredmarkdowneclipseplugin"/>
 	<classpathentry kind="src" path="src/main/java/markdown_renderer"/>
 	<classpathentry kind="src" path="src/main/java/table_formatter"/>
+	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace-blasted/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-0.11.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace-blasted/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-ext-gfm-strikethrough-0.11.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/neil/eclipse-workspace-blasted/GitHub-Flavored-Markdown-Eclipse-Plugin/commonmark-ext-gfm-tables-0.10.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
