@@ -27,6 +27,7 @@ import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
+import table_formatter.PipeTableFormat;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -46,10 +47,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		markdownRenderer = new MarkdownRenderer();
 	}
 
-	private IFile saveMarkdown(IEditorInput editorInput, IProgressMonitor progressMonitor) {
-
-		IDocumentProvider documentProvider = this.getDocumentProvider();
-		IDocument document = documentProvider.getDocument(editorInput);
+	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		IProject project = getCurrentProject(editorInput);
 
 		String mdFileName = editorInput.getName();
@@ -60,7 +58,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
 				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
 				+ "</body>\n" + "</html>";
-
 		try {
 			if (!project.isOpen())
 				project.open(progressMonitor);
@@ -96,18 +93,21 @@ public class MarkdownEditor extends AbstractTextEditor {
 	@Override
 	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
 		super.init(site, editorInput);
-		IFile htmlFile = saveMarkdown(editorInput, null);
+		IDocumentProvider documentProvider = getDocumentProvider();
+		IDocument document = documentProvider.getDocument(editorInput);
+		IFile htmlFile = saveMarkdown(editorInput, document, null);
 		loadFileInBrowser(htmlFile);
 	}
 
 	@Override
 	public void doSave(IProgressMonitor progressMonitor) {
 
-		IDocumentProvider p = getDocumentProvider();
-		if (p == null)
+		IDocumentProvider documentProvider = getDocumentProvider();
+		if (documentProvider == null)
 			return;
 		IEditorInput editorInput = getEditorInput();
-		if (p.isDeleted(getEditorInput())) {
+		IDocument document = documentProvider.getDocument(editorInput);
+		if (documentProvider.isDeleted(getEditorInput())) {
 
 			if (isSaveAsAllowed()) {
 
@@ -123,7 +123,11 @@ public class MarkdownEditor extends AbstractTextEditor {
 			}
 
 		} else {
-			IFile htmlFile = saveMarkdown(editorInput, progressMonitor);
+			String[] string = new String[1];
+			string[0] = document.get();
+			String formattedString = PipeTableFormat.format(string)[0];
+			document.set(formattedString);
+			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
 			loadFileInBrowser(htmlFile);
 			performSave(false, progressMonitor);
 		}
