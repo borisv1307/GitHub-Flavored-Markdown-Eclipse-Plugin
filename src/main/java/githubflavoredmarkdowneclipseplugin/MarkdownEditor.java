@@ -15,6 +15,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -76,11 +79,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private void loadFileInBrowser(IFile file) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
 		try {
 			if (browser == null)
-				browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
+				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
 			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
 			browser.openURL(htmlFile);
+			IWorkbenchPartSite site = this.getSite();
+			IWorkbenchPart part = site.getPart();
+			site.getPage().activate(part);
 		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
 		}
