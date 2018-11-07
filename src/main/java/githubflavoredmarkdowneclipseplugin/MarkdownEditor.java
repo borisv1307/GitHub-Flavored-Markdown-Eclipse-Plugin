@@ -1,9 +1,11 @@
 package githubflavoredmarkdowneclipseplugin;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
@@ -34,6 +36,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
 
+	private static final String CSS_LOCATION = "../github-markdown-css/github-markdown.css";
+
 	public MarkdownEditor() throws FileNotFoundException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
@@ -48,6 +52,24 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private IFile saveMarkdown(IEditorInput editorInput, IProgressMonitor progressMonitor) {
 
+		StringBuffer cssContent = new StringBuffer();
+		try {
+			InputStream is = MarkdownEditor.class.getResourceAsStream(CSS_LOCATION);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				cssContent.append(line);
+				cssContent.append("\n");
+			}
+
+			br.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File '" + CSS_LOCATION + "' not found");
+		} catch (IOException e) {
+			System.out.println("Unable to read file '" + CSS_LOCATION + "'");
+		}
+
 		IDocumentProvider documentProvider = this.getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 		IProject project = getCurrentProject(editorInput);
@@ -57,9 +79,11 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String htmlFileName = fileName + ".html";
 		IFile file = project.getFile(htmlFileName);
 
-		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
-				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
-				+ "</body>\n" + "</html>";
+		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n"
+				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" + "\n<style>\n"
+				+ cssContent + "\n</style>\n" + "<title>" + htmlFileName + "</title>\n"
+				+ "<article class=\"markdown-body\">\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
+				+ "</body>\n" + "</html>\n" + "<article>";
 
 		try {
 			if (!project.isOpen())

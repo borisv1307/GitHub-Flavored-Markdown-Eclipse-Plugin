@@ -1,0 +1,3 @@
+[submodule "src/main/java/github-markdown-css"]
+	path = src/main/java/github-markdown-css
+	url = https://github.com/sindresorhus/github-markdown-css
