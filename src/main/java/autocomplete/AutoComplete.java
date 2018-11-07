@@ -10,7 +10,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import append.AddStuffToString;
-import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 
 public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
@@ -25,8 +24,6 @@ public class AutoComplete extends JFrame {
 
 	public AutoComplete() {
 		frame.setUndecorated(true);
-		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
-		this.frame.setLocation(point.x, point.y);
 		list = new JList(str);
 		container.add(list);
 		container.add(new JScrollPane(list));
@@ -94,25 +91,32 @@ public class AutoComplete extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		};
 		list.addKeyListener(listener);
 	}
-	
+
 	public String getSelectedContent() {
 		return selectedContent;
 	}
-	
+
 	public void show(final String selection) {
-		frame.setVisible(true);
 		selectedContent = selection;
+		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
+		this.frame.setLocation(point.x, point.y);
+		frame.setVisible(true);
 	}
+
+//	public static void main(String[] args) {
+//		AutoComplete panel = new AutoComplete();
+//		panel.show("test");
+//	}
 }
