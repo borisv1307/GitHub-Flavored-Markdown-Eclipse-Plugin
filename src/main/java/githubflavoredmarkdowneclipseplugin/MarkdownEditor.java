@@ -41,7 +41,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
-	private AutoComplete panel = new AutoComplete();
+	private AutoComplete autoComplete;
 	private StyledText styledText;
 	private Point point;
 
@@ -54,6 +54,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		autoComplete = new AutoComplete(this);
 	}
 
 	@Override
@@ -70,11 +71,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
 					String text = styledText.getSelectionText();
 					point = styledText.getSelectionRange();
-//					System.out.println("point:"+point);
-//					styledText.replaceTextRange(point.x, point.y, text+"test");
 					if (!text.isEmpty()) {
-						panel.show(text);
-
+						autoComplete.show();
 					}
 				}
 			}
@@ -85,10 +83,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			}
 		});
-	}
-
-	public void getSelectedContent(String selectedContent) {
-//		styledText.replaceTextRange(point.x, point.y, selectedContent);
 	}
 
 	@Override
@@ -131,6 +125,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} catch (PartInitException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void test() {
+//		String text = styledText.getSelectionText();
+		ISourceViewer fSourceViewer = super.getSourceViewer();
+		styledText = fSourceViewer.getTextWidget();
+		point = styledText.getSelectionRange();
+//		System.out.println("point:"+point);
+		styledText.replaceTextRange(point.x, point.y, "foobar" + "test");
 	}
 
 }

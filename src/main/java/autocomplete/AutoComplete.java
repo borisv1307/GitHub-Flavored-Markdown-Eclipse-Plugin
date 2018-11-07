@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import append.AddStuffToString;
+import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 
 public class AutoComplete extends JFrame {
 	private JFrame frame = new JFrame("");
@@ -22,7 +23,9 @@ public class AutoComplete extends JFrame {
 			"\t - Code block (indented with tab)", "'inline code' - A span of code inline", "**strong** - strong",
 			"_emphasis_ - emphasis" };
 
-	public AutoComplete() {
+	MarkdownEditor markdownEditor;
+
+	public AutoComplete(MarkdownEditor markdownEditor) {
 		frame.setUndecorated(true);
 		list = new JList(str);
 		container.add(list);
@@ -30,9 +33,10 @@ public class AutoComplete extends JFrame {
 		frame.setSize(300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
+		this.markdownEditor = markdownEditor;
 	}
 
-	private void addListener() {
+	public void addListener() {
 		listener = new KeyListener() {
 
 			@Override
@@ -41,8 +45,8 @@ public class AutoComplete extends JFrame {
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					markdownEditor.test();
 					AddStuffToString stuff = new AddStuffToString();
-					String result = "";
 					switch (list.getSelectedIndex()) {
 					case 0:
 						selectedContent = stuff.addSingleCharacter(selectedContent, "#");
@@ -85,7 +89,6 @@ public class AutoComplete extends JFrame {
 					}
 					frame.dispose();
 				}
-
 			}
 
 			@Override
@@ -102,14 +105,11 @@ public class AutoComplete extends JFrame {
 
 		};
 		list.addKeyListener(listener);
+
 	}
 
-	public String getSelectedContent() {
-		return selectedContent;
-	}
-
-	public void show(final String selection) {
-		selectedContent = selection;
+	@Override
+	public void show() {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(point.x, point.y);
 		frame.setVisible(true);
