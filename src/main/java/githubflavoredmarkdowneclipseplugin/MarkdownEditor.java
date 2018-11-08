@@ -66,13 +66,12 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-//				System.out.println(e);
 				// TODO Auto-generated method stub
 				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
 					String text = styledText.getSelectionText();
 					point = styledText.getSelectionRange();
 					if (!text.isEmpty()) {
-						autoComplete.show();
+						autoComplete.show(text);
 					}
 				}
 			}
@@ -127,13 +126,11 @@ public class MarkdownEditor extends AbstractTextEditor {
 		}
 	}
 
-	public void test() {
-//		String text = styledText.getSelectionText();
+	public void replace(String text) {
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
 		point = styledText.getSelectionRange();
-//		System.out.println("point:"+point);
-		styledText.replaceTextRange(point.x, point.y, "foobar" + "test");
+		styledText.replaceTextRange(point.x, point.y, text);
 	}
 
 }

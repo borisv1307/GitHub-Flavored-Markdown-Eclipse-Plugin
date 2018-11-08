@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import org.eclipse.swt.widgets.Display;
+
 import append.AddStuffToString;
 import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 
@@ -45,7 +47,6 @@ public class AutoComplete extends JFrame {
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					markdownEditor.test();
 					AddStuffToString stuff = new AddStuffToString();
 					switch (list.getSelectedIndex()) {
 					case 0:
@@ -88,6 +89,12 @@ public class AutoComplete extends JFrame {
 						break;
 					}
 					frame.dispose();
+					Display.getDefault().syncExec(new Runnable() {
+					    @Override
+					    public void run() {
+					    	markdownEditor.replace(selectedContent);
+					    }
+					 });
 				}
 			}
 
@@ -108,15 +115,11 @@ public class AutoComplete extends JFrame {
 
 	}
 
-	@Override
-	public void show() {
+	public void show(String slection) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(point.x, point.y);
+		selectedContent = slection;
 		frame.setVisible(true);
 	}
 
-//	public static void main(String[] args) {
-//		AutoComplete panel = new AutoComplete();
-//		panel.show("test");
-//	}
 }
