@@ -126,7 +126,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 			String[] string = new String[1];
 			string[0] = document.get();
 			String formattedString = PipeTableFormat.format(string)[0];
+			// Calculating the position of the cursor
+			String[] cursorPosition = this.getCursorPosition().split("\\ : ");
+			int cursorLength = Integer.parseInt(cursorPosition[0]) * Integer.parseInt(cursorPosition[1]) - 1;
+			// This sets the cursor on at the start of the file
 			document.set(formattedString);
+			// Move the cursor
+			this.setHighlightRange(cursorLength, 0, true);
 			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
 			loadFileInBrowser(htmlFile);
 			performSave(false, progressMonitor);
