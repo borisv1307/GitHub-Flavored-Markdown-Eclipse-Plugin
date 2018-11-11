@@ -29,7 +29,7 @@ public class PipeTableFormat {
 		return string;
 	}
 
-	public String[] format(String[] string) {
+	public static String[] format(String[] string) {
 		StringFormatter stringFormatter = new StringFormatter();
 		if (string.length == 1) {
 			string[0] = stringFormatter.format(string[0]);
@@ -65,20 +65,20 @@ public class PipeTableFormat {
 		}
 		return string;
 	}
-	
-	private void join(String[] string, String[][] format, int i) {
+
+	private static void join(String[] string, String[][] format, int i) {
 		string[i] = "";
 		int lengthOfFormatI = format[i].length;
-		for(int j = 0;j< lengthOfFormatI - 1;j++) {
-			string[i] += format[i][j]+"|";
+		for (int j = 0; j < lengthOfFormatI - 1; j++) {
+			string[i] += format[i][j] + "|";
 		}
-		if(!format[i][lengthOfFormatI-1].isEmpty()) {
-			string[i] += format[i][lengthOfFormatI-1]+"|";
-			string[i] = string[i].substring(0, string[i].length()-1);
+		if (!format[i][lengthOfFormatI - 1].isEmpty()) {
+			string[i] += format[i][lengthOfFormatI - 1] + "|";
+			string[i] = string[i].substring(0, string[i].length() - 1);
 		}
 	}
 
-	private int getLengthOfColumn(String[][] format, int m) {
+	private static int getLengthOfColumn(String[][] format, int m) {
 		int length = 0;
 		for (int n = 0; n < format.length; n++) {
 			if (format[n][m] != null && format[n][m].length() > length) {
@@ -88,7 +88,7 @@ public class PipeTableFormat {
 		return length;
 	}
 
-	private String addSpaces(int numberOfSpaces) {
+	private static String addSpaces(int numberOfSpaces) {
 		StringBuilder strB = new StringBuilder();
 		for (int i = 0; i < numberOfSpaces; i++) {
 
