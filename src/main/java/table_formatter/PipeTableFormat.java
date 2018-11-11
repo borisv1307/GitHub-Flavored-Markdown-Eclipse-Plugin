@@ -29,7 +29,7 @@ public class PipeTableFormat {
 		return string;
 	}
 
-	public String[] format(String[] string) {
+	public static String[] format(String[] string) {
 		StringFormatter stringFormatter = new StringFormatter();
 		if (string.length == 1) {
 			string[0] = stringFormatter.format(string[0]);
@@ -45,12 +45,13 @@ public class PipeTableFormat {
 				lengthOfComponents = format[i].length;
 			}
 		}
-		for (int i = 0; i < format.length; i++) {
+		int length = format.length;
+		for (int i = 0; i < length; i++) {
 			format[i] = Arrays.copyOf(format[i], lengthOfComponents);
 		}
 		for (int m = 1; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
-			for (int n = 0; n < format.length; n++) {
+			for (int n = 0; n < length; n++) {
 				if (format[n][m] != null) {
 					int numberOfSpaces = lengthOfColumn - format[n][m].length();
 					format[n][m] += addSpaces(numberOfSpaces);
@@ -59,13 +60,25 @@ public class PipeTableFormat {
 				}
 			}
 		}
-		for (int i = 0; i < format.length; i++) {
-			string[i] = String.join("|", format[i]);
+		for (int i = 0; i < length; i++) {
+			join(string, format, i);
 		}
 		return string;
 	}
 
-	private int getLengthOfColumn(String[][] format, int m) {
+	private static void join(String[] string, String[][] format, int i) {
+		string[i] = "";
+		int lengthOfFormatI = format[i].length;
+		for (int j = 0; j < lengthOfFormatI - 1; j++) {
+			string[i] += format[i][j] + "|";
+		}
+		if (!format[i][lengthOfFormatI - 1].isEmpty()) {
+			string[i] += format[i][lengthOfFormatI - 1] + "|";
+			string[i] = string[i].substring(0, string[i].length() - 1);
+		}
+	}
+
+	private static int getLengthOfColumn(String[][] format, int m) {
 		int length = 0;
 		for (int n = 0; n < format.length; n++) {
 			if (format[n][m] != null && format[n][m].length() > length) {
@@ -75,7 +88,7 @@ public class PipeTableFormat {
 		return length;
 	}
 
-	private String addSpaces(int numberOfSpaces) {
+	private static String addSpaces(int numberOfSpaces) {
 		StringBuilder strB = new StringBuilder();
 		for (int i = 0; i < numberOfSpaces; i++) {
 

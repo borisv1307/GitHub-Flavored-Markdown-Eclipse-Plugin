@@ -7,15 +7,11 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.SWT;
@@ -26,6 +22,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -36,6 +35,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import autocomplete.AutoComplete;
 import markdown_renderer.MarkdownRenderer;
+import table_formatter.PipeTableFormat;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -44,6 +44,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private AutoComplete autoComplete;
 	private StyledText styledText;
 	private Point point;
+	private IWebBrowser browser;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -84,44 +85,45 @@ public class MarkdownEditor extends AbstractTextEditor {
 		});
 	}
 
-	@Override
-	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
-		super.init(site, editorInput);
-		IDocumentProvider documentProvider = this.getDocumentProvider();
-		IDocument document = documentProvider.getDocument(editorInput);
+	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
+		IProject project = getCurrentProject(editorInput);
 
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject project = root.getProject("markdown");
-		IFolder folder = project.getFolder("html");
-		IFile file = folder.getFile("markdown.html");
-		String markdownString = markdownRenderer.render(document.get());
+		String mdFileName = editorInput.getName();
+		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
+		String htmlFileName = fileName + ".html";
+		IFile file = project.getFile(htmlFileName);
+
+		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
+				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
+				+ "</body>\n" + "</html>";
 		try {
-			if (!project.exists())
-
-				project.create(null);
-
 			if (!project.isOpen())
-				project.open(null);
+				project.open(progressMonitor);
 			if (file.exists())
-				file.delete(true, null);
+				file.delete(true, progressMonitor);
 			if (!file.exists()) {
 				byte[] bytes = markdownString.getBytes();
 				InputStream source = new ByteArrayInputStream(bytes);
-				file.create(source, IResource.NONE, null);
+				file.create(source, IResource.NONE, progressMonitor);
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return file;
+	}
 
-		IWebBrowser browser;
+	private void loadFileInBrowser(IFile file) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
 		try {
-			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(activator.PLUGIN_ID);
-			URL url = FileLocator.find(activator.getBundle(), new Path("index.html"));
+			if (browser == null)
+				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
 			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
 			browser.openURL(htmlFile);
-		} catch (PartInitException | IOException e) {
+			IWorkbenchPartSite site = this.getSite();
+			IWorkbenchPart part = site.getPart();
+			site.getPage().activate(part);
+		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
 		}
 	}
@@ -133,4 +135,57 @@ public class MarkdownEditor extends AbstractTextEditor {
 		styledText.replaceTextRange(point.x, point.y, text);
 	}
 
+	@Override
+	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
+		super.init(site, editorInput);
+		IDocumentProvider documentProvider = getDocumentProvider();
+		IDocument document = documentProvider.getDocument(editorInput);
+		IFile htmlFile = saveMarkdown(editorInput, document, null);
+		loadFileInBrowser(htmlFile);
+	}
+
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+
+		IDocumentProvider documentProvider = getDocumentProvider();
+		if (documentProvider == null)
+			return;
+		IEditorInput editorInput = getEditorInput();
+		IDocument document = documentProvider.getDocument(editorInput);
+		if (documentProvider.isDeleted(getEditorInput())) {
+
+			if (isSaveAsAllowed()) {
+
+				/*
+				 * 1GEUSSR: ITPUI:ALL - User should never loose changes made in the editors.
+				 * Changed Behavior to make sure that if called inside a regular save (because
+				 * of deletion of input element) there is a way to report back to the caller.
+				 */
+				performSaveAs(progressMonitor);
+
+			} else {
+
+			}
+
+		} else {
+			String[] string = new String[1];
+			string[0] = document.get();
+			String formattedString = PipeTableFormat.format(string)[0];
+			document.set(formattedString);
+			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
+			loadFileInBrowser(htmlFile);
+			performSave(false, progressMonitor);
+		}
+	}
+
+	private IProject getCurrentProject(IEditorInput editorInput) {
+		IProject project = editorInput.getAdapter(IProject.class);
+		if (project == null) {
+			IResource resource = editorInput.getAdapter(IResource.class);
+			if (resource != null) {
+				project = resource.getProject();
+			}
+		}
+		return project;
+	}
 }
