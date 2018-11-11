@@ -35,14 +35,13 @@ public class PipeTableFormat {
 	public static String[] format(String[] string) {
 		StringFormatter stringFormatter = new StringFormatter();
 		if (string.length == 1) {
-//			string[0] = stringFormatter.format(string[0]);
 			return string;
 		}
 		String tempSecondLine = string[1];
 		boolean judge = true;
 		
 		judge = checkSecondLine(tempSecondLine, judge);
-		if(judge == false) {
+		if(!judge) {
 			return string;
 		}
 		
@@ -76,11 +75,7 @@ public class PipeTableFormat {
 		int lengthOfSecondLine = secondLine.length;
 		for(int i = 1;i < lengthOfSecondLine-1;i++) {
 			int tempLength = secondLine[i].trim().length()-1;
-			if(secondLine[i].trim().isEmpty()) {
-				judge = false;
-				break;
-			}
-			if(!(secondLine[i].trim().charAt(0) == '-' || secondLine[i].trim().charAt(0) == ':') ||
+			if(secondLine[i].trim().isEmpty() || !(secondLine[i].trim().charAt(0) == '-' || secondLine[i].trim().charAt(0) == ':') ||
 					!(secondLine[i].trim().charAt(tempLength) == '-' || secondLine[i].trim().charAt(tempLength) == ':')) {
 				judge = false;
 				break;
@@ -93,16 +88,8 @@ public class PipeTableFormat {
 		for (int m = 1; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
 			for (int n = 0; n < length; n++) {
-				if (format[n][m] != null) {
-					int numberOfSpaces = lengthOfColumn - format[n][m].length();
-					if(n == 1) {
-						format[n][m] = addHyphen(format[n][m],numberOfSpaces);
-						if(m == lengthOfComponents-1 && !format[n][m].isEmpty()) {
-							format[n][m] = format[n][m].substring(0, format[n][m].length()-1);
-						}
-					} else {
-						format[n][m] += addSpaces(numberOfSpaces);
-					}
+				if (format[n][m] != null){
+					addStringToEachComponent(format, lengthOfComponents, m, lengthOfColumn, n);
 				} else {
 					if(n == 1) {
 						format[n][m] = addHyphen("",lengthOfColumn);
@@ -111,6 +98,19 @@ public class PipeTableFormat {
 					}
 				}
 			}
+		}
+	}
+
+	private static void addStringToEachComponent(String[][] format, int lengthOfComponents, int m, int lengthOfColumn,
+			int n) {
+		int numberOfSpaces = lengthOfColumn - format[n][m].length();
+		if(n == 1) {
+			format[n][m] = addHyphen(format[n][m],numberOfSpaces);
+			if(m == lengthOfComponents-1 && !format[n][m].isEmpty()) {
+				format[n][m] = format[n][m].substring(0, format[n][m].length()-1);
+			}
+		} else {
+			format[n][m] += addSpaces(numberOfSpaces);
 		}
 	}
 
