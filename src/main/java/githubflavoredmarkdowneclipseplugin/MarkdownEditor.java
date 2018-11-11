@@ -70,15 +70,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 			System.out.println("Unable to read file '" + CSS_LOCATION + "'");
 		}
 
-		IDocumentProvider documentProvider = this.getDocumentProvider();
-		IDocument document = documentProvider.getDocument(editorInput);
 		IProject project = getCurrentProject(editorInput);
 
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
 		IFile file = project.getFile(htmlFileName);
-    
+
 		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n"
 				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" + "\n<style>\n"
 				+ cssContent + "\n</style>\n" + "<title>" + htmlFileName + "</title>\n"
