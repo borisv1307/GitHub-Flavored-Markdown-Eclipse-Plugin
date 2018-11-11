@@ -36,7 +36,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
 
-	private static final String CSS_LOCATION = "../github-markdown-css/github-markdown.css";
+	private static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -51,11 +51,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IProgressMonitor progressMonitor) {
-
 		StringBuffer cssContent = new StringBuffer();
 		try {
-			InputStream is = MarkdownEditor.class.getResourceAsStream(CSS_LOCATION);
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(MarkdownEditor.class.getResourceAsStream(CSS_LOCATION)));
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
