@@ -1,11 +1,9 @@
 package githubflavoredmarkdowneclipseplugin;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
@@ -28,6 +26,7 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
+import injector.HTMLInjector;
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
 
@@ -36,8 +35,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
-
-	private static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
+	private HTMLInjector htmlInjector;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -49,39 +47,18 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		htmlInjector = new HTMLInjector();
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
-		StringBuffer cssContent = new StringBuffer();
-		try {
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(MarkdownEditor.class.getResourceAsStream(CSS_LOCATION)));
-			String line = null;
-
-			while ((line = br.readLine()) != null) {
-				cssContent.append(line);
-				cssContent.append("\n");
-			}
-
-			br.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File '" + CSS_LOCATION + "' not found");
-		} catch (IOException e) {
-			System.out.println("Unable to read file '" + CSS_LOCATION + "'");
-		}
 
 		IProject project = getCurrentProject(editorInput);
-
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
 		IFile file = project.getFile(htmlFileName);
 
-		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n"
-				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" + "\n<style>\n"
-				+ cssContent + "\n</style>\n" + "<title>" + htmlFileName + "</title>\n"
-				+ "<article class=\"markdown-body\">\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
-				+ "</body>\n" + "</html>\n" + "<article>";
+		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
 
 		try {
 			if (!project.isOpen())
