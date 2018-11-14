@@ -2,25 +2,17 @@ package githubflavoredmarkdowneclipseplugin;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
@@ -28,12 +20,14 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
+import githubflavoredmarkdowneclipseplugin.BrowserEditor;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
-	private IWebBrowser browser;
+	private BrowserEditor browserEditor;
+//	private IWebBrowser browser;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -43,8 +37,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 		// Activator manages connections to the Workbench
 		activator = Activator.getDefault();
-
 		markdownRenderer = new MarkdownRenderer();
+		browserEditor = new BrowserEditor(PlatformUI.getWorkbench(), Activator.PLUGIN_ID);
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
@@ -75,28 +69,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 		return file;
 	}
 
-	private void loadFileInBrowser(IFile file) {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		try {
-			if (browser == null)
-				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
-			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
-			browser.openURL(htmlFile);
-			IWorkbenchPartSite site = this.getSite();
-			IWorkbenchPart part = site.getPart();
-			site.getPage().activate(part);
-		} catch (IOException | PartInitException e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
 		super.init(site, editorInput);
 		IDocumentProvider documentProvider = getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 		IFile htmlFile = saveMarkdown(editorInput, document, null);
-		loadFileInBrowser(htmlFile);
+		browserEditor.loadFileInBrowser(htmlFile, this.getSite());
 	}
 
 	@Override
@@ -128,7 +107,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			String formattedString = PipeTableFormat.format(string)[0];
 			document.set(formattedString);
 			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
-			loadFileInBrowser(htmlFile);
+			browserEditor.loadFileInBrowser(htmlFile, this.getSite());
 			performSave(false, progressMonitor);
 		}
 	}
