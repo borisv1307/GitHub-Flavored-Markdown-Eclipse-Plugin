@@ -33,7 +33,7 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
-import autocomplete.AutoComplete;
+import markdownSyntaxSuggestionWindow.MarkdownSyntaxSuggestionWindow;
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
 
@@ -41,7 +41,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
-	private AutoComplete autoComplete;
+	private MarkdownSyntaxSuggestionWindow autoComplete;
 	private StyledText styledText;
 	private Point point;
 	private IWebBrowser browser;
@@ -55,7 +55,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
-		autoComplete = new AutoComplete(this);
+		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
 
 	@Override

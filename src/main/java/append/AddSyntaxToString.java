@@ -1,6 +1,6 @@
 package append;
 
-public class AddStuffToString {
+public class AddSyntaxToString {
 
 	public String surroundSingleCharacter(String string, String character) {
 		string = character + string + character;
