@@ -5,7 +5,7 @@ import java.util.Arrays;
 import string_formatter.StringFormatter;
 
 public class PipeTableFormat {
-	public String[] preprocess(String[] string) { // divide string into several independent tables
+	public static String[] preprocess(String[] string) { // divide string into several independent tables
 		int ending = 0;
 		int beginning = 0;
 		while (ending < string.length) {
