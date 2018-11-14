@@ -40,7 +40,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_2() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -57,7 +57,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_3() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -70,6 +70,23 @@ public class TableFormatterTest {
 		String[] formatted = pipeTableFormat.preprocess(string);
 		assertEquals("|  123|  |123  |", formatted[0]);
 		assertEquals("|  --- |-| --t  |", formatted[1]);
+		assertEquals("  |tian|  jia  |feng|123|", formatted[2]);
+		assertEquals("", formatted[3]);
+		assertEquals("|   T|J   |F", formatted[4]);
+	}
+
+	@Test
+	public void format_table_4() {
+		PipeTableFormat pipeTableFormat = new PipeTableFormat();
+		String[] string = new String[5];
+		string[0] = "|  123|  |123  |";
+		string[1] = "|  --- |-123-| --:  |";
+		string[2] = "  |tian|  jia  |feng|123|";
+		string[3] = "";
+		string[4] = "|   T|J   |F";
+		String[] formatted = pipeTableFormat.preprocess(string);
+		assertEquals("|  123|  |123  |", formatted[0]);
+		assertEquals("|  --- |-123-| --:  |", formatted[1]);
 		assertEquals("  |tian|  jia  |feng|123|", formatted[2]);
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);

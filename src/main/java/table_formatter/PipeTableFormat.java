@@ -20,7 +20,7 @@ public class PipeTableFormat {
 			}
 			int temp = beginning + count;
 			String[] table = Arrays.copyOfRange(string, beginning, temp);
-			if(table.length>0) {
+			if (table.length > 0) {
 				table = format(table);
 			}
 			for (int i = beginning; i < temp; i++) {
@@ -28,7 +28,7 @@ public class PipeTableFormat {
 			}
 			beginning = ++ending;
 		}
-		
+
 		return string;
 	}
 
@@ -39,12 +39,12 @@ public class PipeTableFormat {
 		}
 		String tempSecondLine = string[1];
 		boolean judge = true;
-		
+
 		judge = checkSecondLine(tempSecondLine, judge);
-		if(!judge) {
+		if (!judge) {
 			return string;
 		}
-		
+
 		String[][] format = new String[string.length][];
 		int lengthOfComponents = 0;
 		int lengthOfString = string.length;
@@ -68,15 +68,25 @@ public class PipeTableFormat {
 	}
 
 	private static boolean checkSecondLine(String tempSecondLine, boolean judge) {
-		if(tempSecondLine.charAt(tempSecondLine.length()-1) != '|') {
+		if (tempSecondLine.charAt(tempSecondLine.length() - 1) != '|') {
 			tempSecondLine += '|';
 		}
-		String [] secondLine = tempSecondLine.split("\\|", -1);
+		String[] secondLine = tempSecondLine.split("\\|", -1);
 		int lengthOfSecondLine = secondLine.length;
-		for(int i = 1;i < lengthOfSecondLine-1;i++) {
-			int tempLength = secondLine[i].trim().length()-1;
-			if(secondLine[i].trim().isEmpty() || !(secondLine[i].trim().charAt(0) == '-' || secondLine[i].trim().charAt(0) == ':') ||
-					!(secondLine[i].trim().charAt(tempLength) == '-' || secondLine[i].trim().charAt(tempLength) == ':')) {
+		for (int i = 1; i < lengthOfSecondLine - 1; i++) {
+			int tempLength = secondLine[i].trim().length() - 1;
+			boolean checkEveryChar = true;
+			for (int j = 1; j < tempLength; j++) {
+				if (secondLine[i].trim().charAt(j) != '-') {
+					checkEveryChar = false;
+					break;
+				}
+			}
+			if (secondLine[i].trim().isEmpty()
+					|| !(secondLine[i].trim().charAt(0) == '-' || secondLine[i].trim().charAt(0) == ':')
+					|| !(secondLine[i].trim().charAt(tempLength) == '-'
+							|| secondLine[i].trim().charAt(tempLength) == ':')
+					|| !checkEveryChar) {
 				judge = false;
 				break;
 			}
@@ -88,11 +98,11 @@ public class PipeTableFormat {
 		for (int m = 1; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
 			for (int n = 0; n < length; n++) {
-				if (format[n][m] != null){
+				if (format[n][m] != null) {
 					addStringToEachComponent(format, lengthOfComponents, m, lengthOfColumn, n);
 				} else {
-					if(n == 1) {
-						format[n][m] = addHyphen("",lengthOfColumn);
+					if (n == 1) {
+						format[n][m] = addHyphen("", lengthOfColumn);
 					} else {
 						format[n][m] = addSpaces(lengthOfColumn);
 					}
@@ -104,10 +114,10 @@ public class PipeTableFormat {
 	private static void addStringToEachComponent(String[][] format, int lengthOfComponents, int m, int lengthOfColumn,
 			int n) {
 		int numberOfSpaces = lengthOfColumn - format[n][m].length();
-		if(n == 1) {
-			format[n][m] = addHyphen(format[n][m],numberOfSpaces);
-			if(m == lengthOfComponents-1 && !format[n][m].isEmpty()) {
-				format[n][m] = format[n][m].substring(0, format[n][m].length()-1);
+		if (n == 1) {
+			format[n][m] = addHyphen(format[n][m], numberOfSpaces);
+			if (m == lengthOfComponents - 1 && !format[n][m].isEmpty()) {
+				format[n][m] = format[n][m].substring(0, format[n][m].length() - 1);
 			}
 		} else {
 			format[n][m] += addSpaces(numberOfSpaces);
@@ -116,24 +126,24 @@ public class PipeTableFormat {
 
 	private static String addHyphen(String format, int numberOfSpaces) {
 		StringBuilder strB = new StringBuilder();
-		
-		if(!format.isEmpty()) {
-			if(format.charAt(format.length()-1) == ' ') {
+
+		if (!format.isEmpty()) {
+			if (format.charAt(format.length() - 1) == ' ') {
 				for (int i = 0; i < numberOfSpaces; i++) {
 					strB.append("-");
 				}
-				format = format.substring(0, 2)+strB.toString()+format.substring(2,format.length());
+				format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length());
 			} else {
-				for (int i = 0; i < numberOfSpaces-1; i++) {
+				for (int i = 0; i < numberOfSpaces - 1; i++) {
 					strB.append("-");
 				}
-				format = format.substring(0, 2)+strB.toString()+format.substring(2,format.length())+" ";
+				format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length()) + " ";
 			}
-		} else if(numberOfSpaces>2){
-			for (int i = 0; i < numberOfSpaces-2; i++) {
+		} else if (numberOfSpaces > 2) {
+			for (int i = 0; i < numberOfSpaces - 2; i++) {
 				strB.append("-");
 			}
-			format = " "+strB.toString()+" ";
+			format = " " + strB.toString() + " ";
 		}
 		return format;
 	}
