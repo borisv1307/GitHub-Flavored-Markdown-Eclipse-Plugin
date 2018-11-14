@@ -23,6 +23,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
+import util.FileNameCreator;
 import githubflavoredmarkdowneclipseplugin.BrowserEditor;
 
 public class MarkdownEditor extends AbstractTextEditor {
@@ -30,7 +31,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
 	private BrowserEditor browserEditor;
-//	private IWebBrowser browser;
+	private FileNameCreator fileNameCreator;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -42,14 +43,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 		markdownRenderer = new MarkdownRenderer();
 		browserEditor = new BrowserEditor(PlatformUI.getWorkbench(), Activator.PLUGIN_ID);
+		fileNameCreator = new FileNameCreator();
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		IProject project = getCurrentProject(editorInput);
 
-		String mdFileName = editorInput.getName();
-		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileName + ".html";
+		String htmlFileName = fileNameCreator.getHtmlFileName(editorInput.getName());
 		IFile file = project.getFile(htmlFileName);
 
 		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
