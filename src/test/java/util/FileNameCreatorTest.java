@@ -11,28 +11,28 @@ public class FileNameCreatorTest {
 	public void verifyGenericNameMdExtension() {
 		String mdFileName1 = "File1.md";
 		String created_name = fileNameCreator.getHtmlFileName(mdFileName1);
-		assertEquals(created_name, "File1.html");
+		assertEquals("File1.html", created_name);
 	}
 	
 	@Test
 	public void verifyNameWithSpecialCharactersMdExtension() {
 		String mdFileName2 = "'ä','ü' and 'ö'.md";
 		String created_name = fileNameCreator.getHtmlFileName(mdFileName2);
-		assertEquals(created_name, "'ä','ü' and 'ö'.html");
+		assertEquals("'ä','ü' and 'ö'.html", created_name);
 	}
 	
 	@Test
 	public void verifyGenericNameMarkdownExtension() {
 		String mdFileName3 = "File2.markdown";
 		String created_name = fileNameCreator.getHtmlFileName(mdFileName3);
-		assertEquals(created_name, "File2.html");
+		assertEquals("File2.html", created_name);
 	}
 	
 	@Test
 	public void verifyNameWithSpecialCharactersMarkdownExtension() {
 		String mdFileName4 = "#@!$%^&*()_+.markdown";
 		String created_name = fileNameCreator.getHtmlFileName(mdFileName4);
-		assertEquals(created_name, "#@!$%^&*()_+.html");
+		assertEquals("#@!$%^&*()_+.html", created_name);
 	}
 
 }
