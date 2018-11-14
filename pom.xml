@@ -18,6 +18,7 @@
 					<target>1.7</target>
 					<excludes>
 						<exclude>githubflavoredmarkdowneclipseplugin/*.java</exclude>
+						<exclude>autocomplete/*.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
