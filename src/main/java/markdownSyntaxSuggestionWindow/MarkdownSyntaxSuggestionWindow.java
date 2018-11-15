@@ -34,7 +34,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
 		markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
-		markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper()
+		markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
 		this.markdownEditor = markdownEditor;
 	}
 
