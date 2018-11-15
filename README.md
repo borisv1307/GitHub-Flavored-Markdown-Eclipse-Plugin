@@ -1,5 +1,14 @@
 # GitHub-Flavored-Markdown-Eclipse-Plugin
-License info
-contributors
-say its a drexel capstone with boris leading the way
-what we did and why we did it. how its better than other implementations. benefits of eclipse pop up window via browser vs other way?
+
+### License info:
+
+### Drexel Software Engineering Capstone Led by Boris Valerstein
+
+### Contributors:
+* Boris Valerstein
+* Neil Castelino
+* Kristófer Másson
+* Jiafeng Tian
+* Andrew Williams
+* Ibukunoluwa Fatoki
+
