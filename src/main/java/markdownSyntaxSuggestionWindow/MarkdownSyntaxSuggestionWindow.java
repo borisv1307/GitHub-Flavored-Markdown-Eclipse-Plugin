@@ -18,11 +18,10 @@ import markdownSyntaxSuggestionHelper.MarkdownSyntaxSuggestionHelper;
 public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
-	private KeyListener listener;
-	public String selectedContent = "";
+	private String selectedContent = "";
 	private JList list = null;
-	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
-	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
+	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants;
+	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper;
 
 	MarkdownEditor markdownEditor;
 
@@ -34,12 +33,13 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		frame.setSize(300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
+		markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
+		markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper()
 		this.markdownEditor = markdownEditor;
 	}
 
 	public void addListener() {
-		listener = new KeyListener() {
-
+		list.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -69,10 +69,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 				// TODO Auto-generated method stub
 
 			}
-
-		};
-		list.addKeyListener(listener);
-
+		});
 	}
 
 	public void show(String slection) {

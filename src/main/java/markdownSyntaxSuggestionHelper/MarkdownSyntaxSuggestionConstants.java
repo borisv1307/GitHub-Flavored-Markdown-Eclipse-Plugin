@@ -15,8 +15,7 @@ public class MarkdownSyntaxSuggestionConstants {
 	private static final String ITALIC = "_emphasis_ - emphasis";
 
 	public String[] getArrayOfConstants() {
-		String[] arrayOfConstants = { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
-				BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
-		return arrayOfConstants;
+		return new String[]{ HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
+			BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
 	}
 }
