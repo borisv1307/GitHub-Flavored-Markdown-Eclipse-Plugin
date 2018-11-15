@@ -67,8 +67,16 @@ public class StringFormatterTest {
 	@Test
 	public void no_beginning_pipe() {
 		StringFormatter stringFormatter = new StringFormatter();
-		String input = "        1  |    2      |";
+		String input = "1 | 2 |";
 		String formatted = stringFormatter.format("        1  |    2      |");
+		assertEquals(input, formatted);
+	}
+	
+	@Test
+	public void no_beginning_and_closing_pipe() {
+		StringFormatter stringFormatter = new StringFormatter();
+		String input = "1 | 2";
+		String formatted = stringFormatter.format("        1  |    2  ");
 		assertEquals(input, formatted);
 	}
 
