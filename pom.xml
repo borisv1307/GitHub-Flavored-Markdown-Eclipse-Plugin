@@ -18,7 +18,7 @@
 					<target>1.7</target>
 					<excludes>
 						<exclude>githubflavoredmarkdowneclipseplugin/*.java</exclude>
-						<exclude>markdownSyntaxSuggestionWindow/*.java</exclude>
+						<exclude>markdown_syntax_suggestion_window/*.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
