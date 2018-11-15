@@ -21,7 +21,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	private String selectedContent = "";
 	private JList list = null;
 	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
-	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();;
+	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
 
 	MarkdownEditor markdownEditor;
 
