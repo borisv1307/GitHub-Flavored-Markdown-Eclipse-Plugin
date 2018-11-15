@@ -16,12 +16,16 @@ import markdownSyntaxSuggestionHelper.MarkdownSyntaxSuggestionConstants;
 import markdownSyntaxSuggestionHelper.MarkdownSyntaxSuggestionHelper;
 
 public class MarkdownSyntaxSuggestionWindow extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -993172187555204951L;
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private String selectedContent = "";
 	private JList list = null;
-	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants;
-	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper;
+	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
+	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();;
 
 	MarkdownEditor markdownEditor;
 
@@ -33,8 +37,6 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		frame.setSize(300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
-		markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
-		markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
 		this.markdownEditor = markdownEditor;
 	}
 
