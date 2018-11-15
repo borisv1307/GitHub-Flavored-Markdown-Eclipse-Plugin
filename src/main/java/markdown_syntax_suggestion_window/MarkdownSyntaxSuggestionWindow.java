@@ -1,4 +1,4 @@
-package markdownSyntaxSuggestionWindow;
+package markdown_syntax_suggestion_window;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import org.eclipse.swt.widgets.Display;
 
 import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
-import markdownSyntaxSuggestionHelper.MarkdownSyntaxSuggestionConstants;
-import markdownSyntaxSuggestionHelper.MarkdownSyntaxSuggestionHelper;
+import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
+import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionHelper;
 
 public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	/**

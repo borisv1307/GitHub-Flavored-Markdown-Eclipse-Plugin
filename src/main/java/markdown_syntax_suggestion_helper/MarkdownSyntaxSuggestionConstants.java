@@ -1,4 +1,4 @@
-package markdownSyntaxSuggestionHelper;
+package markdown_syntax_suggestion_helper;
 
 public class MarkdownSyntaxSuggestionConstants {
 	private static final String HEADING_ONE = "# - Heading 1";

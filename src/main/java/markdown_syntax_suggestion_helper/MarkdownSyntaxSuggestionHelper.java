@@ -1,4 +1,4 @@
-package markdownSyntaxSuggestionHelper;
+package markdown_syntax_suggestion_helper;
 
 import append.AddSyntaxToString;
 

@@ -36,8 +36,8 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
-import markdownSyntaxSuggestionWindow.MarkdownSyntaxSuggestionWindow;
 import markdown_renderer.MarkdownRenderer;
+import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
 
 public class MarkdownEditor extends AbstractTextEditor {
