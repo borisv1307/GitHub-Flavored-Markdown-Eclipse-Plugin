@@ -16,10 +16,6 @@ import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionHelper;
 
 public class MarkdownSyntaxSuggestionWindow extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -993172187555204951L;
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private String selectedContent = "";
