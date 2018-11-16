@@ -1,22 +1,8 @@
 package markdown_renderer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
-import org.junit.Before;
 import org.junit.Test;
 
-public class ComplexMarkdownRendererTest {
-
-	private static final String RESOURCE_LOCATION = "src/test/resources/commonmark/";
-	MarkdownRenderer markdownRenderer;
-
-	@Before
-	public void setUp() {
-		markdownRenderer = new MarkdownRenderer();
-	}
+public class MarkdownRendererComplexTest extends MarkdownRendererAbstractTest {
 
 	@Test
 	public void combine_excess_italics_with_bold() {
@@ -41,45 +27,36 @@ public class ComplexMarkdownRendererTest {
 	@Test
 	public void triple_bold() {
 		readAndAssertFileContents("edgeCase_TripleBold.html", "******Strike******");
-  }
-  
-  @Test
-	public void combine_blockquote_with_emphasis() {
-		readAndAssertFileContents("edgeCase_CombineBlockquoteWithEmphasis.html", "> *text*");
-  }
-  
-  @Test
-	public void emphasis_plus_inline_code() {
-		readAndAssertFileContents("edgeCase_EmphasisPlusInlineCode.html", "*`text`*");
-  }
-  
-  @Test
-	public void combine_unordered_list_bold_strikethrough() {
-		readAndAssertFileContents("edgeCase_UnorderedListBoldStrikethrough.html", "* **~~Strike~~**");
-  }
-  
-  @Test
-	public void triple_italics() {
-		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
-  }
-  
-  @Test
-	public void emphasis_mismatch() {
-		readAndAssertFileContents("edgeCase_EmphasisMismatch.html", "_*___Test*__**");
-  }
-	
-  @Test
-  public void combine_triple_blockquote_double_inline_code() {
-		readAndAssertFileContents("edgeCase_TripleBlockquote_DoubleInlineCode.html", ">>> ``Hi``");
 	}
 
-	private void readAndAssertFileContents(String filename, String contents) {
-		try {
-			String buffer = FileReaderHelper.readFileToBuffer(RESOURCE_LOCATION + filename);
-			assertEquals(buffer, markdownRenderer.render(contents));
-		} catch (IOException e) {
-			fail();
-		}
+	@Test
+	public void combine_blockquote_with_emphasis() {
+		readAndAssertFileContents("edgeCase_CombineBlockquoteWithEmphasis.html", "> *text*");
+	}
+
+	@Test
+	public void emphasis_plus_inline_code() {
+		readAndAssertFileContents("edgeCase_EmphasisPlusInlineCode.html", "*`text`*");
+	}
+
+	@Test
+	public void combine_unordered_list_bold_strikethrough() {
+		readAndAssertFileContents("edgeCase_UnorderedListBoldStrikethrough.html", "* **~~Strike~~**");
+	}
+
+	@Test
+	public void triple_italics() {
+		readAndAssertFileContents("edgeCase_TripleItalics.html", "_*_Strike_*_");
+	}
+
+	@Test
+	public void emphasis_mismatch() {
+		readAndAssertFileContents("edgeCase_EmphasisMismatch.html", "_*___Test*__**");
+	}
+
+	@Test
+	public void combine_triple_blockquote_double_inline_code() {
+		readAndAssertFileContents("edgeCase_TripleBlockquote_DoubleInlineCode.html", ">>> ``Hi``");
 	}
 
 }

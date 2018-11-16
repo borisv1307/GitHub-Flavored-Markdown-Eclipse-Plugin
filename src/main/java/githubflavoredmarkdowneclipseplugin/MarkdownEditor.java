@@ -13,6 +13,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
@@ -125,10 +128,31 @@ public class MarkdownEditor extends AbstractTextEditor {
 			}
 
 		} else {
-			String[] string = new String[1];
-			string[0] = document.get();
-			String formattedString = PipeTableFormat.format(string)[0];
-			document.set(formattedString);
+			// Convert document from string to string array with each instance a single line
+			// of the document
+			String[] stringArrayOfDocument = document.get().split("\n");
+			String[] formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
+			StringBuilder builder = new StringBuilder();
+			for (String line : formattedLines) {
+				builder.append(line);
+				builder.append("\n");
+			}
+			String formattedDocument = builder.toString();
+
+			// Calculating the position of the cursor
+			ISelectionProvider selectionProvider = this.getSelectionProvider();
+			ISelection selection = selectionProvider.getSelection();
+			int cursorLength = 0;
+			if (selection instanceof ITextSelection) {
+				ITextSelection textSelection = (ITextSelection) selection;
+				cursorLength = textSelection.getOffset(); // etc.
+				activator.log(Integer.toString(cursorLength));
+			}
+			// This sets the cursor on at the start of the file
+			document.set(formattedDocument);
+
+			// Move the cursor
+			this.setHighlightRange(cursorLength, 0, true);
 			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
 			loadFileInBrowser(htmlFile);
 			performSave(false, progressMonitor);

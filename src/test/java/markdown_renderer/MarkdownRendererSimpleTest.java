@@ -1,22 +1,8 @@
 package markdown_renderer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
-import org.junit.Before;
 import org.junit.Test;
 
-public class MarkdownRendererTest {
-
-	private static final String RESOURCE_LOCATION = "src/test/resources/commonmark/";
-	MarkdownRenderer markdownRenderer;
-
-	@Before
-	public void setUp() {
-		markdownRenderer = new MarkdownRenderer();
-	}
+public class MarkdownRendererSimpleTest extends MarkdownRendererAbstractTest {
 
 	@Test
 	public void italics() {
@@ -46,11 +32,6 @@ public class MarkdownRendererTest {
 	@Test
 	public void indented_code_block_first_line() {
 		readAndAssertFileContents("indented-code-block-e85.html", "        foo\n    bar");
-	}
-
-	@Test
-	public void unorderedList() {
-		readAndAssertFileContents("unorderedList.html", "* test\n* test\n* test\n");
 	}
 
 	@Test
@@ -332,15 +313,6 @@ public class MarkdownRendererTest {
 	@Test
 	public void links_improper_space() {
 		readAndAssertFileContents("link-improper-space.html", "[link] (/uri)");
-	}
-
-	private void readAndAssertFileContents(String filename, String contents) {
-		try {
-			String buffer = FileReaderHelper.readFileToBuffer(RESOURCE_LOCATION + filename);
-			assertEquals(buffer, markdownRenderer.render(contents));
-		} catch (IOException e) {
-			fail();
-		}
 	}
 
 }
