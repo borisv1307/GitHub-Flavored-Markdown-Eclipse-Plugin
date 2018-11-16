@@ -6,7 +6,7 @@ public class AddSyntaxToString {
 		string = character + string + character;
 		return string;
 	}
-	
+
 	public String surroundDoubleCharacter(String string, String character1, String character2) {
 		string = character1 + string + character2;
 		return string;
@@ -18,32 +18,32 @@ public class AddSyntaxToString {
 	}
 
 	public String addSingleCharacter(String str, String character) {
-		str = character + str;
+		str = character + " " + str;
 		return str;
 	}
 
 	public String addDoubleCharacter(String str, String character) {
-		str = character + character + str;
+		str = character + character + " " + str;
 		return str;
 	}
 
 	public String addTripleCharacter(String str, String character) {
-		str = character + character + character + str;
+		str = character + character + character + " " + str;
 		return str;
 	}
 
 	public String addFourCharacter(String str, String character) {
-		str = character + character + character + character + str;
+		str = character + character + character + character + " " + str;
 		return str;
 	}
 
 	public String addFiveCharacter(String str, String character) {
-		str = character + character + character + character + character + str;
+		str = character + character + character + character + character + " " + str;
 		return str;
 	}
 
 	public String addSixCharacter(String str, String character) {
-		str = character + character + character + character + character + character + str;
+		str = character + character + character + character + character + character + " " + str;
 		return str;
 	}
 

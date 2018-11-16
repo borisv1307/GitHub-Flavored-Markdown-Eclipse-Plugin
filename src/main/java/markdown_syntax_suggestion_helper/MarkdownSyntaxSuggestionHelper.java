@@ -36,7 +36,7 @@ public class MarkdownSyntaxSuggestionHelper {
 			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 			break;
 		case 9:
-			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "'", "' ");
+			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "`");
 			break;
 		case 10:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "**");
