@@ -315,4 +315,9 @@ public class MarkdownRendererSimpleTest extends MarkdownRendererAbstractTest {
 		readAndAssertFileContents("link-improper-space.html", "[link] (/uri)");
 	}
 
+	@Test
+	public void hard_line_break() {
+		readAndAssertFileContents("hard_line_break.html", "foo\\\r\nbar");
+	}
+
 }
