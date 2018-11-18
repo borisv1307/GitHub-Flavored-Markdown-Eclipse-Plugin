@@ -1,6 +1,7 @@
 package markdown_syntax_suggestion_window;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,9 +29,10 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	public MarkdownSyntaxSuggestionWindow(MarkdownEditor markdownEditor) {
 		frame.setUndecorated(true);
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants());
+		list.setFont(new Font("Arial", Font.BOLD, 22));
 		container.add(list);
 		container.add(new JScrollPane(list));
-		frame.setSize(300, 200);
+		frame.setSize(450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addListener();
 		this.markdownEditor = markdownEditor;
