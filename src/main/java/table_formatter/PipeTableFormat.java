@@ -21,7 +21,7 @@ public class PipeTableFormat {
 			int temp = beginning + count;
 			String[] table = Arrays.copyOfRange(string, beginning, temp);
 			if (table.length > 0) {
-				table = format(table);
+				format(table);
 			}
 			for (int i = beginning; i < temp; i++) {
 				string[i] = table[i - beginning];
@@ -155,16 +155,14 @@ public class PipeTableFormat {
 			for (int n = 0; n < length; n++) {
 				if (format[n][m] != null) {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
-				} else {
-					if (n == 1) {
-						boolean isLast = false;
-						if(m == lengthOfComponents-1) {
-							isLast = true;
-						}
-						format[n][m] = addHyphen("", lengthOfColumn, isLast);
-					} else {
-						format[n][m] = addSpaces(lengthOfColumn);
+				} else if (n == 1) {
+					boolean isLast = false;
+					if(m == lengthOfComponents-1) {
+						isLast = true;
 					}
+					format[n][m] = addHyphen("", lengthOfColumn, isLast);
+				} else {
+					format[n][m] = addSpaces(lengthOfColumn);
 				}
 			}
 		}
@@ -189,31 +187,31 @@ public class PipeTableFormat {
 		if (!format.isEmpty()) {
 			if(numberOfSpaces>0) {
 				if (isLast || format.charAt(format.length()-1) == ' ') {
-					for (int i = 0; i < numberOfSpaces; i++) {
-						strB.append("-");
-					}
+					strB = stringBuilderAppend(numberOfSpaces);
 					format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length());
 				} else {
-					for (int i = 0; i < numberOfSpaces-1; i++) {
-						strB.append("-");
-					}
+					strB = stringBuilderAppend(numberOfSpaces-1);
 					format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length())+" ";
 				}
 			}
 		} else if (numberOfSpaces > 2) {
 			if(isLast) {
-				for (int i = 0; i < numberOfSpaces - 1; i++) {
-					strB.append("-");
-				}
+				strB = stringBuilderAppend(numberOfSpaces-1);
 			} else {
-				for (int i = 0; i < numberOfSpaces - 2; i++) {
-					strB.append("-");
-				}
+				strB = stringBuilderAppend(numberOfSpaces-2);
 				strB.append(" ");
 			}	
 			format = " " + strB.toString();
 		}
 		return format;
+	}
+
+	private static StringBuilder stringBuilderAppend(int numberOfSpaces) {
+		StringBuilder strB = new StringBuilder();
+		for (int i = 0; i < numberOfSpaces; i++) {
+			strB.append("-");
+		}
+		return strB;
 	}
 	
 	private static String addSpaces(int numberOfSpaces) {
