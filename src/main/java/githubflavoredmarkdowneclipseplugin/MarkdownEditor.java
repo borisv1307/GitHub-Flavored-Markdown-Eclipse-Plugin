@@ -136,12 +136,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			// of the document
 			String[] stringArrayOfDocument = document.get().split("\n");
 			String[] formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
-			StringBuilder builder = new StringBuilder();
-			for (String line : formattedLines) {
-				builder.append(line);
-				builder.append("\n");
-			}
-			String formattedDocument = builder.toString();
+			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor
 			ISelectionProvider selectionProvider = this.getSelectionProvider();
@@ -152,7 +147,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 				cursorLength = textSelection.getOffset(); // etc.
 				activator.log(Integer.toString(cursorLength));
 			}
-			// This sets the cursor on at the start of the file
+			// Replace the document with the formatted string
 			document.set(formattedDocument);
 
 			// Move the cursor
