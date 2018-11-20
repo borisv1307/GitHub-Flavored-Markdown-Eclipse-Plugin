@@ -318,6 +318,11 @@ public class MarkdownRendererSimpleTest extends MarkdownRendererAbstractTest {
 	@Test
 	public void hard_line_break() {
 		readAndAssertFileContents("hard_line_break.html", "foo\\\r\nbar");
+  }
+  
+  @Test
+	public void escape_char() {
+		readAndAssertFileContents("escape_char.html", "\\# hi there");
 	}
 
 }
