@@ -18,7 +18,7 @@ import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionHelper;
 
-public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListener {
+public class MarkdownSyntaxSuggestionWindow extends JFrame{
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private String selectedContent = "";
@@ -30,17 +30,12 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListe
 
 	public MarkdownSyntaxSuggestionWindow(MarkdownEditor markdownEditor) {
 		frame.setUndecorated(true);
-//		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(""));
-//		list.setFont(new Font("Arial", Font.BOLD, 22));
-		
 		frame.setSize(450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		addListener();
-//		list.addMouseListener(this);
 		this.markdownEditor = markdownEditor;
 	}
 
-	public void addKeyListener() {
+	private void addKeyListener() {
 		list.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -73,6 +68,48 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListe
 			}
 		});
 	}
+	
+	private void addMouseListener() {
+		list.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(), selectedContent);
+					frame.dispose();
+					Display.getDefault().syncExec(new Runnable() {
+						@Override
+						public void run() {
+							markdownEditor.replace(selectedContent);
+						}
+					});
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}});
+	}
 
 	public void show(String selection) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
@@ -85,47 +122,8 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListe
 		container.add(list);
 		container.add(new JScrollPane(list));
 		addKeyListener();
+		addMouseListener();
 		selectedContent = selection;
 		frame.setVisible(true);
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2) {
-			selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(), selectedContent);
-			frame.dispose();
-			Display.getDefault().syncExec(new Runnable() {
-				@Override
-				public void run() {
-					markdownEditor.replace(selectedContent);
-				}
-			});
-		}
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
