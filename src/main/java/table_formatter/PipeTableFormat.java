@@ -187,18 +187,18 @@ public class PipeTableFormat {
 		if (!format.isEmpty()) {
 			if(numberOfSpaces>0) {
 				if (isLast || format.charAt(format.length()-1) == ' ') {
-					strB = stringBuilderAppend(numberOfSpaces);
+					strB = stringBuilderAppend(numberOfSpaces, strB);
 					format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length());
 				} else {
-					strB = stringBuilderAppend(numberOfSpaces-1);
+					strB = stringBuilderAppend(numberOfSpaces-1, strB);
 					format = format.substring(0, 2) + strB.toString() + format.substring(2, format.length())+" ";
 				}
 			}
 		} else if (numberOfSpaces > 2) {
 			if(isLast) {
-				strB = stringBuilderAppend(numberOfSpaces-1);
+				strB = stringBuilderAppend(numberOfSpaces-1, strB);
 			} else {
-				strB = stringBuilderAppend(numberOfSpaces-2);
+				strB = stringBuilderAppend(numberOfSpaces-2, strB);
 				strB.append(" ");
 			}	
 			format = " " + strB.toString();
@@ -206,8 +206,7 @@ public class PipeTableFormat {
 		return format;
 	}
 
-	private static StringBuilder stringBuilderAppend(int numberOfSpaces) {
-		StringBuilder strB = new StringBuilder();
+	private static StringBuilder stringBuilderAppend(int numberOfSpaces, StringBuilder strB) {
 		for (int i = 0; i < numberOfSpaces; i++) {
 			strB.append("-");
 		}
