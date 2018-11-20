@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -37,6 +38,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
+	private IFolder folder;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -56,7 +58,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
-		IFile file = project.getFile(htmlFileName);
+		folder = project.getFolder(".html");
+		IFile file = folder.getFile(htmlFileName);
 
 		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
 				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
@@ -64,6 +67,9 @@ public class MarkdownEditor extends AbstractTextEditor {
 		try {
 			if (!project.isOpen())
 				project.open(progressMonitor);
+			if (!folder.exists()) {
+				folder.create(IResource.NONE, true, progressMonitor);
+			}
 			if (file.exists())
 				file.delete(true, progressMonitor);
 			if (!file.exists()) {
