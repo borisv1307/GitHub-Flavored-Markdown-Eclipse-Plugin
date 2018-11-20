@@ -15,7 +15,7 @@
          point="org.eclipse.ui.editors">
          <editor
       name="Markdown Editor (GFM)"
-      extensions="md, markdown, mrkdwn"
+      extensions="md, markdown, mrkdwn, mdown"
       class="githubflavoredmarkdowneclipseplugin.MarkdownEditor"
       id="githubflavoredmarkdowneclipseplugin.MarkdownEditor">
    </editor>
