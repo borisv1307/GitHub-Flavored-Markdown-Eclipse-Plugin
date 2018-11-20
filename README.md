@@ -2,7 +2,7 @@
 
 ### License info:
 
-### Drexel Software Engineering Capstone Led by Boris Valerstein
+### Drexel Software Engineering Capstone (Graduate)
 
 ### Contributors:
 * Professor: Boris Valerstein
