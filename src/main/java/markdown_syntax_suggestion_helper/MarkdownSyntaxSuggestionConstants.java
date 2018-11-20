@@ -13,7 +13,7 @@ public class MarkdownSyntaxSuggestionConstants {
 	private static final String INLINE_CODE = "`inline code` - A span of code inline";
 	private static final String BOLD = "**strong** - strong";
 	private static final String ITALIC = "_emphasis_ - emphasis";
-	private static final String TABLE = "automatically add second line";
+	private static final String TABLE = "table - automatically add second line";
 
 	public String[] getArrayOfConstants(String selectedContent) {
 		if(isHeader(selectedContent)) {
