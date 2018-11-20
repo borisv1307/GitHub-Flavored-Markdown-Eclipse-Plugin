@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,6 +29,7 @@ import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.osgi.service.prefs.Preferences;
 
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
@@ -52,6 +54,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		IProject project = getCurrentProject(editorInput);
+		Preferences preferences = ConfigurationScope.INSTANCE.getNode("githubflavoredmarkdowneclipseplugin.preferences");
+		activator.log(((String)preferences)); // doesn't work!
 
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
