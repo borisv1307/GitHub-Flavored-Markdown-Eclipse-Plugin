@@ -25,7 +25,7 @@ public class MarkdownSyntaxSuggestionConstants {
 		}
 	}
 	
-	private boolean isHeader (String selectedContent) {
+	public boolean isHeader (String selectedContent) {
 		if(selectedContent.contains("|") && selectedContent.trim().length()>1) {
 			return true;
 		} else {
