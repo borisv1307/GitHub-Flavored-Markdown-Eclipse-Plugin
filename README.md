@@ -5,7 +5,7 @@
 ### Drexel Software Engineering Capstone Led by Boris Valerstein
 
 ### Contributors:
-* Boris Valerstein
+# Professor: Boris Valerstein
 * Neil Castelino
 * Kristófer Másson
 * Jiafeng Tian
