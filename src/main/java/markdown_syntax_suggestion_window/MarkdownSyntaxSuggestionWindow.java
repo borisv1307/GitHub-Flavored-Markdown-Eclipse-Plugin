@@ -30,18 +30,17 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListe
 
 	public MarkdownSyntaxSuggestionWindow(MarkdownEditor markdownEditor) {
 		frame.setUndecorated(true);
-		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants());
-		list.setFont(new Font("Arial", Font.BOLD, 22));
-		container.add(list);
-		container.add(new JScrollPane(list));
+//		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(""));
+//		list.setFont(new Font("Arial", Font.BOLD, 22));
+		
 		frame.setSize(450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addListener();
-		list.addMouseListener(this);
+//		addListener();
+//		list.addMouseListener(this);
 		this.markdownEditor = markdownEditor;
 	}
 
-	public void addListener() {
+	public void addKeyListener() {
 		list.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -75,10 +74,18 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame implements MouseListe
 		});
 	}
 
-	public void show(String slection) {
+	public void show(String selection) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(point.x, point.y);
-		selectedContent = slection;
+		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
+		list.setFont(new Font("Arial", Font.BOLD, 22));
+		if(container.getComponents() != null) {
+			container.removeAll();
+		}
+		container.add(list);
+		container.add(new JScrollPane(list));
+		addKeyListener();
+		selectedContent = selection;
 		frame.setVisible(true);
 	}
 

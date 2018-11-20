@@ -13,9 +13,23 @@ public class MarkdownSyntaxSuggestionConstants {
 	private static final String INLINE_CODE = "`inline code` - A span of code inline";
 	private static final String BOLD = "**strong** - strong";
 	private static final String ITALIC = "_emphasis_ - emphasis";
+	private static final String TABLE = "automatically add second line";
 
-	public String[] getArrayOfConstants() {
-		return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
-				BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
+	public String[] getArrayOfConstants(String selectedContent) {
+		if(isHeader(selectedContent)) {
+			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
+					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC, TABLE };
+		} else {
+			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
+					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
+		}
+	}
+	
+	private boolean isHeader (String selectedContent) {
+		if(selectedContent.contains("|") && selectedContent.length()>1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
