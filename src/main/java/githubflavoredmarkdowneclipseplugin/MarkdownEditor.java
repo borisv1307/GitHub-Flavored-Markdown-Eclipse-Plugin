@@ -14,6 +14,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -31,25 +38,56 @@ import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
+import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
+	private MarkdownSyntaxSuggestionWindow autoComplete;
+	private StyledText styledText;
+	private Point point;
 	private IWebBrowser browser;
 	private IFolder folder;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
-
 		setDocumentProvider(new TextFileDocumentProvider());
 
 		// Activator manages connections to the Workbench
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
+	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+		super.createPartControl(parent);
+		ISourceViewer fSourceViewer = super.getSourceViewer();
+		styledText = fSourceViewer.getTextWidget();
+		styledText.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
+					String text = styledText.getSelectionText();
+					point = styledText.getSelectionRange();
+					if (!text.isEmpty()) {
+						autoComplete.show(text);
+					}
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
@@ -97,6 +135,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void replace(String text) {
+		ISourceViewer fSourceViewer = super.getSourceViewer();
+		styledText = fSourceViewer.getTextWidget();
+		point = styledText.getSelectionRange();
+		styledText.replaceTextRange(point.x, point.y, text);
 	}
 
 	@Override
