@@ -15,8 +15,7 @@ public class HTMLInjector {
 	public String inject(String htmlFileName, String renderedMarkdown) {
 		return "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n"
 				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" + "\n<style>\n"
-				+ cssInjector.getCSS() + "\n</style>\n" + "<title>" + htmlFileName + "</title>\n"
-				+ "<article class=\"markdown-body\">\n" + "</head>" + "<body>" + renderedMarkdown + "</body>\n"
-				+ "</html>\n" + "<article>";
+				+ cssInjector.getCSS() + "\n</style>\n" + "<title>" + htmlFileName + "</title>\n" + "</head>" + "<body>"
+				+ renderedMarkdown + "</body>\n" + "</html>\n";
 	}
 }
