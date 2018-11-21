@@ -6,45 +6,45 @@ public class MarkdownSyntaxSuggestionHelper {
 	private AddSyntaxToString syntax = new AddSyntaxToString();
 	private String markdownSyntaxSuggestionSelection = "";
 
-	public String applySuggestion(int index, String selectedContent) {
-		switch (index) {
-		case 0:
+	public String applySuggestion(String string, String selectedContent) {
+		switch (string) {
+		case "# - Heading 1":
 			markdownSyntaxSuggestionSelection = syntax.addSingleCharacter(selectedContent, "#");
 			break;
-		case 1:
+		case "## - Heading 2":
 			markdownSyntaxSuggestionSelection = syntax.addDoubleCharacter(selectedContent, "#");
 			break;
-		case 2:
+		case "### - Heading 3":
 			markdownSyntaxSuggestionSelection = syntax.addTripleCharacter(selectedContent, "#");
 			break;
-		case 3:
+		case "#### - Heading 4":
 			markdownSyntaxSuggestionSelection = syntax.addFourCharacter(selectedContent, "#");
 			break;
-		case 4:
+		case "##### - Heading 5":
 			markdownSyntaxSuggestionSelection = syntax.addFiveCharacter(selectedContent, "#");
 			break;
-		case 5:
+		case "###### - Heading 6":
 			markdownSyntaxSuggestionSelection = syntax.addSixCharacter(selectedContent, "#");
 			break;
-		case 6:
+		case "> - Blockquote":
 			markdownSyntaxSuggestionSelection = syntax.blockQuote(selectedContent);
 			break;
-		case 7:
+		case "[] - Link(inline) - [Text]":
 			markdownSyntaxSuggestionSelection = syntax.linkToURL(selectedContent);
 			break;
-		case 8:
+		case "\t - Code block (indented with tab)":
 			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 			break;
-		case 9:
+		case "`inline code` - A span of code inline":
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "`");
 			break;
-		case 10:
+		case "**strong** - strong":
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "**");
 			break;
-		case 11:
+		case "_emphasis_ - emphasis":
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "_");
 			break;
-		case 12:
+		case "table - automatically add second line":
 			markdownSyntaxSuggestionSelection = addSecondLineToTable(selectedContent);
 			break;
 		default:
