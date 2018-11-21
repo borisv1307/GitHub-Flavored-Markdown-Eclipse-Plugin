@@ -29,16 +29,17 @@ import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.osgi.service.prefs.Preferences;
 
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
+import githubflavoredmarkdowneclipseplugin.preferences.PreferenceMonitor;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
+	private PreferenceMonitor preferences;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
@@ -50,12 +51,11 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		preferences = new PreferenceMonitor();
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		IProject project = getCurrentProject(editorInput);
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode("githubflavoredmarkdowneclipseplugin.preferences");
-		activator.log(((String)preferences)); // doesn't work!
 
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
@@ -132,8 +132,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} else {
 			// Convert document from string to string array with each instance a single line
 			// of the document
+			String[] formattedLines;
 			String[] stringArrayOfDocument = document.get().split("\n");
-			String[] formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
+			
+			if (preferences.formatTable()) {
+				formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
+			} else {
+				formattedLines = stringArrayOfDocument;
+			}
+			
 			StringBuilder builder = new StringBuilder();
 			for (String line : formattedLines) {
 				builder.append(line);
