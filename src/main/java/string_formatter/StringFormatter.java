@@ -11,8 +11,11 @@ public class StringFormatter {
 		String formattedLine = "";
 		String[] temp = string.split("\\|", -1);
 		int length = temp.length;
-		if (!temp[0].isEmpty()) { // no beginning pipe
+		if(temp.length == 1) {
 			return originalLine;
+		}
+		if(!temp[0].isEmpty()) {
+			temp[0] = temp[0].trim() + " ";
 		}
 		for (int i = 1; i < length - 1; i++) {
 			if (!temp[i].isEmpty()) {

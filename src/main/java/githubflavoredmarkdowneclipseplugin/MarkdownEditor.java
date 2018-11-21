@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -14,6 +15,13 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -31,6 +39,7 @@ import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
+import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
 import githubflavoredmarkdowneclipseplugin.preferences.PreferenceMonitor;
 
@@ -38,13 +47,16 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
+	private MarkdownSyntaxSuggestionWindow autoComplete;
+	private StyledText styledText;
+	private Point point;
 	private IWebBrowser browser;
 	private PreferenceMonitor preferences;
+	private IFolder folder;
 
 	public MarkdownEditor() throws FileNotFoundException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
-
 		setDocumentProvider(new TextFileDocumentProvider());
 
 		// Activator manages connections to the Workbench
@@ -52,6 +64,34 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 		markdownRenderer = new MarkdownRenderer();
 		preferences = new PreferenceMonitor();
+		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
+	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+		super.createPartControl(parent);
+		ISourceViewer fSourceViewer = super.getSourceViewer();
+		styledText = fSourceViewer.getTextWidget();
+		styledText.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
+					String text = styledText.getSelectionText();
+					point = styledText.getSelectionRange();
+					if (!text.isEmpty()) {
+						autoComplete.show(text);
+					}
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
@@ -60,7 +100,8 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
-		IFile file = project.getFile(htmlFileName);
+		folder = project.getFolder(".html");
+		IFile file = folder.getFile(htmlFileName);
 
 		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
 				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
@@ -68,6 +109,9 @@ public class MarkdownEditor extends AbstractTextEditor {
 		try {
 			if (!project.isOpen())
 				project.open(progressMonitor);
+			if (!folder.exists()) {
+				folder.create(IResource.NONE, true, progressMonitor);
+			}
 			if (file.exists())
 				file.delete(true, progressMonitor);
 			if (!file.exists()) {
@@ -95,6 +139,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} catch (IOException | PartInitException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void replace(String text) {
+		ISourceViewer fSourceViewer = super.getSourceViewer();
+		styledText = fSourceViewer.getTextWidget();
+		point = styledText.getSelectionRange();
+		styledText.replaceTextRange(point.x, point.y, text);
 	}
 
 	@Override
@@ -147,6 +198,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 				builder.append("\n");
 			}
 			String formattedDocument = builder.toString();
+			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor
 			ISelectionProvider selectionProvider = this.getSelectionProvider();
@@ -157,7 +209,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 				cursorLength = textSelection.getOffset(); // etc.
 				activator.log(Integer.toString(cursorLength));
 			}
-			// This sets the cursor on at the start of the file
+			// Replace the document with the formatted string
 			document.set(formattedDocument);
 
 			// Move the cursor
