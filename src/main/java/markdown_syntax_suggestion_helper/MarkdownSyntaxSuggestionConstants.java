@@ -17,8 +17,8 @@ public class MarkdownSyntaxSuggestionConstants {
 
 	public String[] getArrayOfConstants(String selectedContent) {
 		if (isHeader(selectedContent)) {
-			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
-					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC, TABLE };
+			return new String[] { TABLE, HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE,
+					HEADING_SIX, BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
 		} else {
 			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
 					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
