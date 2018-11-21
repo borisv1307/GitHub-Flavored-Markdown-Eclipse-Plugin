@@ -1,4 +1,4 @@
-package githubflavoredmarkdowneclipseplugin.preferences;
+package preferences;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.swt.widgets.Composite;

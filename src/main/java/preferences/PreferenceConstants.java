@@ -1,4 +1,4 @@
-package githubflavoredmarkdowneclipseplugin.preferences;
+package preferences;
 
 public class PreferenceConstants {
 	public static final String P_TABLE = "P_TABLE";

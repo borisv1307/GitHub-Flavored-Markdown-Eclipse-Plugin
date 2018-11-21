@@ -13,7 +13,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.SWT;
@@ -41,7 +40,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import markdown_renderer.MarkdownRenderer;
 import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
-import githubflavoredmarkdowneclipseplugin.preferences.PreferenceMonitor;
+import preferences.PreferenceMonitor;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -192,12 +191,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 				formattedLines = stringArrayOfDocument;
 			}
 			
-			StringBuilder builder = new StringBuilder();
-			for (String line : formattedLines) {
-				builder.append(line);
-				builder.append("\n");
-			}
-			String formattedDocument = builder.toString();
 			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor

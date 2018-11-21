@@ -1,4 +1,4 @@
-package githubflavoredmarkdowneclipseplugin.preferences;
+package preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;

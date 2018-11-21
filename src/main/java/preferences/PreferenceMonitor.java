@@ -1,4 +1,4 @@
-package githubflavoredmarkdowneclipseplugin.preferences;
+package preferences;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;

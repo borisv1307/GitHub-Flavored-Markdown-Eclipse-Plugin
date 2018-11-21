@@ -7,13 +7,13 @@
       <page
             id="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage"
             name="GFM Editor Preferences"
-            class="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage">
+            class="preferences.PreferencePage">
       </page>
    </extension>
    <extension
    		 point="org.eclipse.core.runtime.preferences">
        <initializer
-   		 class="githubflavoredmarkdowneclipseplugin.preferences.PreferenceInitializer">
+   		 class="preferences.PreferenceInitializer">
    	 </initializer>
    </extension>
    <extension
