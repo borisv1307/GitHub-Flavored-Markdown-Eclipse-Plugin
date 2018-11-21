@@ -8,43 +8,43 @@ public class MarkdownSyntaxSuggestionHelper {
 
 	public String applySuggestion(String string, String selectedContent) {
 		switch (string) {
-		case "# - Heading 1":
+		case MarkdownSyntaxSuggestionConstants.HEADING_ONE:
 			markdownSyntaxSuggestionSelection = syntax.addSingleCharacter(selectedContent, "#");
 			break;
-		case "## - Heading 2":
+		case MarkdownSyntaxSuggestionConstants.HEADING_TWO:
 			markdownSyntaxSuggestionSelection = syntax.addDoubleCharacter(selectedContent, "#");
 			break;
-		case "### - Heading 3":
+		case MarkdownSyntaxSuggestionConstants.HEADING_THREE:
 			markdownSyntaxSuggestionSelection = syntax.addTripleCharacter(selectedContent, "#");
 			break;
-		case "#### - Heading 4":
+		case MarkdownSyntaxSuggestionConstants.HEADING_FOUR:
 			markdownSyntaxSuggestionSelection = syntax.addFourCharacter(selectedContent, "#");
 			break;
-		case "##### - Heading 5":
+		case MarkdownSyntaxSuggestionConstants.HEADING_FIVE:
 			markdownSyntaxSuggestionSelection = syntax.addFiveCharacter(selectedContent, "#");
 			break;
-		case "###### - Heading 6":
+		case MarkdownSyntaxSuggestionConstants.HEADING_SIX:
 			markdownSyntaxSuggestionSelection = syntax.addSixCharacter(selectedContent, "#");
 			break;
-		case "> - Blockquote":
+		case MarkdownSyntaxSuggestionConstants.BLOCKQUOTE:
 			markdownSyntaxSuggestionSelection = syntax.blockQuote(selectedContent);
 			break;
-		case "[] - Link(inline) - [Text]":
+		case MarkdownSyntaxSuggestionConstants.LINK:
 			markdownSyntaxSuggestionSelection = syntax.linkToURL(selectedContent);
 			break;
-		case "\t - Code block (indented with tab)":
+		case MarkdownSyntaxSuggestionConstants.CODE_BLOCK:
 			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 			break;
-		case "`inline code` - A span of code inline":
+		case MarkdownSyntaxSuggestionConstants.INLINE_CODE:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "`");
 			break;
-		case "**strong** - strong":
+		case MarkdownSyntaxSuggestionConstants.BOLD:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "**");
 			break;
-		case "_emphasis_ - emphasis":
+		case MarkdownSyntaxSuggestionConstants.ITALIC:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "_");
 			break;
-		case "table - automatically add second line":
+		case MarkdownSyntaxSuggestionConstants.TABLE:
 			markdownSyntaxSuggestionSelection = addSecondLineToTable(selectedContent);
 			break;
 		default:
