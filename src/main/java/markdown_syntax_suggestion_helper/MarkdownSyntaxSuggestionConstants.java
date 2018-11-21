@@ -16,7 +16,7 @@ public class MarkdownSyntaxSuggestionConstants {
 	private static final String TABLE = "table - automatically add second line";
 
 	public String[] getArrayOfConstants(String selectedContent) {
-		if(isHeader(selectedContent)) {
+		if (isHeader(selectedContent)) {
 			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
 					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC, TABLE };
 		} else {
@@ -24,12 +24,14 @@ public class MarkdownSyntaxSuggestionConstants {
 					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
 		}
 	}
-	
-	public boolean isHeader (String selectedContent) {
-		if(selectedContent.contains("|") && selectedContent.trim().length()>1) {
-			return true;
+
+	public boolean isHeader(String selectedContent) {
+		boolean test;
+		if (selectedContent.contains("|") && selectedContent.trim().length() > 1) {
+			test = true;
 		} else {
-			return false;
+			test = false;
 		}
+		return test;
 	}
 }
