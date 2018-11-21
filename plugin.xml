@@ -3,6 +3,20 @@
 <plugin>
 
    <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            id="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage"
+            name="GFM Editor Preferences"
+            class="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage">
+      </page>
+   </extension>
+   <extension
+   		 point="org.eclipse.core.runtime.preferences">
+       <initializer
+   			class="githubflavoredmarkdowneclipseplugin.preferences.PreferenceInitializer">
+   	   </initializer>
+   </extension>
+   <extension
          point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             id="githubflavoredmarkdowneclipseplugin.project"
@@ -62,20 +76,6 @@
             contentTypeId="githubflavoredmarkdowneclipseplugin.project"
             extensions="project">
       </participant>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            id="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage"
-            name="GFM Editor Preferences"
-            class="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage">
-      </page>
-   </extension>
-   <extension
-   		 point="org.eclipse.core.runtime.preferences">
-       <initializer
-   			class="githubflavoredmarkdowneclipseplugin.preferences.PreferenceInitializer">
-   	   </initializer>
    </extension>
 
 </plugin>
