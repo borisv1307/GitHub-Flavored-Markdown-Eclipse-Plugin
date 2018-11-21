@@ -8,7 +8,7 @@ import wrapper.BufferedReaderWrapper;
 public class CSSInjector {
 
 	static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
-	private static StringBuilder cssContent;
+	private StringBuilder cssContent;
 
 	public CSSInjector(BufferedReaderWrapper bufferedReaderWrapper) throws IOException {
 		cssContent = new StringBuilder();
