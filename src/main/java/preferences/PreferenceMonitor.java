@@ -23,5 +23,9 @@ public class PreferenceMonitor implements IPreferenceChangeListener{
 	public boolean formatTable() {
 		return store.getBoolean("P_TABLE");
 	}
+	
+	public boolean autocomplete() {
+		return store.getBoolean("P_SUGGEST");
+	}
 
 }

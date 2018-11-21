@@ -1,6 +1,7 @@
 package preferences;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -25,7 +26,8 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	
 	public PreferencePage() {
         super(GRID);
-        setPreferenceStore(Activator.getDefault().getPreferenceStore());
+        IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+        setPreferenceStore(store);
         setDescription("General settings for GFM Editor");
     }
 	
@@ -37,7 +39,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	protected void createFieldEditors() {
 		Composite parent = getFieldEditorParent();
 		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE,"&Use automatic table formatting feature",parent));
-//		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST,"&Use suggestion feature",parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST,"&Use suggestion feature",parent));
 	}
 
 }
