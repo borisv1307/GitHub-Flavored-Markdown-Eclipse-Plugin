@@ -18,7 +18,7 @@ import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionHelper;
 
-public class MarkdownSyntaxSuggestionWindow extends JFrame{
+public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	private JFrame frame = new JFrame("");
 	private Container container = frame.getContentPane();
 	private String selectedContent = "";
@@ -68,14 +68,14 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame{
 			}
 		});
 	}
-	
+
 	private void addMouseListener() {
 		list.addMouseListener(new MouseListener() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(), selectedContent);
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(),
+							selectedContent);
 					frame.dispose();
 					Display.getDefault().syncExec(new Runnable() {
 						@Override
@@ -89,26 +89,27 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-			}});
+
+			}
+		});
 	}
 
 	public void show(String selection) {
@@ -116,7 +117,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame{
 		this.frame.setLocation(point.x, point.y);
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
 		list.setFont(new Font("Arial", Font.BOLD, 22));
-		if(container.getComponents() != null) {
+		if (container.getComponents() != null) {
 			container.removeAll();
 		}
 		container.add(list);

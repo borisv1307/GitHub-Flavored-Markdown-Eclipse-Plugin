@@ -45,49 +45,49 @@ public class AddStuffToStringTest {
 	public void asterisk_unordered_list() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addSingleCharacter("word", "*");
-		assertEquals("*word", actual);
+		assertEquals("* word", actual);
 	}
 
 	@Test
 	public void pound_header1() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addSingleCharacter("word", "#");
-		assertEquals("#word", actual);
+		assertEquals("# word", actual);
 	}
 
 	@Test
 	public void pound_header2() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addDoubleCharacter("word", "#");
-		assertEquals("##word", actual);
+		assertEquals("## word", actual);
 	}
 
 	@Test
 	public void pound_header3() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addTripleCharacter("word", "#");
-		assertEquals("###word", actual);
+		assertEquals("### word", actual);
 	}
 
 	@Test
 	public void pound_header4() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addFourCharacter("word", "#");
-		assertEquals("####word", actual);
+		assertEquals("#### word", actual);
 	}
 
 	@Test
 	public void pound_header5() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addFiveCharacter("word", "#");
-		assertEquals("#####word", actual);
+		assertEquals("##### word", actual);
 	}
 
 	@Test
 	public void pound_header6() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addSixCharacter("word", "#");
-		assertEquals("######word", actual);
+		assertEquals("###### word", actual);
 	}
 
 	@Test
