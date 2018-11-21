@@ -14,16 +14,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
@@ -39,8 +39,8 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 import markdown_renderer.MarkdownRenderer;
 import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
-import table_formatter.PipeTableFormat;
 import preferences.PreferenceMonitor;
+import table_formatter.PipeTableFormat;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -185,13 +185,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 			// of the document
 			String[] formattedLines;
 			String[] stringArrayOfDocument = document.get().split("\n");
-			
+
 			if (preferences.formatTable()) {
 				formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
 			} else {
 				formattedLines = stringArrayOfDocument;
 			}
-			
+
 			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor
