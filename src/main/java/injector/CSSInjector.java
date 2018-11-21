@@ -1,35 +1,29 @@
 package injector;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import wrapper.BufferedReaderWrapper;
 
 public class CSSInjector {
 
-	private static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
+	static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
 	private static StringBuffer cssContent;
 
-	public CSSInjector() {
-		if (cssContent == null || cssContent.length() == 0) {
+	public CSSInjector(BufferedReaderWrapper bufferedReaderWrapper) throws IOException {
+		if (cssContent == null) {
 			cssContent = new StringBuffer();
 
-			try {
-				BufferedReader br = new BufferedReader(
-						new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(CSS_LOCATION)));
-				String line = null;
+			BufferedReader br = bufferedReaderWrapper.getFileFromLocation(CSS_LOCATION);
+			String line = null;
 
-				while ((line = br.readLine()) != null) {
-					cssContent.append(line);
-					cssContent.append("\n");
-				}
-
-				br.close();
-			} catch (FileNotFoundException e) {
-				System.out.println("File '" + CSS_LOCATION + "' not found");
-			} catch (IOException e) {
-				System.out.println("Unable to read file '" + CSS_LOCATION + "'");
+			while ((line = br.readLine()) != null) {
+				cssContent.append(line);
+				cssContent.append("\n");
 			}
+
+			br.close();
+
 		}
 	}
 

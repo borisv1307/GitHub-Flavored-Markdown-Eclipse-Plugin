@@ -1,7 +1,6 @@
 package githubflavoredmarkdowneclipseplugin;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -32,6 +31,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import injector.HTMLInjector;
 import markdown_renderer.MarkdownRenderer;
 import table_formatter.PipeTableFormat;
+import wrapper.BufferedReaderWrapper;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -40,7 +40,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private IWebBrowser browser;
 	private HTMLInjector htmlInjector;
 
-	public MarkdownEditor() throws FileNotFoundException {
+	public MarkdownEditor() throws IOException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
 
@@ -50,7 +50,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
-		htmlInjector = new HTMLInjector();
+		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {

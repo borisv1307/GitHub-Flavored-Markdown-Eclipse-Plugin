@@ -1,10 +1,15 @@
 package injector;
 
+import java.io.IOException;
+
+import wrapper.BufferedReaderWrapper;
+
 public class HTMLInjector {
 	private CSSInjector cssInjector;
 
-	public HTMLInjector() {
-		cssInjector = new CSSInjector();
+	public HTMLInjector(BufferedReaderWrapper bufferedReaderWrapper) throws IOException {
+		cssInjector = new CSSInjector(bufferedReaderWrapper);
+
 	}
 
 	public String inject(String htmlFileName, String renderedMarkdown) {
