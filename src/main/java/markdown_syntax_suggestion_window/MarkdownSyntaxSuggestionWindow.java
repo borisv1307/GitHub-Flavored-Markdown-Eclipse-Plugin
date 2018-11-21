@@ -43,7 +43,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(),
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedValue().toString(),
 							selectedContent);
 					frame.dispose();
 					Display.getDefault().syncExec(new Runnable() {
@@ -74,7 +74,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(),
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedValue().toString(),
 							selectedContent);
 					frame.dispose();
 					Display.getDefault().syncExec(new Runnable() {
