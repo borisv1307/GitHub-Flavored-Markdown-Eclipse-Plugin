@@ -8,23 +8,20 @@ import wrapper.BufferedReaderWrapper;
 public class CSSInjector {
 
 	static final String CSS_LOCATION = "/src/main/java/github_markdown_css/github-markdown.css";
-	private static StringBuffer cssContent;
+	private static StringBuilder cssContent;
 
 	public CSSInjector(BufferedReaderWrapper bufferedReaderWrapper) throws IOException {
-		if (cssContent == null) {
-			cssContent = new StringBuffer();
+		cssContent = new StringBuilder();
 
-			BufferedReader br = bufferedReaderWrapper.getFileFromLocation(CSS_LOCATION);
-			String line = null;
+		BufferedReader br = bufferedReaderWrapper.getFileFromLocation(CSS_LOCATION);
+		String line = null;
 
-			while ((line = br.readLine()) != null) {
-				cssContent.append(line);
-				cssContent.append("\n");
-			}
-
-			br.close();
-
+		while ((line = br.readLine()) != null) {
+			cssContent.append(line);
+			cssContent.append("\n");
 		}
+
+		br.close();
 	}
 
 	public String getCSS() {
