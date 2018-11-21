@@ -75,12 +75,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
-					String text = styledText.getSelectionText();
-					point = styledText.getSelectionRange();
-					if (!text.isEmpty()) {
-						autoComplete.show(text);
+				if (preferences.autocomplete()) {
+					if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
+						String text = styledText.getSelectionText();
+						point = styledText.getSelectionRange();
+						if (!text.isEmpty()) {
+							autoComplete.show(text);
+						}
 					}
 				}
 			}

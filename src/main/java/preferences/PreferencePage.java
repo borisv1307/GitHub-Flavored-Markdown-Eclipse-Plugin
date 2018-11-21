@@ -23,10 +23,11 @@ import githubflavoredmarkdowneclipseplugin.Activator;
  */
 
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+	private Activator activator;
 	
 	public PreferencePage() {
         super(GRID);
-        IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+        IPreferenceStore store = activator.getDefault().getPreferenceStore();
         setPreferenceStore(store);
         setDescription("General settings for GFM Editor");
     }
