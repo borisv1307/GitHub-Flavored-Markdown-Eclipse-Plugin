@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -39,6 +40,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private MarkdownRenderer markdownRenderer;
 	private IWebBrowser browser;
 	private HTMLInjector htmlInjector;
+	private IFolder folder;
 
 	public MarkdownEditor() throws IOException {
 
@@ -59,13 +61,17 @@ public class MarkdownEditor extends AbstractTextEditor {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
-		IFile file = project.getFile(htmlFileName);
+		folder = project.getFolder(".html");
+		IFile file = folder.getFile(htmlFileName);
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
 
 		try {
 			if (!project.isOpen())
 				project.open(progressMonitor);
+			if (!folder.exists()) {
+				folder.create(IResource.NONE, true, progressMonitor);
+			}
 			if (file.exists())
 				file.delete(true, progressMonitor);
 			if (!file.exists()) {
@@ -132,12 +138,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			// of the document
 			String[] stringArrayOfDocument = document.get().split("\n");
 			String[] formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
-			StringBuilder builder = new StringBuilder();
-			for (String line : formattedLines) {
-				builder.append(line);
-				builder.append("\n");
-			}
-			String formattedDocument = builder.toString();
+			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor
 			ISelectionProvider selectionProvider = this.getSelectionProvider();
@@ -148,7 +149,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 				cursorLength = textSelection.getOffset(); // etc.
 				activator.log(Integer.toString(cursorLength));
 			}
-			// This sets the cursor on at the start of the file
+			// Replace the document with the formatted string
 			document.set(formattedDocument);
 
 			// Move the cursor
