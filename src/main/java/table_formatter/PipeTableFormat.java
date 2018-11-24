@@ -153,7 +153,7 @@ public class PipeTableFormat {
 			int lengthOfColumn = getLengthOfColumn(format, m);
 			for (int n = 0; n < length; n++) {
 				// Ignore the second line, because we want to trim the hyphens if needed
-				if (format[n][m] != null && n != 1) {
+				if (format[n][m] != null) {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
 				} else if (n == 1) {
 					boolean isLast = false;
@@ -184,7 +184,7 @@ public class PipeTableFormat {
 
 	private static String addHyphen(String format, int numberOfSpaces, boolean isLast) {
 		if (!format.isEmpty()) {
-			if (numberOfSpaces > 0) {
+			if (numberOfSpaces >= 0) {
 				if (isLast || format.charAt(format.length() - 1) == ' ') {
 					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces)
 							+ format.substring(2, format.length());
@@ -192,6 +192,8 @@ public class PipeTableFormat {
 					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces - 1)
 							+ format.substring(2, format.length()) + " ";
 				}
+			} else {
+				format = format.substring(0, 2) + format.substring(2 + numberOfSpaces * -1, format.length());
 			}
 		} else if (numberOfSpaces > 2) {
 			if (isLast) {
