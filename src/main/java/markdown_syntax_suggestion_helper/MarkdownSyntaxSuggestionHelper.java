@@ -27,7 +27,7 @@ public class MarkdownSyntaxSuggestionHelper {
 			markdownSyntaxSuggestionSelection = syntax.addSixCharacter(selectedContent, "#");
 			break;
 		case MarkdownSyntaxSuggestionConstants.BLOCKQUOTE:
-			markdownSyntaxSuggestionSelection = syntax.blockQuote(selectedContent);
+			markdownSyntaxSuggestionSelection = syntax.addCharToEachLine(selectedContent, ">");
 			break;
 		case MarkdownSyntaxSuggestionConstants.LINK:
 			markdownSyntaxSuggestionSelection = syntax.linkToURL(selectedContent);
@@ -46,6 +46,12 @@ public class MarkdownSyntaxSuggestionHelper {
 			break;
 		case MarkdownSyntaxSuggestionConstants.TABLE:
 			markdownSyntaxSuggestionSelection = addSecondLineToTable(selectedContent);
+			break;
+		case MarkdownSyntaxSuggestionConstants.UNORDERED_LIST:
+			markdownSyntaxSuggestionSelection = syntax.addCharToEachLine(selectedContent, "*");
+			break;
+		case MarkdownSyntaxSuggestionConstants.ORDERED_LIST:
+			markdownSyntaxSuggestionSelection = syntax.addCharToEachLine(selectedContent, "1.");
 			break;
 		default:
 			break;

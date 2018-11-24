@@ -7,21 +7,24 @@ public class MarkdownSyntaxSuggestionConstants {
 	public static final String HEADING_FOUR = "#### - Heading 4";
 	public static final String HEADING_FIVE = "##### - Heading 5";
 	public static final String HEADING_SIX = "###### - Heading 6";
-	public static final String BLOCKQUOTE = "> - Blockquote";
+	public static final String BLOCKQUOTE = "> Blockquote - add > to each line";
 	public static final String LINK = "[] - Link(inline) - [Text]";
 	public static final String CODE_BLOCK = "\t - Code block (indented with tab)";
 	public static final String INLINE_CODE = "`inline code` - A span of code inline";
 	public static final String BOLD = "**strong** - strong";
 	public static final String ITALIC = "_emphasis_ - emphasis";
 	public static final String TABLE = "table - automatically add second line";
+	public static final String UNORDERED_LIST = "* Unordered List - add * to each line";
+	public static final String ORDERED_LIST = "1. Ordered List - add 1. to each line";
 
 	public String[] getArrayOfConstants(String selectedContent) {
 		if (isHeader(selectedContent)) {
 			return new String[] { TABLE, HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE,
-					HEADING_SIX, BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
+					HEADING_SIX, BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC, UNORDERED_LIST,
+					ORDERED_LIST };
 		} else {
 			return new String[] { HEADING_ONE, HEADING_TWO, HEADING_THREE, HEADING_FOUR, HEADING_FIVE, HEADING_SIX,
-					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC };
+					BLOCKQUOTE, LINK, CODE_BLOCK, INLINE_CODE, BOLD, ITALIC, UNORDERED_LIST, ORDERED_LIST };
 		}
 	}
 
