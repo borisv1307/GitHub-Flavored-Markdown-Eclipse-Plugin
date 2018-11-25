@@ -8,9 +8,9 @@ import githubflavoredmarkdowneclipseplugin.Activator;
 
 public class PreferenceMonitor implements IPreferenceChangeListener {
 	private IPreferenceStore store;
-	private static final int[] SMALL = { 350, 200 };
+	private static final int[] SMALL = { 200, 100 };
 	private static final int[] MEDIUM = { 450, 300 };
-	private static final int[] LARGE = { 550, 400 };
+	private static final int[] LARGE = { 650, 500 };
 
 	public PreferenceMonitor() {
 		store = Activator.getDefault().getPreferenceStore();
@@ -27,9 +27,9 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 
 	public int[] popupSize() {
 		String size = store.getString("P_POPUP");
-		if (size == "large") {
+		if (size.equals("large")) {
 			return LARGE;
-		} else if (size == "small") {
+		} else if (size.equals("small")) {
 			return SMALL;
 		} else {
 			return MEDIUM;
