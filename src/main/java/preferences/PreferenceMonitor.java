@@ -25,4 +25,15 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		return store.getBoolean("P_TABLE");
 	}
 
+	public int[] popupSize() {
+		String size = store.getString("P_POPUP");
+		if (size == "large") {
+			return LARGE;
+		} else if (size == "small") {
+			return SMALL;
+		} else {
+			return MEDIUM;
+		}
+	}
+
 }
