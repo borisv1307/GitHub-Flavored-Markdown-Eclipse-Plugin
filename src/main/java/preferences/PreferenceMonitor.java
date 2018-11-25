@@ -8,6 +8,9 @@ import githubflavoredmarkdowneclipseplugin.Activator;
 
 public class PreferenceMonitor implements IPreferenceChangeListener {
 	private IPreferenceStore store;
+	private static final int[] SMALL = { 350, 200 };
+	private static final int[] MEDIUM = { 450, 300 };
+	private static final int[] LARGE = { 550, 400 };
 
 	public PreferenceMonitor() {
 		store = Activator.getDefault().getPreferenceStore();
