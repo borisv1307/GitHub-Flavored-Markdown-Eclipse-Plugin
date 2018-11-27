@@ -18,6 +18,7 @@
 					<target>1.7</target>
 					<excludes>
 						<exclude>githubflavoredmarkdowneclipseplugin/*.java</exclude>
+						<exclude>markdown_syntax_suggestion_window/*.java</exclude> 
 					</excludes>
 				</configuration>
 			</plugin>
@@ -45,19 +46,25 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	  		<groupId>com.atlassian.commonmark</groupId>
-	  		<artifactId>commonmark</artifactId>
-	  		<version>0.11.0</version>
-	  	</dependency>
-	  	<dependency>
-	 	    <groupId>com.atlassian.commonmark</groupId>
-	 	    <artifactId>commonmark-ext-gfm-tables</artifactId>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark-ext-gfm-tables</artifactId>
 			<version>0.9.0</version>
 		</dependency>
-	  	<dependency>
-	  		<groupId>com.atlassian.commonmark</groupId>
-	  		<artifactId>commonmark-ext-gfm-strikethrough</artifactId>
-	  		<version>0.11.0</version>
-	  	</dependency>
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+			<version>0.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
