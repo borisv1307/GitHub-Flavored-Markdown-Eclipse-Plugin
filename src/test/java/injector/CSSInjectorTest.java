@@ -30,7 +30,7 @@ public class CSSInjectorTest {
 	@Test
 	public void css_length() {
 		try {
-			assertEquals(10863, getMockedInjector(RELATIVE_CSS_LOCATION).getCSS().length());
+			assertEquals(10843, getMockedInjector(RELATIVE_CSS_LOCATION).getCSS().length());
 		} catch (IOException e) {
 			fail();
 		}
