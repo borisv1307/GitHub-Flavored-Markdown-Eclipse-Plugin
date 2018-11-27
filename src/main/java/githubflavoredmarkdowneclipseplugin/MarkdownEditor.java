@@ -14,16 +14,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
@@ -179,7 +179,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} else {
 			// Convert document from string to string array with each instance a single line
 			// of the document
-			String[] stringArrayOfDocument = document.get().split("\n");
+			String[] stringArrayOfDocument = document.get().split("\n", -1);
 			String[] formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
 			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
