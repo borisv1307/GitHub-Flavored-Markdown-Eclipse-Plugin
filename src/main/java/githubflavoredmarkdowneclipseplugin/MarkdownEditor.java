@@ -1,7 +1,6 @@
 package githubflavoredmarkdowneclipseplugin;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,9 +36,11 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
+import injector.HTMLInjector;
 import markdown_renderer.MarkdownRenderer;
 import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
+import wrapper.BufferedReaderWrapper;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -49,9 +50,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private StyledText styledText;
 	private Point point;
 	private IWebBrowser browser;
+	private HTMLInjector htmlInjector;
 	private IFolder folder;
 
-	public MarkdownEditor() throws FileNotFoundException {
+	public MarkdownEditor() throws IOException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
 		setDocumentProvider(new TextFileDocumentProvider());
@@ -60,6 +62,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
 
@@ -91,17 +94,16 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
-		IProject project = getCurrentProject(editorInput);
 
+		IProject project = getCurrentProject(editorInput);
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
 		String htmlFileName = fileName + ".html";
 		folder = project.getFolder(".html");
 		IFile file = folder.getFile(htmlFileName);
 
-		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
-				+ htmlFileName + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
-				+ "</body>\n" + "</html>";
+		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
+
 		try {
 			if (!project.isOpen())
 				project.open(progressMonitor);
