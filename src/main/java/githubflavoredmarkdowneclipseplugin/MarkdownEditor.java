@@ -19,6 +19,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -52,6 +53,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private IWebBrowser browser;
 	private HTMLInjector htmlInjector;
 	private IFolder folder;
+	private static final int POPUP_OFFSET = 20;
 
 	public MarkdownEditor() throws IOException {
 
@@ -78,9 +80,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 				// TODO Auto-generated method stub
 				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
 					String text = styledText.getSelectionText();
+					Composite control = styledText.getParent();
+					// this function comes from org.eclipse.jface.fieldassist, how do they get the coordinates
+					Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
+					Rectangle selectedBlock = styledText.getBlockSelectionBounds();
+					int xLocation = location.x+selectedBlock.x+selectedBlock.width+POPUP_OFFSET;
+					int yLocation = location.y+selectedBlock.y+selectedBlock.height;
 					point = styledText.getSelectionRange();
 					if (!text.isEmpty()) {
-						autoComplete.show(text);
+						autoComplete.show(text, xLocation, yLocation);
 					}
 				}
 			}
