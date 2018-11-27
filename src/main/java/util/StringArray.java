@@ -11,34 +11,5 @@ public class StringArray {
 		}
 		return builder.toString();
 	}
-	
-	public static String[] split(String string, char deliminator) {
-		int lengthOfString = string.length();
-		int numOfComponent = 1;
-		for(int i=0;i<lengthOfString;i++) {
-			if(string.charAt(i) == deliminator) {
-				numOfComponent++;
-			}
-		}
-		String[] stringArray = new String[numOfComponent];
-		if(numOfComponent == 1) {
-			stringArray[0] = string;
-			return stringArray;
-		}
-		int pointer = 0;
-		int counter = 0;
-		for(int i=0;i<lengthOfString;i++) {
-			if(string.charAt(i) == deliminator) {
-				stringArray[counter] = string.substring(pointer, i);
-				pointer = i+1;
-				counter++;
-			}
-			if(counter == numOfComponent-1) {
-				stringArray[numOfComponent-1] = string.substring(pointer, string.length());
-				break;
-			}
-		}
-		return stringArray;
-	}
 
 }
