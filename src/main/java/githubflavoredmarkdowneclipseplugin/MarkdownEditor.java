@@ -1,6 +1,7 @@
 package githubflavoredmarkdowneclipseplugin;
 
 import java.io.FileNotFoundException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -33,9 +35,11 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
+import injector.HTMLInjector;
 import markdown_renderer.MarkdownRenderer;
 import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import table_formatter.PipeTableFormat;
+import wrapper.BufferedReaderWrapper;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
@@ -45,8 +49,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private StyledText styledText;
 	private Point point;
 	private IWebBrowser browser;
+	private HTMLInjector htmlInjector;
+	private static final int POPUP_OFFSET = 20;
 
-	public MarkdownEditor() throws FileNotFoundException {
+	public MarkdownEditor() throws IOException {
 
 		setSourceViewerConfiguration(new TextSourceViewerConfiguration());
 		setDocumentProvider(new TextFileDocumentProvider());
@@ -55,6 +61,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		activator = Activator.getDefault();
 
 		markdownRenderer = new MarkdownRenderer();
+		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
 
@@ -70,9 +77,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 				// TODO Auto-generated method stub
 				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
 					String text = styledText.getSelectionText();
+					Composite control = styledText.getParent();
+					// this function comes from org.eclipse.jface.fieldassist, how do they get the coordinates
+					Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
+					Rectangle selectedBlock = styledText.getBlockSelectionBounds();
+					int xLocation = location.x+selectedBlock.x+selectedBlock.width+POPUP_OFFSET;
+					int yLocation = location.y+selectedBlock.y+selectedBlock.height;
 					point = styledText.getSelectionRange();
 					if (!text.isEmpty()) {
-						autoComplete.show(text);
+						autoComplete.show(text, xLocation, yLocation);
 					}
 				}
 			}
@@ -88,11 +101,11 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Path saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
+		String htmlFileName = fileName + "html";
 		Path file = null;
 
-		String markdownString = "<!DOCTYPE html>\n" + "<html>" + "<head>\n" + "<meta charset=\"utf-8\">\n" + "<title>"
-				+ fileName + ".html" + "</title>\n" + "</head>" + "<body>" + markdownRenderer.render(document.get())
-				+ "</body>\n" + "</html>";
+		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
+
 		try {
 			byte[] bytes = markdownString.getBytes();
 			file = Files.createTempFile(fileName, ".html");
