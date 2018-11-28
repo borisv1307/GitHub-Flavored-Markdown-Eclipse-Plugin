@@ -109,8 +109,8 @@ public class MarkdownSyntaxSuggestionHelperTest {
 	@Test
 	public void blockQuote() {
 		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
-		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("> - Blockquote", "test");
-		assertEquals("\n> test\n", formatted);
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("> Blockquote - add > to each line", "test");
+		assertEquals("> test", formatted);
 	}
 
 	@Test
@@ -156,5 +156,18 @@ public class MarkdownSyntaxSuggestionHelperTest {
 		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("", "test");
 		assertEquals("", formatted);
 	}
-
+	
+	@Test
+	public void ordered_list() {
+		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("1. Ordered List - add 1. to each line", "test\ntest");
+		assertEquals("1. test\n1. test", formatted);
+	}
+	
+	@Test
+	public void unordered_list() {
+		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("* Unordered List - add * to each line", "test\ntest");
+		assertEquals("* test\n* test", formatted);
+	}
 }
