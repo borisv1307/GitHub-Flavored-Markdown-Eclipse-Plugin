@@ -179,14 +179,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 			// Convert document from string to string array with each instance a single line
 			// of the document
 			String[] formattedLines;
-			String[] stringArrayOfDocument = document.get().split("\n");
+			String[] stringArrayOfDocument = document.get().split("\n",-1);
 
 			if (preferences.formatTable()) {
 				formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
 			} else {
 				formattedLines = stringArrayOfDocument;
 			}
-
 			String formattedDocument = util.StringArray.join(formattedLines, "\n");
 
 			// Calculating the position of the cursor

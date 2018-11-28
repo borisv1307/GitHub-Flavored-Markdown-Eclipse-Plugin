@@ -109,7 +109,7 @@ public class PipeTableFormat {
 	}
 
 	private static boolean checkSecondLine(String tempSecondLine) {
-		if (tempSecondLine.trim().charAt(tempSecondLine.length() - 1) != '|') {
+		if (tempSecondLine.trim().charAt(tempSecondLine.trim().length() - 1) != '|') {
 			tempSecondLine += '|';
 		}
 		if (tempSecondLine.trim().charAt(0) != '|') {
