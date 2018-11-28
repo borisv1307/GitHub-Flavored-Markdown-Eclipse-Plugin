@@ -65,7 +65,6 @@ public class AddSyntaxToString {
 	public String addCharToEachLine(String str, String character) {
 		str = str.replaceAll("\n", "\n" + character + " ");
 		str = character + " " + str;
-		// str = str.substring(0, str.length() - 4);
 		return str;
 	}
 }
