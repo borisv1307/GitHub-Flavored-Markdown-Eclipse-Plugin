@@ -158,14 +158,12 @@ public class PipeTableFormat {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
 				} else if (n == 1) {
 					boolean isLast = false;
-					boolean isFirst = false;
 					if (m == lengthOfComponents - 1) {
 						isLast = true;
 					}
-					if(m == 0) {
-						isFirst = true;
-					}
-					format[n][m] = addHyphen("", lengthOfColumn, isFirst, isLast);
+					// isFirst is always false because format[n][m] == null only happens at the end of array
+					// when I add the length of array
+					format[n][m] = addHyphen("", lengthOfColumn, false, isLast);
 				} else {
 					format[n][m] = addSpaces(lengthOfColumn);
 				}
