@@ -2,9 +2,7 @@ package githubflavoredmarkdowneclipseplugin;
 
 import java.io.IOException;
 import java.net.URL;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.FileLocator;
+import java.nio.file.Path;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -13,7 +11,7 @@ import org.eclipse.ui.browser.IWebBrowser;
 
 public class BrowserEditor {
 	private IWebBrowser browser;
-	
+
 	public BrowserEditor(IWorkbench workbench, String plugin_id) {
 		if (browser == null) {
 			try {
@@ -23,11 +21,11 @@ public class BrowserEditor {
 			}
 		}
 	}
-	
-	public void loadFileInBrowser(IFile file, IWorkbenchPartSite site) {
+
+	public void loadFileInBrowser(Path file, IWorkbenchPartSite site) {
 		URL htmlFile;
 		try {
-			htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
+			htmlFile = file.toUri().toURL();
 			browser.openURL(htmlFile);
 			IWorkbenchPart part = site.getPart();
 			site.getPage().activate(part);

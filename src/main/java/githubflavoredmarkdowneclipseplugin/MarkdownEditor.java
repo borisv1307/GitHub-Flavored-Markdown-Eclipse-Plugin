@@ -126,21 +126,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 		return file;
 	}
 
-	private void loadFileInBrowser(Path file) {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		try {
-			if (browser == null)
-				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
-			URL htmlFile = file.toUri().toURL();
-			browser.openURL(htmlFile);
-			IWorkbenchPartSite site = this.getSite();
-			IWorkbenchPart part = site.getPart();
-			site.getPage().activate(part);
-		} catch (IOException | PartInitException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void replace(String text) {
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
