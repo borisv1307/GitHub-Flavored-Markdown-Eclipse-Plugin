@@ -2,6 +2,8 @@
 
 ## License info:
 
+[MIT](LICENSE)
+
 ### Drexel Software Engineering Capstone (Graduate)
 
 ### Contributors:
