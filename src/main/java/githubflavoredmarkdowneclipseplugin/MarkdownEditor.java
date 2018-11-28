@@ -1,14 +1,11 @@
 package githubflavoredmarkdowneclipseplugin;
 
-import java.io.FileNotFoundException;
-import java.io.ByteArrayInputStream;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -25,11 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
@@ -40,16 +34,19 @@ import markdown_renderer.MarkdownRenderer;
 import markdown_syntax_suggestion_window.MarkdownSyntaxSuggestionWindow;
 import preferences.PreferenceMonitor;
 import table_formatter.PipeTableFormat;
+import util.FileNameCreator;
+import githubflavoredmarkdowneclipseplugin.BrowserEditor;
 import wrapper.BufferedReaderWrapper;
 
 public class MarkdownEditor extends AbstractTextEditor {
 
 	private Activator activator;
 	private MarkdownRenderer markdownRenderer;
+	private BrowserEditor browserEditor;
+	private FileNameCreator fileNameCreator;
 	private MarkdownSyntaxSuggestionWindow autoComplete;
 	private StyledText styledText;
 	private Point point;
-	private IWebBrowser browser;
 	private PreferenceMonitor preferences;
 	private HTMLInjector htmlInjector;
 	private static final int POPUP_OFFSET = 20;
@@ -61,8 +58,9 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 		// Activator manages connections to the Workbench
 		activator = Activator.getDefault();
-
 		markdownRenderer = new MarkdownRenderer();
+		browserEditor = new BrowserEditor(PlatformUI.getWorkbench(), Activator.PLUGIN_ID);
+		fileNameCreator = new FileNameCreator();
 		preferences = new PreferenceMonitor();
 		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
@@ -105,7 +103,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Path saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileName + " (Preview)";
+		String htmlFileName = fileNameCreator.getHtmlFileName(editorInput.getName());
 		Path file = null;
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
@@ -121,21 +119,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 		return file;
 	}
 
-	private void loadFileInBrowser(Path file) {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		try {
-			if (browser == null)
-				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
-			URL htmlFile = file.toUri().toURL();
-			browser.openURL(htmlFile);
-			IWorkbenchPartSite site = this.getSite();
-			IWorkbenchPart part = site.getPart();
-			site.getPage().activate(part);
-		} catch (IOException | PartInitException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void replace(String text) {
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
@@ -149,7 +132,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		IDocumentProvider documentProvider = getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
 		Path htmlFile = saveMarkdown(editorInput, document, null);
-		loadFileInBrowser(htmlFile);
+		browserEditor.loadFileInBrowser(htmlFile, this.getSite());
 	}
 
 	@Override
@@ -202,7 +185,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 			// Move the cursor
 			this.setHighlightRange(cursorLength, 0, true);
 			Path htmlFile = saveMarkdown(editorInput, document, progressMonitor);
-			loadFileInBrowser(htmlFile);
+			browserEditor.loadFileInBrowser(htmlFile, this.getSite());
 			performSave(false, progressMonitor);
 		}
 	}
