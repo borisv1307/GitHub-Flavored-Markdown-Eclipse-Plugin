@@ -11,8 +11,11 @@ public class StringFormatter {
 		String formattedLine = "";
 		String[] temp = string.split("\\|", -1);
 		int length = temp.length;
-		if (!temp[0].isEmpty()) { // no beginning pipe
+		if (temp.length == 1) {
 			return originalLine;
+		}
+		if (!temp[0].isEmpty()) {
+			temp[0] = temp[0].trim() + " ";
 		}
 		for (int i = 1; i < length - 1; i++) {
 			if (!temp[i].isEmpty()) {
@@ -25,13 +28,13 @@ public class StringFormatter {
 			temp[length - 1] = " " + temp[length - 1].trim();
 		}
 		formattedLine = join(temp, length);
-		return formattedLine.substring(0,formattedLine.length()-1);
+		return formattedLine.substring(0, formattedLine.length() - 1);
 	}
-	
+
 	private String join(String[] temp, int length) {
 		StringBuilder str = new StringBuilder();
-		for(int i = 0;i<length;i++) {
-			str.append(temp[i]+"|");
+		for (int i = 0; i < length; i++) {
+			str.append(temp[i] + "|");
 		}
 		return str.toString();
 	}
