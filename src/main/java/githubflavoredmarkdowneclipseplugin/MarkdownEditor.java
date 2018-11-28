@@ -209,13 +209,19 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private IProject getCurrentProject(IEditorInput editorInput) {
-		IProject project = editorInput.getAdapter(IProject.class);
+		IProject project = (IProject) editorInput.getAdapter(IProject.class);
 		if (project == null) {
-			IResource resource = editorInput.getAdapter(IResource.class);
+			IResource resource = (IResource) editorInput.getAdapter(IResource.class);
 			if (resource != null) {
 				project = resource.getProject();
 			}
 		}
 		return project;
+	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
