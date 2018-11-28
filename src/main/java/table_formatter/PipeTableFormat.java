@@ -152,6 +152,7 @@ public class PipeTableFormat {
 		for (int m = 0; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
 			for (int n = 0; n < length; n++) {
+				// Ignore the second line, because we want to trim the hyphens if needed
 				if (format[n][m] != null) {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
 				} else if (n == 1) {
@@ -183,7 +184,7 @@ public class PipeTableFormat {
 
 	private static String addHyphen(String format, int numberOfSpaces, boolean isLast) {
 		if (!format.isEmpty()) {
-			if (numberOfSpaces > 0) {
+			if (numberOfSpaces >= 0) {
 				if (isLast || format.charAt(format.length() - 1) == ' ') {
 					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces)
 							+ format.substring(2, format.length());
@@ -191,6 +192,8 @@ public class PipeTableFormat {
 					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces - 1)
 							+ format.substring(2, format.length()) + " ";
 				}
+			} else {
+				format = format.substring(0, 2) + format.substring(2 + numberOfSpaces * -1, format.length());
 			}
 		} else if (numberOfSpaces > 2) {
 			if (isLast) {
@@ -234,7 +237,8 @@ public class PipeTableFormat {
 	private static int getLengthOfColumn(String[][] format, int m) {
 		int length = 0;
 		for (int n = 0; n < format.length; n++) {
-			if (format[n][m] != null && format[n][m].length() > length) {
+			// Ignore second line, because length is adjusted by other content
+			if (n != 1 && format[n][m] != null && format[n][m].length() > length) {
 				length = format[n][m].length();
 			}
 		}
