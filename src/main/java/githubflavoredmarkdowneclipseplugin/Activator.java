@@ -74,4 +74,13 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+
+	public void log(boolean message) {
+		if (message) {
+			log("true", null);
+		} else {
+			log("false", null);
+		}
+
+	}
 }
