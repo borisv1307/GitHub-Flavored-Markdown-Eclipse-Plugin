@@ -131,7 +131,7 @@ public class PipeTableFormat {
 	private static boolean checkEverySplitedComponent(String[] secondLine, int i) {
 		int tempLength = secondLine[i].trim().length() - 1;
 		boolean checkEveryChar = true;
-		if (tempLength < 2 || ((secondLine[i].trim().charAt(0) != '-' && secondLine[i].trim().charAt(0) != ':')
+		if (tempLength < 0 || ((secondLine[i].trim().charAt(0) != '-' && secondLine[i].trim().charAt(0) != ':')
 				|| (secondLine[i].trim().charAt(tempLength) != '-'
 						&& secondLine[i].trim().charAt(tempLength) != ':'))) {
 			checkEveryChar = false;
