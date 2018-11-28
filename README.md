@@ -36,4 +36,10 @@
 	to meet the expectations of companies with strict privacy policy adherence. Lastly, our plugin uses eclipse's built in 
 	browser to render GFM accurately with CSS. 
 	
+## Install
 
+To pull submodules in the project do
+
+```
+git pull --recurse-submodules
+```
