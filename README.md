@@ -2,6 +2,8 @@
 
 ## License info:
 
+[MIT](LICENSE)
+
 ### Drexel Software Engineering Capstone (Graduate)
 
 ### Contributors:
@@ -35,10 +37,12 @@
 	to meet the expectations of companies with strict privacy policy adherence. Lastly, our plugin uses eclipse's built in 
 	browser to render GFM accurately with CSS. 
 	
-## Install
+## Installation of the plugin
 
-To pull submodules in the project do
+[Follow these steps](https://github.com/borisv13/GitHub-Flavored-Markdown-Eclipse-Plugin/wiki/Installing)
 
-```
-git pull --recurse-submodules
-```
+## Building from source
+
+[Follow these steps](https://github.com/borisv13/GitHub-Flavored-Markdown-Eclipse-Plugin/wiki/Building#building-for-deployment-wip)
+
+[Some common build issues addressed](https://github.com/borisv13/GitHub-Flavored-Markdown-Eclipse-Plugin/wiki/Debugging.builds#debugging-the-build)
