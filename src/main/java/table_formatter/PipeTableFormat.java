@@ -151,36 +151,7 @@ public class PipeTableFormat {
 
 	private static void formatEachComponent(String[][] format, int lengthOfComponents, int length) {
 		for (int m = 0; m < lengthOfComponents; m++) {
-			int lengthOfColumn = getLengthOfColumn(format, m);
-//			System.out.println(format[1][m]);
-			System.out.println(lengthOfColumn);
-			if (format[1][m] != null) {
-				int lentghOfSecondLine = format[1][m].length();
-				int counter = 0;
-				for (int i = 0; i < lentghOfSecondLine; i++) {
-					if (format[1][m].charAt(i) == '-') {
-						counter++;
-					}
-				}
-				int lengthOfThreeHyphens = 0;
-				if (counter < 3) {
-					lengthOfThreeHyphens = 3 - counter + format[1][m].length();
-					if (lengthOfColumn > 0 && lengthOfColumn < lengthOfThreeHyphens)
-						lengthOfColumn = lengthOfThreeHyphens;
-				}
-			} else {
-//				System.out.println(lengthOfColumn);
-				lengthOfColumn = 5;
-			}
-
-			// Hyphens should never be less than 3. 3 hyphens + 2 spaces
-//			if (m == 0 || m == lengthOfComponents - 1) {
-//				if (lengthOfColumn > 0 && lengthOfColumn < 4)
-//					lengthOfColumn = 4;
-//			} else {
-//				if (lengthOfColumn > 0 && lengthOfColumn < 5)
-//					lengthOfColumn = 5;
-//			}
+			int lengthOfColumn = getLengthOfColumn(format,lengthOfComponents, m);
 			for (int n = 0; n < length; n++) {
 				// Ignore the second line, because we want to trim the hyphens if needed
 				if (format[n][m] != null) {
@@ -264,14 +235,37 @@ public class PipeTableFormat {
 		}
 	}
 
-	private static int getLengthOfColumn(String[][] format, int m) {
-		int length = 0;
-		for (int n = 0; n < format.length; n++) {
+	private static int getLengthOfColumn(String[][] format, int lengthOfComponents, int m) {
+		int lengthOfColumn = 0;
+		int lengthOfFormat = format.length;
+		for (int n = 0; n < lengthOfFormat; n++) {
 			// Ignore second line, because length is adjusted by other content
-			if (n != 1 && format[n][m] != null && format[n][m].length() > length) {
-				length = format[n][m].length();
+			if (n != 1 && format[n][m] != null && format[n][m].length() > lengthOfColumn) {
+				lengthOfColumn = format[n][m].length();
 			}
 		}
-		return length;
+		if (m == 0 || m == lengthOfComponents - 1) {
+			if (lengthOfColumn > 0 && lengthOfColumn < 4)
+				lengthOfColumn = 4;
+		} else {
+			if (lengthOfColumn < 5)
+				lengthOfColumn = 5;
+		}
+		if (format[1][m] != null) {
+			int lentghOfSecondLine = format[1][m].length();
+			int counter = 0;
+			for (int i = 0; i < lentghOfSecondLine; i++) {
+				if (format[1][m].charAt(i) == '-') {
+					counter++;
+				}
+			}
+			int lengthOfThreeHyphens = 0;
+			if (counter < 3) {
+				lengthOfThreeHyphens = 3 - counter + format[1][m].length();
+				if (lengthOfColumn > 0 && lengthOfColumn < lengthOfThreeHyphens)
+					lengthOfColumn = lengthOfThreeHyphens;
+			}
+		}
+		return lengthOfColumn;
 	}
 }
