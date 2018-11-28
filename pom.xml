@@ -16,6 +16,11 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<excludes>	
+						<exclude>githubflavoredmarkdowneclipseplugin/*.java</exclude>	
+						<exclude>markdown_syntax_suggestion_window/*.java</exclude>	
+						<exclude>preferences/*.java</exclude> 	
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
