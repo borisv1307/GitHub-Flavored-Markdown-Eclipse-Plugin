@@ -28,6 +28,7 @@ public class StringArray {
 		int pointer = 0;
 		int counter = 0;
 		int i = 0;
+
 		while (counter < numOfComponent - 1) {
 			if (string.charAt(i) == deliminator) {
 				stringArray[counter] = string.substring(pointer, i);
