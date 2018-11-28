@@ -61,7 +61,7 @@ public class MarkdownSyntaxSuggestionConstantsTest {
 	public void getArrayIsNotHeader() {
 		MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
 		String[] test = markdownSyntaxSuggestionConstants.getArrayOfConstants("123123");
-		assertEquals(12, test.length);
+		assertEquals(14, test.length);
 		assertEquals("# - Heading 1", test[0]);
 	}
 
@@ -69,7 +69,7 @@ public class MarkdownSyntaxSuggestionConstantsTest {
 	public void getArrayIsHeader() {
 		MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
 		String[] test = markdownSyntaxSuggestionConstants.getArrayOfConstants("123|123");
-		assertEquals(13, test.length);
+		assertEquals(15, test.length);
 		assertEquals("table - automatically add second line", test[0]);
 	}
 
