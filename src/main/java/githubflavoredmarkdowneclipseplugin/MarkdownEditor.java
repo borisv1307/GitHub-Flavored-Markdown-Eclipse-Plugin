@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
@@ -177,7 +178,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 			if (selection instanceof ITextSelection) {
 				ITextSelection textSelection = (ITextSelection) selection;
 				cursorLength = textSelection.getOffset(); // etc.
-				activator.log(Integer.toString(cursorLength));
 			}
 			// Replace the document with the formatted string
 			document.set(formattedDocument);
