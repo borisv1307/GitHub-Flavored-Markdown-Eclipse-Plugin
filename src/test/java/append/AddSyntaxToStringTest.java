@@ -107,8 +107,8 @@ public class AddSyntaxToStringTest {
 	@Test
 	public void add_block_quote() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
-		String actual = addStuffToString.blockQuote("word");
-		assertEquals("\n> word\n", actual);
+		String actual = addStuffToString.addCharToEachLine("word\nword2", ">");
+		assertEquals("> word\n> word2", actual);
 	}
 
 	@Test
@@ -121,10 +121,14 @@ public class AddSyntaxToStringTest {
 	@Test
 	public void add_ordered_list() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
-		String actual = addStuffToString.orderedList("word\nword\n");
-		assertEquals("1.  word\n1.  word\n", actual);
+		String actual = addStuffToString.addCharToEachLine("word\nword2\nword3", "1.");
+		assertEquals("1. word\n1. word2\n1. word3", actual);
 	}
-
-	// TODO make a function and test for an ordered list (each new line starts with
-	// "1."
+	
+ 	@Test
+	public void addUnorderedList() {
+		AddSyntaxToString addStuffToString = new AddSyntaxToString();
+		String actual = addStuffToString.addCharToEachLine("word\nword2\nword3", "*");
+		assertEquals("* word\n* word2\n* word3", actual);
+	}
 }

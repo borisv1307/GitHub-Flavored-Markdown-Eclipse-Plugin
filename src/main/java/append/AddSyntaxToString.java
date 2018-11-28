@@ -57,20 +57,14 @@ public class AddSyntaxToString {
 		return str;
 	}
 
-	public String blockQuote(String str) {
-		str = "\n> " + str + "\n";
-		return str;
-	}
-
 	public String addLinkToImage(String str) {
 		str = "![" + str + "](url)";
 		return str;
 	}
 
-	public String orderedList(String str) {
-		str = str.replaceAll("(\n)", "\n1.  ");
-		str = "1.  " + str;
-		str = str.substring(0, str.length() - 4);
+	public String addCharToEachLine(String str, String character) {
+		str = str.replaceAll("\n", "\n" + character + " ");
+		str = character + " " + str;
 		return str;
 	}
 }
