@@ -43,7 +43,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 					frame.dispose();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(),
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedValue().toString(),
 							selectedContent);
 					frame.dispose();
 					Display.getDefault().syncExec(new Runnable() {
@@ -74,7 +74,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedIndex(),
+					selectedContent = markdownSyntaxSuggestionHelper.applySuggestion(list.getSelectedValue().toString(),
 							selectedContent);
 					frame.dispose();
 					Display.getDefault().syncExec(new Runnable() {
@@ -112,9 +112,9 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		});
 	}
 
-	public void show(String selection) {
+	public void show(String selection, int xLocation, int yLocation) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
-		this.frame.setLocation(point.x, point.y);
+		this.frame.setLocation(xLocation, yLocation);
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
 		list.setFont(new Font("Arial", Font.BOLD, 22));
 		if (container.getComponents() != null) {

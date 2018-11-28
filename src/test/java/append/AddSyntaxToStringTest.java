@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class AddStuffToStringTest {
+public class AddSyntaxToStringTest {
 
 	@Test
 	public void asterisk_italics() {
@@ -98,28 +98,28 @@ public class AddStuffToStringTest {
 	}
 
 	@Test
-	public void addLink() {
+	public void add_link() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.linkToURL("word");
 		assertEquals("[word](url \"Title\")", actual);
 	}
 
 	@Test
-	public void addBlockQuote() {
+	public void add_block_quote() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.blockQuote("word");
 		assertEquals("\n> word\n", actual);
 	}
 
 	@Test
-	public void addPicture() {
+	public void add_picture() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addLinkToImage("word");
 		assertEquals("![word](url)", actual);
 	}
 
 	@Test
-	public void addOrderedList() {
+	public void add_ordered_list() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.orderedList("word\nword\n");
 		assertEquals("1.  word\n1.  word\n", actual);

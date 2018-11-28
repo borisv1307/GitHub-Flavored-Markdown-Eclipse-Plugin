@@ -1,19 +1,19 @@
 package markdown_syntax_suggestion_helper;
 
 public class MarkdownSyntaxSuggestionConstants {
-	private static final String HEADING_ONE = "# - Heading 1";
-	private static final String HEADING_TWO = "## - Heading 2";
-	private static final String HEADING_THREE = "### - Heading 3";
-	private static final String HEADING_FOUR = "#### - Heading 4";
-	private static final String HEADING_FIVE = "##### - Heading 5";
-	private static final String HEADING_SIX = "###### - Heading 6";
-	private static final String BLOCKQUOTE = "> - Blockquote";
-	private static final String LINK = "[] - Link(inline) - [Text]";
-	private static final String CODE_BLOCK = "\t - Code block (indented with tab)";
-	private static final String INLINE_CODE = "`inline code` - A span of code inline";
-	private static final String BOLD = "**strong** - strong";
-	private static final String ITALIC = "_emphasis_ - emphasis";
-	private static final String TABLE = "table - automatically add second line";
+	public static final String HEADING_ONE = "# - Heading 1";
+	public static final String HEADING_TWO = "## - Heading 2";
+	public static final String HEADING_THREE = "### - Heading 3";
+	public static final String HEADING_FOUR = "#### - Heading 4";
+	public static final String HEADING_FIVE = "##### - Heading 5";
+	public static final String HEADING_SIX = "###### - Heading 6";
+	public static final String BLOCKQUOTE = "> - Blockquote";
+	public static final String LINK = "[] - Link(inline) - [Text]";
+	public static final String CODE_BLOCK = "\t - Code block (indented with tab)";
+	public static final String INLINE_CODE = "`inline code` - A span of code inline";
+	public static final String BOLD = "**strong** - strong";
+	public static final String ITALIC = "_emphasis_ - emphasis";
+	public static final String TABLE = "table - automatically add second line";
 
 	public String[] getArrayOfConstants(String selectedContent) {
 		if (isHeader(selectedContent)) {
