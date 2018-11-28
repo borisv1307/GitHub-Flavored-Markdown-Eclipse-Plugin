@@ -37,8 +37,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	protected void createFieldEditors() {
 		Composite parent = getFieldEditorParent();
-		addField(
-				new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature", parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature (experimental)", parent));
 		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST, "&Use suggestion feature", parent));
 	}
 
