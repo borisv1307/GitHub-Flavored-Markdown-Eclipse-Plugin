@@ -50,12 +50,12 @@ public class PipeTableFormat {
 		int lengthOfString = string.length;
 		boolean beginningPipe = true;
 		boolean closingPipe = true;
-		if(string[0].trim().charAt(0) == '|') {
+		if (string[0].trim().charAt(0) == '|') {
 			beginningPipe = true;
 		} else {
 			beginningPipe = false;
 		}
-		if(string[0].trim().charAt(string[0].trim().length()-1) == '|') {
+		if (string[0].trim().charAt(string[0].trim().length() - 1) == '|') {
 			closingPipe = true;
 		} else {
 			closingPipe = false;
@@ -83,43 +83,44 @@ public class PipeTableFormat {
 		return string;
 	}
 
-	// does every line in table has beginning pipe or closing pipe is determined by the pattern of first line
+	// does every line in table has beginning pipe or closing pipe is determined by
+	// the pattern of first line
 	private static void applyPatternOfFirstLine(String[] string, boolean beginningPipe, boolean closingPipe, int i) {
-		boolean charAtZero = string[i].charAt(0)=='|';
-		boolean charAtLast = string[i].charAt(string[i].length()-1)=='|';
-		if(beginningPipe) {
-			if(!charAtZero) {
-				string[i] = "| "+string[i];
+		boolean charAtZero = string[i].charAt(0) == '|';
+		boolean charAtLast = string[i].charAt(string[i].length() - 1) == '|';
+		if (beginningPipe) {
+			if (!charAtZero) {
+				string[i] = "| " + string[i];
 			}
 		} else {
-			if(charAtZero) {
+			if (charAtZero) {
 				string[i] = string[i].substring(2, string[i].length());
 			}
 		}
-		if(closingPipe) {
-			if(!charAtLast) {
+		if (closingPipe) {
+			if (!charAtLast) {
 				string[i] = string[i] + " |";
 			}
 		} else {
-			if(charAtLast) {
-				string[i] = string[i].substring(0, string[i].length()-2);
+			if (charAtLast) {
+				string[i] = string[i].substring(0, string[i].length() - 2);
 			}
 		}
 	}
 
 	private static boolean checkSecondLine(String tempSecondLine) {
-		if (tempSecondLine.trim().charAt(tempSecondLine.length() - 1) != '|') {
+		if (tempSecondLine.trim().charAt(tempSecondLine.trim().length() - 1) != '|') {
 			tempSecondLine += '|';
 		}
 		if (tempSecondLine.trim().charAt(0) != '|') {
-			tempSecondLine = '|'+tempSecondLine;
+			tempSecondLine = '|' + tempSecondLine;
 		}
 		boolean judge = true;
 		String[] secondLine = tempSecondLine.trim().split("\\|", -1);
 		int lengthOfSecondLine = secondLine.length;
-		for (int i = 1; i < lengthOfSecondLine-1; i++) {
+		for (int i = 1; i < lengthOfSecondLine - 1; i++) {
 			boolean checkEveryChar = checkEverySplitedComponent(secondLine, i);
-			if(!checkEveryChar) {
+			if (!checkEveryChar) {
 				judge = false;
 				break;
 			}
@@ -130,9 +131,9 @@ public class PipeTableFormat {
 	private static boolean checkEverySplitedComponent(String[] secondLine, int i) {
 		int tempLength = secondLine[i].trim().length() - 1;
 		boolean checkEveryChar = true;
-		if(tempLength<2 || ((secondLine[i].trim().charAt(0) != '-' && secondLine[i].trim().charAt(0) != ':')
+		if (tempLength < 2 || ((secondLine[i].trim().charAt(0) != '-' && secondLine[i].trim().charAt(0) != ':')
 				|| (secondLine[i].trim().charAt(tempLength) != '-'
-				&& secondLine[i].trim().charAt(tempLength) != ':'))) {
+						&& secondLine[i].trim().charAt(tempLength) != ':'))) {
 			checkEveryChar = false;
 		}
 		for (int j = 1; j < tempLength; j++) {
@@ -141,7 +142,7 @@ public class PipeTableFormat {
 				break;
 			}
 		}
-		if(secondLine[i].trim().isEmpty()) {
+		if (secondLine[i].trim().isEmpty()) {
 			checkEveryChar = false;
 		}
 		return checkEveryChar;
@@ -151,11 +152,12 @@ public class PipeTableFormat {
 		for (int m = 0; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
 			for (int n = 0; n < length; n++) {
+				// Ignore the second line, because we want to trim the hyphens if needed
 				if (format[n][m] != null) {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
 				} else if (n == 1) {
 					boolean isLast = false;
-					if(m == lengthOfComponents-1) {
+					if (m == lengthOfComponents - 1) {
 						isLast = true;
 					}
 					format[n][m] = addHyphen("", lengthOfColumn, isLast);
@@ -171,7 +173,7 @@ public class PipeTableFormat {
 		int numberOfSpaces = lengthOfColumn - format[n][m].length();
 		if (n == 1) {
 			boolean isLast = false;
-			if(m == lengthOfComponents-1) {
+			if (m == lengthOfComponents - 1) {
 				isLast = true;
 			}
 			format[n][m] = addHyphen(format[n][m], numberOfSpaces, isLast);
@@ -182,19 +184,23 @@ public class PipeTableFormat {
 
 	private static String addHyphen(String format, int numberOfSpaces, boolean isLast) {
 		if (!format.isEmpty()) {
-			if(numberOfSpaces>0) {
-				if (isLast || format.charAt(format.length()-1) == ' ') {
-					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces) + format.substring(2, format.length());
+			if (numberOfSpaces >= 0) {
+				if (isLast || format.charAt(format.length() - 1) == ' ') {
+					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces)
+							+ format.substring(2, format.length());
 				} else {
-					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces-1) + format.substring(2, format.length())+" ";
+					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces - 1)
+							+ format.substring(2, format.length()) + " ";
 				}
+			} else {
+				format = format.substring(0, 2) + format.substring(2 + numberOfSpaces * -1, format.length());
 			}
 		} else if (numberOfSpaces > 2) {
-			if(isLast) {
-				format = " " + stringBuilderAppend(numberOfSpaces-1);
+			if (isLast) {
+				format = " " + stringBuilderAppend(numberOfSpaces - 1);
 			} else {
-				format = " " + stringBuilderAppend(numberOfSpaces-2)+" ";
-			}	
+				format = " " + stringBuilderAppend(numberOfSpaces - 2) + " ";
+			}
 		}
 		return format;
 	}
@@ -206,7 +212,7 @@ public class PipeTableFormat {
 		}
 		return strB.toString();
 	}
-	
+
 	private static String addSpaces(int numberOfSpaces) {
 		StringBuilder strB = new StringBuilder();
 		for (int i = 0; i < numberOfSpaces; i++) {
@@ -231,7 +237,8 @@ public class PipeTableFormat {
 	private static int getLengthOfColumn(String[][] format, int m) {
 		int length = 0;
 		for (int n = 0; n < format.length; n++) {
-			if (format[n][m] != null && format[n][m].length() > length) {
+			// Ignore second line, because length is adjusted by other content
+			if (n != 1 && format[n][m] != null && format[n][m].length() > length) {
 				length = format[n][m].length();
 			}
 		}

@@ -11,14 +11,15 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 	private static final int[] SMALL = { 200, 100 };
 	private static final int[] MEDIUM = { 450, 300 };
 	private static final int[] LARGE = { 650, 500 };
+	private Activator activator;
 
 	public PreferenceMonitor() {
-		store = Activator.getDefault().getPreferenceStore();
+		store = activator.getDefault().getPreferenceStore();
 	}
 
 	@Override
 	public void preferenceChange(PreferenceChangeEvent event) {
-		store = Activator.getDefault().getPreferenceStore();
+		store = activator.getDefault().getPreferenceStore();
 	}
 
 	public boolean formatTable() {
@@ -34,6 +35,8 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		} else {
 			return MEDIUM;
 		}
+	public boolean autocomplete() {
+		return store.getBoolean("P_SUGGEST");
 	}
 
 }

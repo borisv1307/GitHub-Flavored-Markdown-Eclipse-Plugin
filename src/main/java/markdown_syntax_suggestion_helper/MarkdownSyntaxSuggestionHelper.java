@@ -6,45 +6,45 @@ public class MarkdownSyntaxSuggestionHelper {
 	private AddSyntaxToString syntax = new AddSyntaxToString();
 	private String markdownSyntaxSuggestionSelection = "";
 
-	public String applySuggestion(int index, String selectedContent) {
-		switch (index) {
-		case 0:
+	public String applySuggestion(String string, String selectedContent) {
+		switch (string) {
+		case MarkdownSyntaxSuggestionConstants.HEADING_ONE:
 			markdownSyntaxSuggestionSelection = syntax.addSingleCharacter(selectedContent, "#");
 			break;
-		case 1:
+		case MarkdownSyntaxSuggestionConstants.HEADING_TWO:
 			markdownSyntaxSuggestionSelection = syntax.addDoubleCharacter(selectedContent, "#");
 			break;
-		case 2:
+		case MarkdownSyntaxSuggestionConstants.HEADING_THREE:
 			markdownSyntaxSuggestionSelection = syntax.addTripleCharacter(selectedContent, "#");
 			break;
-		case 3:
+		case MarkdownSyntaxSuggestionConstants.HEADING_FOUR:
 			markdownSyntaxSuggestionSelection = syntax.addFourCharacter(selectedContent, "#");
 			break;
-		case 4:
+		case MarkdownSyntaxSuggestionConstants.HEADING_FIVE:
 			markdownSyntaxSuggestionSelection = syntax.addFiveCharacter(selectedContent, "#");
 			break;
-		case 5:
+		case MarkdownSyntaxSuggestionConstants.HEADING_SIX:
 			markdownSyntaxSuggestionSelection = syntax.addSixCharacter(selectedContent, "#");
 			break;
-		case 6:
+		case MarkdownSyntaxSuggestionConstants.BLOCKQUOTE:
 			markdownSyntaxSuggestionSelection = syntax.blockQuote(selectedContent);
 			break;
-		case 7:
+		case MarkdownSyntaxSuggestionConstants.LINK:
 			markdownSyntaxSuggestionSelection = syntax.linkToURL(selectedContent);
 			break;
-		case 8:
+		case MarkdownSyntaxSuggestionConstants.CODE_BLOCK:
 			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
 			break;
-		case 9:
+		case MarkdownSyntaxSuggestionConstants.INLINE_CODE:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "`");
 			break;
-		case 10:
+		case MarkdownSyntaxSuggestionConstants.BOLD:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "**");
 			break;
-		case 11:
+		case MarkdownSyntaxSuggestionConstants.ITALIC:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "_");
 			break;
-		case 12:
+		case MarkdownSyntaxSuggestionConstants.TABLE:
 			markdownSyntaxSuggestionSelection = addSecondLineToTable(selectedContent);
 			break;
 		default:

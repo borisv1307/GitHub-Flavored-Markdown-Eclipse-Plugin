@@ -3,6 +3,7 @@ package preferences;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -21,10 +22,12 @@ import githubflavoredmarkdowneclipseplugin.Activator;
  */
 
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+	private Activator activator;
 
 	public PreferencePage() {
 		super(GRID);
-		setPreferenceStore(Activator.getDefault().getPreferenceStore());
+		IPreferenceStore store = activator.getDefault().getPreferenceStore();
+		setPreferenceStore(store);
 		setDescription("General settings for GFM Editor");
 	}
 
@@ -35,11 +38,10 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	protected void createFieldEditors() {
 		Composite parent = getFieldEditorParent();
-		addField(
-				new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature", parent));
-//		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST,"&Use suggestion feature",parent));
 		addField(new RadioGroupFieldEditor(PreferenceConstants.P_POPUP, "Select size of suggestion popup window", 1,
 				new String[][] { { "&small", "small" }, { "&medium", "medium" }, { "&large", "large" } }, parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature (experimental)", parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST, "&Use suggestion feature", parent));
 	}
 
 }
