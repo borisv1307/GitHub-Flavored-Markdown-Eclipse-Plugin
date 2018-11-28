@@ -6,12 +6,13 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import githubflavoredmarkdowneclipseplugin.Activator;
 
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
+	private Activator activator;
 
 	@Override
 	public void initializeDefaultPreferences() {
-		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_TABLE, false);
-//		store.setDefault(PreferenceConstants.P_SUGGEST, true);
+		IPreferenceStore store = activator.getDefault().getPreferenceStore();
+		store.setDefault(PreferenceConstants.P_TABLE, true);
+		store.setDefault(PreferenceConstants.P_SUGGEST, true);
 	}
 
 }

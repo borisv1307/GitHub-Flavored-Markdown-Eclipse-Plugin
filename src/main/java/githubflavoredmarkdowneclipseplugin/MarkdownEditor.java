@@ -1,16 +1,14 @@
 package githubflavoredmarkdowneclipseplugin;
 
+import java.io.FileNotFoundException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -54,7 +52,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private IWebBrowser browser;
 	private PreferenceMonitor preferences;
 	private HTMLInjector htmlInjector;
-	private IFolder folder;
 	private static final int POPUP_OFFSET = 20;
 
 	public MarkdownEditor() throws IOException {
@@ -80,18 +77,19 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
-					String text = styledText.getSelectionText();
-					Composite control = styledText.getParent();
-					// this function comes from org.eclipse.jface.fieldassist, how do they get the coordinates
-					Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
-					Rectangle selectedBlock = styledText.getBlockSelectionBounds();
-					int xLocation = location.x+selectedBlock.x+selectedBlock.width+POPUP_OFFSET;
-					int yLocation = location.y+selectedBlock.y+selectedBlock.height;
-					point = styledText.getSelectionRange();
-					if (!text.isEmpty()) {
-						autoComplete.show(text, xLocation, yLocation);
+				if (preferences.autocomplete()) {
+					if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
+						String text = styledText.getSelectionText();
+						Composite control = styledText.getParent();
+						// this function comes from org.eclipse.jface.fieldassist, how do they get the coordinates
+						Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
+						Rectangle selectedBlock = styledText.getBlockSelectionBounds();
+						int xLocation = location.x+selectedBlock.x+selectedBlock.width+POPUP_OFFSET;
+						int yLocation = location.y+selectedBlock.y+selectedBlock.height;
+						point = styledText.getSelectionRange();
+						if (!text.isEmpty()) {
+							autoComplete.show(text, xLocation, yLocation);
+						}
 					}
 				}
 			}
@@ -104,43 +102,31 @@ public class MarkdownEditor extends AbstractTextEditor {
 		});
 	}
 
-	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
-
-		IProject project = getCurrentProject(editorInput);
+	private Path saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileName + ".html";
-		folder = project.getFolder(".html");
-		IFile file = folder.getFile(htmlFileName);
+		String htmlFileName = fileName + "html";
+		Path file = null;
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
 
 		try {
-			if (!project.isOpen())
-				project.open(progressMonitor);
-			if (!folder.exists()) {
-				folder.create(IResource.NONE, true, progressMonitor);
-			}
-			if (file.exists())
-				file.delete(true, progressMonitor);
-			if (!file.exists()) {
-				byte[] bytes = markdownString.getBytes();
-				InputStream source = new ByteArrayInputStream(bytes);
-				file.create(source, IResource.NONE, progressMonitor);
-			}
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
+			byte[] bytes = markdownString.getBytes();
+			file = Files.createTempFile(fileName, ".html");
+			Files.write(file, bytes);
+			file.toFile().deleteOnExit();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return file;
 	}
 
-	private void loadFileInBrowser(IFile file) {
+	private void loadFileInBrowser(Path file) {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		try {
 			if (browser == null)
 				browser = workbench.getBrowserSupport().createBrowser(Activator.PLUGIN_ID);
-			URL htmlFile = FileLocator.toFileURL(file.getLocationURI().toURL());
+			URL htmlFile = file.toUri().toURL();
 			browser.openURL(htmlFile);
 			IWorkbenchPartSite site = this.getSite();
 			IWorkbenchPart part = site.getPart();
@@ -162,7 +148,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 		super.init(site, editorInput);
 		IDocumentProvider documentProvider = getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
-		IFile htmlFile = saveMarkdown(editorInput, document, null);
+		Path htmlFile = saveMarkdown(editorInput, document, null);
 		loadFileInBrowser(htmlFile);
 	}
 
@@ -217,7 +203,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			// Move the cursor
 			this.setHighlightRange(cursorLength, 0, true);
-			IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
+			Path htmlFile = saveMarkdown(editorInput, document, progressMonitor);
 			loadFileInBrowser(htmlFile);
 			performSave(false, progressMonitor);
 		}
