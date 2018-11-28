@@ -42,3 +42,5 @@
 ## Building from source
 
 [Follow these steps](https://github.com/borisv13/GitHub-Flavored-Markdown-Eclipse-Plugin/wiki/Building#building-for-deployment-wip)
+
+[Some common build issues addressed](https://github.com/borisv13/GitHub-Flavored-Markdown-Eclipse-Plugin/wiki/Debugging.builds#debugging-the-build)
