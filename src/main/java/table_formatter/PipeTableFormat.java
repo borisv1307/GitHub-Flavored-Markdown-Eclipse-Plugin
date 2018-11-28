@@ -158,10 +158,14 @@ public class PipeTableFormat {
 					addContentToEveryComponent(format, lengthOfComponents, lengthOfColumn, m, n);
 				} else if (n == 1) {
 					boolean isLast = false;
+					boolean isFirst = false;
 					if (m == lengthOfComponents - 1) {
 						isLast = true;
 					}
-					format[n][m] = addHyphen("", lengthOfColumn, isLast);
+					if(m == 0) {
+						isFirst = true;
+					}
+					format[n][m] = addHyphen("", lengthOfColumn, isFirst, isLast);
 				} else {
 					format[n][m] = addSpaces(lengthOfColumn);
 				}
@@ -174,19 +178,26 @@ public class PipeTableFormat {
 		int numberOfSpaces = lengthOfColumn - format[n][m].length();
 		if (n == 1) {
 			boolean isLast = false;
+			boolean isFirst = false;
 			if (m == lengthOfComponents - 1) {
 				isLast = true;
 			}
-			format[n][m] = addHyphen(format[n][m], numberOfSpaces, isLast);
+			if(m == 0) {
+				isFirst = true;
+			}
+			format[n][m] = addHyphen(format[n][m], numberOfSpaces, isFirst, isLast);
 		} else {
 			format[n][m] += addSpaces(numberOfSpaces);
 		}
 	}
 
-	private static String addHyphen(String format, int numberOfSpaces, boolean isLast) {
+	private static String addHyphen(String format, int numberOfSpaces, boolean isFirst, boolean isLast) {
 		if (!format.isEmpty()) {
 			if (numberOfSpaces >= 0) {
-				if (isLast || format.charAt(format.length() - 1) == ' ') {
+				if (isFirst) {
+					format = format.substring(0, 1) + stringBuilderAppend(numberOfSpaces)
+					+ format.substring(1, format.length());
+				} else if (isLast || format.charAt(format.length() - 1) == ' ') {
 					format = format.substring(0, 2) + stringBuilderAppend(numberOfSpaces)
 							+ format.substring(2, format.length());
 				} else {
@@ -244,6 +255,8 @@ public class PipeTableFormat {
 				lengthOfColumn = format[n][m].length();
 			}
 		}
+		// for the first last column in table, it at least needs 3 hyphens + 1 space
+		// for other columns in table, it needs 3 hyphens + 2 spaces
 		if (m == 0 || m == lengthOfComponents - 1) {
 			if (lengthOfColumn > 0 && lengthOfColumn < 4)
 				lengthOfColumn = 4;
@@ -251,21 +264,24 @@ public class PipeTableFormat {
 			if (lengthOfColumn < 5)
 				lengthOfColumn = 5;
 		}
+		int lengthOfThreeHyphens = 0;
+		int counter = 0;
+		lengthOfThreeHyphens = calculateMinimumLength(format, m, lengthOfThreeHyphens, counter);
+		if (lengthOfColumn > 0 && lengthOfColumn < lengthOfThreeHyphens)  lengthOfColumn = lengthOfThreeHyphens;
+		return lengthOfColumn;
+	}
+
+	// commonmark requires at least 3 hyphens, so for condition like | :-- | its minimum length should be 6
+	private static int calculateMinimumLength(String[][] format, int m, int lengthOfThreeHyphens, int counter) {
 		if (format[1][m] != null) {
 			int lentghOfSecondLine = format[1][m].length();
-			int counter = 0;
 			for (int i = 0; i < lentghOfSecondLine; i++) {
 				if (format[1][m].charAt(i) == '-') {
 					counter++;
 				}
 			}
-			int lengthOfThreeHyphens = 0;
-			if (counter < 3) {
-				lengthOfThreeHyphens = 3 - counter + format[1][m].length();
-				if (lengthOfColumn > 0 && lengthOfColumn < lengthOfThreeHyphens)
-					lengthOfColumn = lengthOfThreeHyphens;
-			}
+			if (counter < 3)  lengthOfThreeHyphens = 3 - counter + format[1][m].length();
 		}
-		return lengthOfColumn;
+		return lengthOfThreeHyphens;
 	}
 }
