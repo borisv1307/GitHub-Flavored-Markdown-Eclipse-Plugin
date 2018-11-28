@@ -150,17 +150,37 @@ public class PipeTableFormat {
 	}
 
 	private static void formatEachComponent(String[][] format, int lengthOfComponents, int length) {
-
 		for (int m = 0; m < lengthOfComponents; m++) {
 			int lengthOfColumn = getLengthOfColumn(format, m);
-			// Hyphens should never be less than 3. 3 hyphens + 2 spaces
-			if (m == 0 || m == lengthOfComponents - 1) {
-				if (lengthOfColumn > 0 && lengthOfColumn < 4)
-					lengthOfColumn = 4;
+//			System.out.println(format[1][m]);
+			System.out.println(lengthOfColumn);
+			if (format[1][m] != null) {
+				int lentghOfSecondLine = format[1][m].length();
+				int counter = 0;
+				for (int i = 0; i < lentghOfSecondLine; i++) {
+					if (format[1][m].charAt(i) == '-') {
+						counter++;
+					}
+				}
+				int lengthOfThreeHyphens = 0;
+				if (counter < 3) {
+					lengthOfThreeHyphens = 3 - counter + format[1][m].length();
+					if (lengthOfColumn > 0 && lengthOfColumn < lengthOfThreeHyphens)
+						lengthOfColumn = lengthOfThreeHyphens;
+				}
 			} else {
-				if (lengthOfColumn > 0 && lengthOfColumn < 5)
-					lengthOfColumn = 5;
+//				System.out.println(lengthOfColumn);
+				lengthOfColumn = 5;
 			}
+
+			// Hyphens should never be less than 3. 3 hyphens + 2 spaces
+//			if (m == 0 || m == lengthOfComponents - 1) {
+//				if (lengthOfColumn > 0 && lengthOfColumn < 4)
+//					lengthOfColumn = 4;
+//			} else {
+//				if (lengthOfColumn > 0 && lengthOfColumn < 5)
+//					lengthOfColumn = 5;
+//			}
 			for (int n = 0; n < length; n++) {
 				// Ignore the second line, because we want to trim the hyphens if needed
 				if (format[n][m] != null) {
