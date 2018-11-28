@@ -233,7 +233,7 @@ public class TableFormatterTest {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
 		String[] string = new String[5];
 		string[0] = "|123||123|";
-		string[1] = "|---|---|----|---|";
+		string[1] = "|---|---|----|---| ";
 		string[2] = "|tian|jia|feng|123|";
 		string[3] = "   123| 234 | tian| jia| feng|";
 		string[4] = "|   T|J   |F";

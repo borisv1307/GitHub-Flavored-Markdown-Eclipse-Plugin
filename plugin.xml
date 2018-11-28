@@ -3,6 +3,20 @@
 <plugin>
 
    <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            id="githubflavoredmarkdowneclipseplugin.preferences.PreferencePage"
+            name="GFM Editor Preferences"
+            class="preferences.PreferencePage">
+      </page>
+   </extension>
+   <extension
+   		 point="org.eclipse.core.runtime.preferences">
+       <initializer
+   		 class="preferences.PreferenceInitializer">
+   	 </initializer>
+   </extension>
+   <extension
          point="org.eclipse.ui.editors">
          <editor
       name="Markdown Editor (GFM)"
