@@ -26,7 +26,6 @@
 	* Pressing ctrl-space while highlighting text pops up a window with GFM syntax options the user can add to their
 	highlighted text
 	* incorrect table spacing will be corrected automatically upon saving a document
-	* GFM syntax is rendered correctly in tabbed browser with CSS
 
 3. **How its different than other implementations**
 	
@@ -36,4 +35,10 @@
 	to meet the expectations of companies with strict privacy policy adherence. Lastly, our plugin uses eclipse's built in 
 	browser to render GFM accurately with CSS. 
 	
+## Install
 
+To pull submodules in the project do
+
+```
+git pull --recurse-submodules
+```
