@@ -91,7 +91,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_5() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -108,7 +108,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_6() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -125,7 +125,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_7() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -142,7 +142,7 @@ public class TableFormatterTest {
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_8() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -193,7 +193,7 @@ public class TableFormatterTest {
 		assertEquals("| 1    |     |      |    ", formatted[3]);
 		assertEquals("| T    | J   | F    |    ", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_no_beginning_pipe() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -210,7 +210,7 @@ public class TableFormatterTest {
 		assertEquals("1    |     |      |    ", formatted[3]);
 		assertEquals("T    | J   | F    |    ", formatted[4]);
 	}
-	
+
 	@Test
 	public void format_table_no_beginning_pipe_2() {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
@@ -233,7 +233,7 @@ public class TableFormatterTest {
 		PipeTableFormat pipeTableFormat = new PipeTableFormat();
 		String[] string = new String[5];
 		string[0] = "|123||123|";
-		string[1] = "|---|---|----|---|";
+		string[1] = "|---|---|----|---| ";
 		string[2] = "|tian|jia|feng|123|";
 		string[3] = "   123| 234 | tian| jia| feng|";
 		string[4] = "|   T|J   |F";
