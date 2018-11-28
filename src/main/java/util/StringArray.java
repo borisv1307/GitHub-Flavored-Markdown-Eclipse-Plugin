@@ -36,6 +36,7 @@ public class StringArray {
 			}
 			i++;
 		}
+
 		stringArray[numOfComponent - 1] = string.substring(pointer, string.length());
 		return stringArray;
 	}
