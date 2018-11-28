@@ -105,7 +105,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private Path saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
 		String mdFileName = editorInput.getName();
 		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileName + "html";
+		String htmlFileName = fileName + " (Preview)";
 		Path file = null;
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
@@ -195,7 +195,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 			if (selection instanceof ITextSelection) {
 				ITextSelection textSelection = (ITextSelection) selection;
 				cursorLength = textSelection.getOffset(); // etc.
-				activator.log(Integer.toString(cursorLength));
 			}
 			// Replace the document with the formatted string
 			document.set(formattedDocument);
