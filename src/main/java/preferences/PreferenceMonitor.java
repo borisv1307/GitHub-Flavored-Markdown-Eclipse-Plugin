@@ -35,6 +35,8 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		} else {
 			return MEDIUM;
 		}
+	}
+
 	public boolean autocomplete() {
 		return store.getBoolean("P_SUGGEST");
 	}
