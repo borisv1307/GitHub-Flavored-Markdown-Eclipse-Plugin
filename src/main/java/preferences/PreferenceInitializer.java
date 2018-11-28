@@ -10,7 +10,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	@Override
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_TABLE, true);
+		store.setDefault(PreferenceConstants.P_TABLE, false);
 //		store.setDefault(PreferenceConstants.P_SUGGEST, true);
 	}
 
