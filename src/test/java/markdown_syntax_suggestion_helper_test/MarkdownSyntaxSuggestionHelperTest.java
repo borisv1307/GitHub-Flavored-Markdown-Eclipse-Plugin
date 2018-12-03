@@ -139,14 +139,14 @@ public class MarkdownSyntaxSuggestionHelperTest {
 	@Test
 	public void bold() {
 		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
-		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("**strong** - strong", "test");
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("**bold** - bold", "test");
 		assertEquals("**test**", formatted);
 	}
 
 	@Test
 	public void italic() {
 		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
-		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("_emphasis_ - emphasis", "test");
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("_italics_ - italics", "test");
 		assertEquals("_test_", formatted);
 	}
 

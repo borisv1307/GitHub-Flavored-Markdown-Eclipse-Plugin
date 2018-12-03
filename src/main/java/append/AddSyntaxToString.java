@@ -67,4 +67,10 @@ public class AddSyntaxToString {
 		str = character + " " + str;
 		return str;
 	}
+	
+	public String codeBlock(String str, String character) {
+		str = str.replaceAll("\n", "\n" + character);
+		str = "\n" + character + str + "\n";
+		return str;
+	}
 }

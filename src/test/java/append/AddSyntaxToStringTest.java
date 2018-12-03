@@ -131,4 +131,11 @@ public class AddSyntaxToStringTest {
 		String actual = addStuffToString.addCharToEachLine("word\nword2\nword3", "*");
 		assertEquals("* word\n* word2\n* word3", actual);
 	}
+ 	
+ 	@Test
+	public void addCodeBlock() {
+		AddSyntaxToString addStuffToString = new AddSyntaxToString();
+		String actual = addStuffToString.codeBlock("word\nword2\nword3", "\t");
+		assertEquals("\n\tword\n\tword2\n\tword3\n", actual);
+	}
 }
