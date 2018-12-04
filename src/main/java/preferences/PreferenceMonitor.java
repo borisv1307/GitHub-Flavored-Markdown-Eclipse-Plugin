@@ -49,6 +49,18 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		}
 		return height;
 	}
+	
+	public int popupFontSize() {
+		String size = store.getString("P_FONT_SIZE");
+		int font;
+		try {
+			font = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 16;
+		}
+		return font;
+	}
 
 	public boolean autocomplete() {
 		return store.getBoolean("P_SUGGEST");

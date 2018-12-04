@@ -119,7 +119,7 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		this.frame.setLocation(xLocation, yLocation);
 		this.frame.setSize(preferences.popupWidth(), preferences.popupHeight());
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
-		list.setFont(new Font("Arial", Font.BOLD, 22));
+		list.setFont(new Font("Arial", Font.BOLD, preferences.popupFontSize()));
 		if (container.getComponents() != null) {
 			container.removeAll();
 		}

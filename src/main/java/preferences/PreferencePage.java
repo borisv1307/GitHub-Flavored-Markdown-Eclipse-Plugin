@@ -43,6 +43,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST, "&Use suggestion feature", parent));
 		addField(new StringFieldEditor(PreferenceConstants.P_POPUP_WIDTH, "Enter the width of the suggestion popup window", parent));
 		addField(new StringFieldEditor(PreferenceConstants.P_POPUP_HEIGHT, "Enter the height of the suggestion popup window", parent));
+		addField(new StringFieldEditor(PreferenceConstants.P_FONT_SIZE, "Enter the size of the text in the suggestion popup window", parent));
 	}
 
 }
