@@ -13,6 +13,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = activator.getDefault().getPreferenceStore();
 		store.setDefault(PreferenceConstants.P_TABLE, true);
 		store.setDefault(PreferenceConstants.P_SUGGEST, true);
+		store.setDefault(PreferenceConstants.P_TEMP_FILES, true);
 	}
 
 }
