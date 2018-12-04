@@ -104,15 +104,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private Path saveTempMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
-		String mdFileName = editorInput.getName();
-		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileNameCreator.getHtmlFileName(editorInput.getName());
+		String htmlFileName = fileNameCreator.getTempFileName(editorInput.getName());
 		Path file = null;
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
 
 		try {
-			file = Files.createTempFile(fileName, ".html");
+			file = Files.createTempFile(htmlFileName, ".html");
 			byte[] bytes = markdownString.getBytes();
 			Files.write(file, bytes);
 			file.toFile().deleteOnExit();

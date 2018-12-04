@@ -3,7 +3,6 @@ package preferences;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -38,9 +37,10 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	protected void createFieldEditors() {
 		Composite parent = getFieldEditorParent();
-		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature (experimental)", parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE,
+				"&Use automatic table formatting feature (experimental)", parent));
 		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST, "&Use suggestion feature", parent));
-		addField(new BooleanFieldEditor(PreferenceConstants.P_TEMP_FILES, "Hide html files", parent));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_TEMP_FILES, "&Hide html files", parent));
 	}
 
 }
