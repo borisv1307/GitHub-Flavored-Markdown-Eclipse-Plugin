@@ -22,6 +22,7 @@
       name="Markdown Editor (GFM)"
       extensions="md, markdown, mrkdwn, mdown"
       class="githubflavoredmarkdowneclipseplugin.MarkdownEditor"
+      icon="icons/icon.png"
       id="githubflavoredmarkdowneclipseplugin.MarkdownEditor">
    </editor>
    </extension>

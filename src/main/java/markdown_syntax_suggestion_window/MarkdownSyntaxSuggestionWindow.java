@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Display;
 import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionHelper;
+import preferences.PreferenceMonitor;
 
 public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	private JFrame frame = new JFrame("");
@@ -25,12 +26,13 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	private JList list = null;
 	private MarkdownSyntaxSuggestionConstants markdownSyntaxSuggestionConstants = new MarkdownSyntaxSuggestionConstants();
 	private MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
+	private PreferenceMonitor preferences;
 
 	MarkdownEditor markdownEditor;
 
 	public MarkdownSyntaxSuggestionWindow(MarkdownEditor markdownEditor) {
+		preferences = new PreferenceMonitor();
 		frame.setUndecorated(true);
-		frame.setSize(450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.markdownEditor = markdownEditor;
 	}
@@ -115,8 +117,9 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 	public void show(String selection, int xLocation, int yLocation) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(xLocation, yLocation);
+		this.frame.setSize(preferences.popupWidth(), preferences.popupHeight());
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
-		list.setFont(new Font("Arial", Font.BOLD, 22));
+		list.setFont(new Font("Arial", Font.BOLD, preferences.popupFontSize()));
 		if (container.getComponents() != null) {
 			container.removeAll();
 		}

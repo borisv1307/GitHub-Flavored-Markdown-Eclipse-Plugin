@@ -33,7 +33,7 @@ public class MarkdownSyntaxSuggestionHelper {
 			markdownSyntaxSuggestionSelection = syntax.linkToURL(selectedContent);
 			break;
 		case MarkdownSyntaxSuggestionConstants.CODE_BLOCK:
-			markdownSyntaxSuggestionSelection = syntax.surroundDoubleCharacter(selectedContent, "\n\t", "\n");
+			markdownSyntaxSuggestionSelection = syntax.codeBlock(selectedContent, "\t");
 			break;
 		case MarkdownSyntaxSuggestionConstants.INLINE_CODE:
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "`");

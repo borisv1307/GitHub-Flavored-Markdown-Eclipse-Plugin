@@ -34,9 +34,9 @@ public class TableFormatterTest {
 		string[3] = "";
 		string[4] = "|   T|J   |F";
 		String[] formatted = pipeTableFormat.preprocess(string);
-		assertEquals("123  |     | 123  |     |    ", formatted[0]);
-		assertEquals("---- | :-- | ---- | --- | ---", formatted[1]);
-		assertEquals("tian | jia | feng | 123 | 123", formatted[2]);
+		assertEquals("123  |      | 123  |     |    ", formatted[0]);
+		assertEquals("---- | :--- | ---- | --- | ---", formatted[1]);
+		assertEquals("tian | jia  | feng | 123 | 123", formatted[2]);
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
@@ -153,9 +153,9 @@ public class TableFormatterTest {
 		string[3] = "";
 		string[4] = "|   T|J   |F";
 		String[] formatted = pipeTableFormat.preprocess(string);
-		assertEquals("123  |     | 123 ", formatted[0]);
-		assertEquals("---- | :-- | ----", formatted[1]);
-		assertEquals("tian | jia | feng", formatted[2]);
+		assertEquals("123  |      | 123 ", formatted[0]);
+		assertEquals("---- | :--- | ----", formatted[1]);
+		assertEquals("tian | jia  | feng", formatted[2]);
 		assertEquals("", formatted[3]);
 		assertEquals("|   T|J   |F", formatted[4]);
 	}
@@ -187,11 +187,11 @@ public class TableFormatterTest {
 		string[3] = "|1|";
 		string[4] = "|   T|J   |F";
 		String[] formatted = pipeTableFormat.preprocess(string);
-		assertEquals("| 123  |     | 123  |    ", formatted[0]);
-		assertEquals("| :--- | --: | ---- | ---", formatted[1]);
-		assertEquals("| tian | jia | feng | 123", formatted[2]);
-		assertEquals("| 1    |     |      |    ", formatted[3]);
-		assertEquals("| T    | J   | F    |    ", formatted[4]);
+		assertEquals("| 123  |      | 123  |    ", formatted[0]);
+		assertEquals("| :--- | ---: | ---- | ---", formatted[1]);
+		assertEquals("| tian | jia  | feng | 123", formatted[2]);
+		assertEquals("| 1    |      |      |    ", formatted[3]);
+		assertEquals("| T    | J    | F    |    ", formatted[4]);
 	}
 
 	@Test
@@ -204,11 +204,11 @@ public class TableFormatterTest {
 		string[3] = "|1|";
 		string[4] = "|   T|J   |F";
 		String[] formatted = pipeTableFormat.preprocess(string);
-		assertEquals("123  |     | 123  |    ", formatted[0]);
-		assertEquals(":--- | --: | ---- | ---", formatted[1]);
-		assertEquals("tian | jia | feng | 123", formatted[2]);
-		assertEquals("1    |     |      |    ", formatted[3]);
-		assertEquals("T    | J   | F    |    ", formatted[4]);
+		assertEquals("123  |      | 123  |    ", formatted[0]);
+		assertEquals(":--- | ---: | ---- | ---", formatted[1]);
+		assertEquals("tian | jia  | feng | 123", formatted[2]);
+		assertEquals("1    |      |      |    ", formatted[3]);
+		assertEquals("T    | J    | F    |    ", formatted[4]);
 	}
 
 	@Test
@@ -221,11 +221,11 @@ public class TableFormatterTest {
 		string[3] = "|1|";
 		string[4] = "|   T|J   |F";
 		String[] formatted = pipeTableFormat.preprocess(string);
-		assertEquals("123  |     | 123  |     |", formatted[0]);
-		assertEquals(":--- | --: | ---- | --- |", formatted[1]);
-		assertEquals("tian | jia | feng | 123 |", formatted[2]);
-		assertEquals("1    |     |      |     |", formatted[3]);
-		assertEquals("T    | J   | F    |     |", formatted[4]);
+		assertEquals("123  |      | 123  |     |", formatted[0]);
+		assertEquals(":--- | ---: | ---- | --- |", formatted[1]);
+		assertEquals("tian | jia  | feng | 123 |", formatted[2]);
+		assertEquals("1    |      |      |     |", formatted[3]);
+		assertEquals("T    | J    | F    |     |", formatted[4]);
 	}
 
 	@Test
@@ -291,5 +291,77 @@ public class TableFormatterTest {
 		assertEquals("| T    | J   | F    |     |", formatted[5]);
 		assertEquals("| ---  | --- | ---  |     |", formatted[6]);
 		assertEquals("| tian | jia | f    |     |", formatted[7]);
+	}
+
+	@Test
+	public void format_table_add_hyphens_if_less_than_3() {
+		PipeTableFormat pipeTableFormat = new PipeTableFormat();
+		String[] string = new String[8];
+		string[0] = "|123||123|";
+		string[1] = "|--|-|:-|:-|";
+		string[2] = "|tian|jia|feng|123|";
+		string[3] = "   123| 234 | tian| jia|";
+		string[4] = "   |213";
+		string[5] = "|   T|J   |F";
+		string[6] = "|---|---|---|";
+		string[7] = "|tian|jia|f|";
+
+		String[] formatted = pipeTableFormat.preprocess(string);
+		assertEquals("| 123  |     | 123  |      |", formatted[0]);
+		assertEquals("| ---- | --- | :--- | :--- |", formatted[1]);
+		assertEquals("| tian | jia | feng | 123  |", formatted[2]);
+		assertEquals("| 123  | 234 | tian | jia  |", formatted[3]);
+		assertEquals("| 213  |     |      |      |", formatted[4]);
+		assertEquals("| T    | J   | F    |      |", formatted[5]);
+		assertEquals("| ---  | --- | ---  |      |", formatted[6]);
+		assertEquals("| tian | jia | f    |      |", formatted[7]);
+	}
+
+	@Test
+	public void format_table_add_hyphens() {
+		PipeTableFormat pipeTableFormat = new PipeTableFormat();
+		String[] string = new String[8];
+		string[0] = "|123||123";
+		string[1] = "|::|-|--|";
+		string[2] = "|tian||feng|1|";
+		string[3] = "   123|| tian| j|";
+		string[4] = "|213||";
+		string[5] = "|   T||F";
+		string[6] = "|---||---|";
+		string[7] = "|tian||f|";
+
+		String[] formatted = pipeTableFormat.preprocess(string);
+		assertEquals("| 123   |     | 123  |    ", formatted[0]);
+		assertEquals("| :---: | --- | ---- | ---", formatted[1]);
+		assertEquals("| tian  |     | feng | 1  ", formatted[2]);
+		assertEquals("| 123   |     | tian | j  ", formatted[3]);
+		assertEquals("| 213   |     |      |    ", formatted[4]);
+		assertEquals("| T     |     | F    |    ", formatted[5]);
+		assertEquals("| ---   |     | ---  |    ", formatted[6]);
+		assertEquals("| tian  |     | f    |    ", formatted[7]);
+	}
+	
+	@Test
+	public void format_table_add_hyphens_at_least_3_hyhpens() {
+		PipeTableFormat pipeTableFormat = new PipeTableFormat();
+		String[] string = new String[8];
+		string[0] = "123||123";
+		string[1] = "|::|-|--|";
+		string[2] = "|tian|jia|feng|1|";
+		string[3] = "   123| 234 | tian| j|";
+		string[4] = "   |213";
+		string[5] = "|   T|J   |F";
+		string[6] = "|---|---|---|";
+		string[7] = "|tian|jia|f|";
+
+		String[] formatted = pipeTableFormat.preprocess(string);
+		assertEquals("123   |     | 123  |    ", formatted[0]);
+		assertEquals(":---: | --- | ---- | ---", formatted[1]);
+		assertEquals("tian  | jia | feng | 1  ", formatted[2]);
+		assertEquals("123   | 234 | tian | j  ", formatted[3]);
+		assertEquals("213   |     |      |    ", formatted[4]);
+		assertEquals("T     | J   | F    |    ", formatted[5]);
+		assertEquals("---   | --- | ---  |    ", formatted[6]);
+		assertEquals("tian  | jia | f    |    ", formatted[7]);
 	}
 }
