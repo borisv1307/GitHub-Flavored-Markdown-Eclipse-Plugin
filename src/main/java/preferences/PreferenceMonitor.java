@@ -8,6 +8,9 @@ import githubflavoredmarkdowneclipseplugin.Activator;
 
 public class PreferenceMonitor implements IPreferenceChangeListener {
 	private IPreferenceStore store;
+	private static final int[] SMALL = { 200, 100 };
+	private static final int[] MEDIUM = { 450, 300 };
+	private static final int[] LARGE = { 650, 500 };
 	private Activator activator;
 
 	public PreferenceMonitor() {
@@ -21,6 +24,42 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 
 	public boolean formatTable() {
 		return store.getBoolean("P_TABLE");
+	}
+
+	public int popupWidth() {
+		String size = store.getString("P_POPUP_WIDTH");
+		int width;
+		try {
+			width = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 450;
+		}
+		return width;
+	}
+	
+	public int popupHeight() {
+		String size = store.getString("P_POPUP_HEIGHT");
+		int height;
+		try {
+			height = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 300;
+		}
+		return height;
+	}
+	
+	public int popupFontSize() {
+		String size = store.getString("P_FONT_SIZE");
+		int font;
+		try {
+			font = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 16;
+		}
+		return font;
 	}
 
 	public boolean autocomplete() {

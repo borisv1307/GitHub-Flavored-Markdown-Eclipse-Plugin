@@ -2,6 +2,8 @@ package preferences;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
@@ -39,6 +41,9 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		Composite parent = getFieldEditorParent();
 		addField(new BooleanFieldEditor(PreferenceConstants.P_TABLE, "&Use automatic table formatting feature (experimental)", parent));
 		addField(new BooleanFieldEditor(PreferenceConstants.P_SUGGEST, "&Use suggestion feature", parent));
+		addField(new StringFieldEditor(PreferenceConstants.P_POPUP_WIDTH, "Enter the width of the suggestion popup window", parent));
+		addField(new StringFieldEditor(PreferenceConstants.P_POPUP_HEIGHT, "Enter the height of the suggestion popup window", parent));
+		addField(new StringFieldEditor(PreferenceConstants.P_FONT_SIZE, "Enter the size of the text in the suggestion popup window", parent));
 	}
 
 }
