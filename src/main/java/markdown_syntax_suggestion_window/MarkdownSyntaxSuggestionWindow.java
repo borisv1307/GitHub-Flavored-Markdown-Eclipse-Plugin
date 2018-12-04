@@ -116,9 +116,8 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 
 	public void show(String selection, int xLocation, int yLocation) {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
-		int[] size = preferences.popupSize();	
 		this.frame.setLocation(xLocation, yLocation);
-		this.frame.setSize(size[0], size[1]);
+		this.frame.setSize(preferences.popupWidth(), preferences.popupHeight());
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
 		list.setFont(new Font("Arial", Font.BOLD, 22));
 		if (container.getComponents() != null) {

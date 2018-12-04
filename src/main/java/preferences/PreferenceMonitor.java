@@ -26,15 +26,28 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		return store.getBoolean("P_TABLE");
 	}
 
-	public int[] popupSize() {
-		String size = store.getString("P_POPUP");
-		if (size.equals("large")) {
-			return LARGE;
-		} else if (size.equals("small")) {
-			return SMALL;
-		} else {
-			return MEDIUM;
+	public int popupWidth() {
+		String size = store.getString("P_POPUP_WIDTH");
+		int width;
+		try {
+			width = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 450;
 		}
+		return width;
+	}
+	
+	public int popupHeight() {
+		String size = store.getString("P_POPUP_HEIGHT");
+		int height;
+		try {
+			height = Integer.parseInt(size);
+		} catch (NumberFormatException e) {
+			// string is not a number. Use default
+			return 300;
+		}
+		return height;
 	}
 
 	public boolean autocomplete() {
