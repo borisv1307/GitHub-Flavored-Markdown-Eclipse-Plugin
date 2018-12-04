@@ -126,14 +126,14 @@ public class AddSyntaxToStringTest {
 	}
 	
  	@Test
-	public void addUnorderedList() {
+	public void add_unordered_list() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.addCharToEachLine("word\nword2\nword3", "*");
 		assertEquals("* word\n* word2\n* word3", actual);
 	}
  	
  	@Test
-	public void addCodeBlock() {
+	public void add_code_block() {
 		AddSyntaxToString addStuffToString = new AddSyntaxToString();
 		String actual = addStuffToString.codeBlock("word\nword2\nword3", "\t");
 		assertEquals("\n\tword\n\tword2\n\tword3\n", actual);
