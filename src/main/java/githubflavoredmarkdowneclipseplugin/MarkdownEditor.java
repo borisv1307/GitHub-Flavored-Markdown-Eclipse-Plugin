@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -84,20 +85,26 @@ public class MarkdownEditor extends AbstractTextEditor {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (preferences.autocomplete()) {
-					if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
-						String text = styledText.getSelectionText();
-						Composite control = styledText.getParent();
-						// this function comes from org.eclipse.jface.fieldassist, how do they get the
-						// coordinates
-						Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
-						Rectangle selectedBlock = styledText.getBlockSelectionBounds();
-						int xLocation = location.x + selectedBlock.x + selectedBlock.width + POPUP_OFFSET;
-						int yLocation = location.y + selectedBlock.y + selectedBlock.height;
-						point = styledText.getSelectionRange();
-						if (!text.isEmpty()) {
-							autoComplete.show(text, xLocation, yLocation);
+					try {
+						if (e.stateMask == SWT.CTRL && e.keyCode == SWT.SPACE) {
+							String text = styledText.getSelectionText();
+							Composite control = styledText.getParent();
+							// this function comes from org.eclipse.jface.fieldassist, how do they get the
+							// coordinates
+							Point location = control.getDisplay().map(control.getParent(), null, control.getLocation());
+							Rectangle selectedBlock = styledText.getBlockSelectionBounds();
+							int xLocation = location.x + selectedBlock.x + selectedBlock.width + POPUP_OFFSET;
+							int yLocation = location.y + selectedBlock.y + selectedBlock.height;
+							point = styledText.getSelectionRange();
+							if (!text.isEmpty()) {
+								autoComplete.show(text, xLocation, yLocation);
+							}
 						}
+					} catch (Exception exception) {
+						addErrorFile(
+								"Suggestion feature did not work, if error persists disable the suggestion feature in your preferences. Preferences > Markdown Editor (GFM) Preference > Use suggestion feature");
 					}
+
 				}
 			}
 
@@ -195,11 +202,16 @@ public class MarkdownEditor extends AbstractTextEditor {
 		} else {
 			// Convert document from string to string array with each instance a single line
 			// of the document
-			String[] formattedLines;
+			String[] formattedLines = null;
 			String[] stringArrayOfDocument = document.get().split("\n", -1);
 
 			if (preferences.formatTable()) {
-				formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
+				try {
+					formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
+				} catch (Exception e) {
+					addErrorFile(
+							"Table formatter did not work, if error persists disable the table formatter in your preferences. Preferences > Markdown Editor (GFM) Preference > Use automatic table formatting feature");
+				}
 			} else {
 				formattedLines = stringArrayOfDocument;
 			}
@@ -226,6 +238,29 @@ public class MarkdownEditor extends AbstractTextEditor {
 				browserEditor.loadFileInBrowser(htmlFile, this.getSite());
 			}
 			performSave(false, progressMonitor);
+		}
+	}
+
+	private void addErrorFile(String errorMessage) {
+		IEditorInput editorInput = getEditorInput();
+		IProject project = getCurrentProject(editorInput);
+		IFile file = project.getFile("MarkdownEditorGFMError.log");
+		errorMessage = new Date().toString() + "\n" + errorMessage + "\n\n";
+		try {
+			if (!project.isOpen())
+				project.open(null);
+			if (file.exists()) {
+				InputStream source = new ByteArrayInputStream(errorMessage.getBytes());
+				file.appendContents(source, true, true, null);
+			}
+			if (!file.exists()) {
+				byte[] bytes = errorMessage.getBytes();
+				InputStream source = new ByteArrayInputStream(bytes);
+				file.create(source, IResource.NONE, null);
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
