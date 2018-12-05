@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="gfmreclipse.feature"
+      id="gfmeclipse.feature"
       label="GFM Markdown Editor"
       version="1.0.0.qualifier">
 
