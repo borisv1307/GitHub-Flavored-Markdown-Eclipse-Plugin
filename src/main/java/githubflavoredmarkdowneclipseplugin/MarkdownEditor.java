@@ -208,7 +208,7 @@ public class MarkdownEditor extends AbstractTextEditor {
 	private void addErrorFile(String errorMessage) {
 		IEditorInput editorInput = getEditorInput();
 		IProject project = getCurrentProject(editorInput);
-		IFile file = project.getFile("MarkdownEditorError.md");
+		IFile file = project.getFile("MarkdownEditorGFMError.log");
 		errorMessage = new Date().toString() + "\n" + errorMessage + "\n\n";
 		try {
 			if (!project.isOpen())
