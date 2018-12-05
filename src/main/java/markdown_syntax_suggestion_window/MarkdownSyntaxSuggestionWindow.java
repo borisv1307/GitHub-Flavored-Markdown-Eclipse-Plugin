@@ -12,7 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.themes.ITheme;
+import org.eclipse.ui.themes.IThemeManager;
 
 import githubflavoredmarkdowneclipseplugin.MarkdownEditor;
 import markdown_syntax_suggestion_helper.MarkdownSyntaxSuggestionConstants;
@@ -118,8 +122,15 @@ public class MarkdownSyntaxSuggestionWindow extends JFrame {
 		Point point = java.awt.MouseInfo.getPointerInfo().getLocation();
 		this.frame.setLocation(xLocation, yLocation);
 		this.frame.setSize(preferences.popupWidth(), preferences.popupHeight());
+
+		IThemeManager themeManager = PlatformUI.getWorkbench().getThemeManager();
+		ITheme currentTheme = themeManager.getCurrentTheme();
+		FontRegistry fontRegistry = currentTheme.getFontRegistry();
+		org.eclipse.swt.graphics.Font font = fontRegistry.defaultFont();
+		String fontName = font.toString();
+
 		list = new JList(markdownSyntaxSuggestionConstants.getArrayOfConstants(selection));
-		list.setFont(new Font("Arial", Font.BOLD, preferences.popupFontSize()));
+		list.setFont(new Font(fontName, Font.BOLD, preferences.popupFontSize()));
 		if (container.getComponents() != null) {
 			container.removeAll();
 		}
