@@ -69,15 +69,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
-	
+
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
 		super.createNavigationActions();
-		
+
 		StyledText textWidget = getSourceViewer().getTextWidget();
 		textWidget.setKeyBinding(SWT.DEL, ST.DELETE_NEXT);
-		
+
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
 		styledText.addKeyListener(new KeyListener() {
@@ -101,8 +101,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 							}
 						}
 					} catch (Exception exception) {
-						addErrorFile(
-								"Suggestion feature did not work, if error persists disable the suggestion feature in your preferences. Preferences > Markdown Editor (GFM) Preference > Use suggestion feature");
+						if (preferences.logErrors()) {
+							addErrorFile(
+									"Suggestion feature did not work, if error persists disable the suggestion feature in your preferences. Preferences > Markdown Editor (GFM) Preference > Use suggestion feature");
+						}
 					}
 
 				}
@@ -209,8 +211,10 @@ public class MarkdownEditor extends AbstractTextEditor {
 				try {
 					formattedLines = PipeTableFormat.preprocess(stringArrayOfDocument);
 				} catch (Exception e) {
-					addErrorFile(
-							"Table formatter did not work, if error persists disable the table formatter in your preferences. Preferences > Markdown Editor (GFM) Preference > Use automatic table formatting feature");
+					if (preferences.logErrors()) {
+						addErrorFile(
+								"Table formatter did not work, if error persists disable the table formatter in your preferences. Preferences > Markdown Editor (GFM) Preference > Use automatic table formatting feature");
+					}
 				}
 			} else {
 				formattedLines = stringArrayOfDocument;
