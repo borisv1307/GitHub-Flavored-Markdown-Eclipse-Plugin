@@ -93,7 +93,6 @@ public class MarkdownEditor extends AbstractTextEditor {
 							if (!text.isEmpty()) {
 								autoComplete.show(text, xLocation, yLocation);
 							}
-							throw new IllegalArgumentException("prump");
 						}
 					} catch (Exception exception) {
 						addErrorFile(
