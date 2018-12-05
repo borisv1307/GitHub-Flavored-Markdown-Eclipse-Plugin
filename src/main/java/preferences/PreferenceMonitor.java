@@ -37,7 +37,7 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		}
 		return width;
 	}
-	
+
 	public int popupHeight() {
 		String size = store.getString("P_POPUP_HEIGHT");
 		int height;
@@ -49,7 +49,7 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		}
 		return height;
 	}
-	
+
 	public int popupFontSize() {
 		String size = store.getString("P_FONT_SIZE");
 		int font;
@@ -68,6 +68,10 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 
 	public boolean tempFile() {
 		return store.getBoolean("P_TEMP_FILES");
+	}
+
+	public boolean logErrors() {
+		return store.getBoolean("P_LOG_ERRORS");
 	}
 
 }
