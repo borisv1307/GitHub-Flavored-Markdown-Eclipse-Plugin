@@ -42,7 +42,7 @@ public class MarkdownSyntaxSuggestionHelper {
 			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "**");
 			break;
 		case MarkdownSyntaxSuggestionConstants.ITALIC:
-			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "_");
+			markdownSyntaxSuggestionSelection = syntax.surroundSingleCharacter(selectedContent, "*");
 			break;
 		case MarkdownSyntaxSuggestionConstants.TABLE:
 			markdownSyntaxSuggestionSelection = addSecondLineToTable(selectedContent);
