@@ -18,6 +18,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -68,10 +69,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
-
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
+		super.createNavigationActions();
+		
+		StyledText textWidget = getSourceViewer().getTextWidget();
+		textWidget.setKeyBinding(SWT.DEL, ST.DELETE_NEXT);
+		
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
 		styledText.addKeyListener(new KeyListener() {
@@ -110,20 +116,40 @@ public class MarkdownEditor extends AbstractTextEditor {
 		});
 	}
 
-	private Path saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
-		String mdFileName = editorInput.getName();
-		String fileName = mdFileName.substring(0, mdFileName.lastIndexOf('.'));
-		String htmlFileName = fileNameCreator.getHtmlFileName(editorInput.getName());
+	private Path saveTempMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
+		String htmlFileName = fileNameCreator.getTempFileName(editorInput.getName());
 		Path file = null;
 
 		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
 
 		try {
+			file = Files.createTempFile(htmlFileName, ".html");
 			byte[] bytes = markdownString.getBytes();
-			file = Files.createTempFile(fileName, ".html");
 			Files.write(file, bytes);
 			file.toFile().deleteOnExit();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
+	}
+
+	private IFile saveMarkdown(IEditorInput editorInput, IDocument document, IProgressMonitor progressMonitor) {
+		String htmlFileName = fileNameCreator.getHtmlFileName(editorInput.getName());
+
+		String markdownString = htmlInjector.inject(htmlFileName, markdownRenderer.render(document.get()));
+		IProject project = getCurrentProject(editorInput);
+		IFile file = project.getFile(htmlFileName);
+		try {
+			if (!project.isOpen())
+				project.open(progressMonitor);
+			if (file.exists())
+				file.delete(true, progressMonitor);
+			if (!file.exists()) {
+				byte[] bytes = markdownString.getBytes();
+				InputStream source = new ByteArrayInputStream(bytes);
+				file.create(source, IResource.NONE, progressMonitor);
+			}
+		} catch (CoreException e) {
 			e.printStackTrace();
 		}
 		return file;
@@ -141,8 +167,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 		super.init(site, editorInput);
 		IDocumentProvider documentProvider = getDocumentProvider();
 		IDocument document = documentProvider.getDocument(editorInput);
-		Path htmlFile = saveMarkdown(editorInput, document, null);
-		browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+		if (preferences.tempFile()) {
+			Path htmlFile = saveTempMarkdown(editorInput, document, null);
+			browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+		} else {
+			IFile htmlFile = saveMarkdown(editorInput, document, null);
+			browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+		}
 	}
 
 	@Override
@@ -199,8 +230,13 @@ public class MarkdownEditor extends AbstractTextEditor {
 
 			// Move the cursor
 			this.setHighlightRange(cursorLength, 0, true);
-			Path htmlFile = saveMarkdown(editorInput, document, progressMonitor);
-			browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+			if (preferences.tempFile()) {
+				Path htmlFile = saveTempMarkdown(editorInput, document, progressMonitor);
+				browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+			} else {
+				IFile htmlFile = saveMarkdown(editorInput, document, progressMonitor);
+				browserEditor.loadFileInBrowser(htmlFile, this.getSite());
+			}
 			performSave(false, progressMonitor);
 		}
 	}
@@ -229,13 +265,19 @@ public class MarkdownEditor extends AbstractTextEditor {
 	}
 
 	private IProject getCurrentProject(IEditorInput editorInput) {
-		IProject project = editorInput.getAdapter(IProject.class);
+		IProject project = (IProject) editorInput.getAdapter(IProject.class);
 		if (project == null) {
-			IResource resource = editorInput.getAdapter(IResource.class);
+			IResource resource = (IResource) editorInput.getAdapter(IResource.class);
 			if (resource != null) {
 				project = resource.getProject();
 			}
 		}
 		return project;
+	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

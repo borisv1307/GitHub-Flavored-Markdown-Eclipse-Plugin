@@ -66,4 +66,8 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 		return store.getBoolean("P_SUGGEST");
 	}
 
+	public boolean tempFile() {
+		return store.getBoolean("P_TEMP_FILES");
+	}
+
 }
