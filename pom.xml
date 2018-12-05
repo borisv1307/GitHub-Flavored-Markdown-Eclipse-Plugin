@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>GitHub-Flavored-Markdown-Eclipse-Plugin</groupId>
 	<artifactId>GitHub-Flavored-Markdown-Eclipse-Plugin</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>GitHub-Flavored-Markdown-Eclipse-Plugin</name>
 
 	<build>
@@ -15,6 +15,11 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<excludes>
+						<exclude>githubflavoredmarkdowneclipseplugin/*.java</exclude>
+						<exclude>markdown_syntax_suggestion_window/*.java</exclude>
+						<exclude>preferences/*.java</exclude> 
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
