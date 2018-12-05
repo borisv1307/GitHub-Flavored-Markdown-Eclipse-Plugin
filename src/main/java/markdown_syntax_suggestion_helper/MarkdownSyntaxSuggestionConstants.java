@@ -12,7 +12,7 @@ public class MarkdownSyntaxSuggestionConstants {
 	public static final String CODE_BLOCK = "\t - Code block (indented with tab)";
 	public static final String INLINE_CODE = "`inline code` - A span of code inline";
 	public static final String BOLD = "**bold** - bold";
-	public static final String ITALIC = "_italics_ - italics";
+	public static final String ITALIC = "*italics* - italics";
 	public static final String TABLE = "table - automatically add second line";
 	public static final String UNORDERED_LIST = "* Unordered List - add * to each line";
 	public static final String ORDERED_LIST = "1. Ordered List - add 1. to each line";
