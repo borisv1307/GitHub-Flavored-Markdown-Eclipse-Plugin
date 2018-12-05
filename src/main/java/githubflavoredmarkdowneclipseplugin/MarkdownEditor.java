@@ -17,6 +17,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -67,10 +68,15 @@ public class MarkdownEditor extends AbstractTextEditor {
 		htmlInjector = new HTMLInjector(new BufferedReaderWrapper());
 		autoComplete = new MarkdownSyntaxSuggestionWindow(this);
 	}
-
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
+		super.createNavigationActions();
+		
+		StyledText textWidget = getSourceViewer().getTextWidget();
+		textWidget.setKeyBinding(SWT.DEL, ST.DELETE_NEXT);
+		
 		ISourceViewer fSourceViewer = super.getSourceViewer();
 		styledText = fSourceViewer.getTextWidget();
 		styledText.addKeyListener(new KeyListener() {
