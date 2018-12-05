@@ -18,10 +18,10 @@
 
 1. **What we did and why we did it**
 
-    We developed an open source eclipse plugin with a unique text editor that renders Github Flavored Markdown (GFM)
+    We developed an open source Eclipse plugin with a unique text editor that renders Github Flavored Markdown (GFM)
     syntax in a tabbed browser, when the user saves their document. This was accomplished for a capstone Software
     Engineering course at Drexel University with the intention of creating a plugin that will be useful to many of
-    Drexel's corporate partners who use eclipse and need a text editor plugin that strictly supports GFM.
+    Drexel's corporate partners who use Eclipse and need a text editor plugin that strictly supports GFM.
 
 2. **Additional Functionality (which can each be toggled on and off)**
 
@@ -31,10 +31,10 @@
 
 3. **How its different than other implementations**
 	
-	There are many eclipse markdown editor plugins but none strictly adhere to GFM syntax. This can be troublesome
-	for companies who want their employees to be able to edit text documents in eclipse while strictly adhering to
+	There are many Eclipse Markdown editor plugins but none strictly adhere to GFM syntax. This can be troublesome
+	for companies who want their employees to be able to edit text documents in Eclipse while strictly adhering to
 	GFM syntax. Additionally, our plugin runs locally and does not save/cache data in order to respect the privacy of our users and
-	to meet the expectations of companies with strict privacy policy adherence. Lastly, our plugin uses eclipse's built in 
+	to meet the expectations of companies with strict privacy policy adherence. Lastly, our plugin uses Eclipse's built in 
 	browser to render GFM accurately with CSS. 
 	
 ## Installation of the plugin

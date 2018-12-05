@@ -146,8 +146,8 @@ public class MarkdownSyntaxSuggestionHelperTest {
 	@Test
 	public void italic() {
 		MarkdownSyntaxSuggestionHelper markdownSyntaxSuggestionHelper = new MarkdownSyntaxSuggestionHelper();
-		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("_italics_ - italics", "test");
-		assertEquals("_test_", formatted);
+		String formatted = markdownSyntaxSuggestionHelper.applySuggestion("*italics* - italics", "test");
+		assertEquals("*test*", formatted);
 	}
 
 	@Test
