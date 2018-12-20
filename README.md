@@ -27,7 +27,8 @@
 
 	* Pressing ctrl-space while highlighting text pops up a window with GFM syntax options the user can add to their
 	highlighted text
-	* incorrect table spacing will be corrected automatically upon saving a document
+	* Table spacing will be formatted automatically upon saving a document
+	* Preferences menu to toggle features on and off and customize plugin-specific configurations
 
 3. **How its different than other implementations**
 	
