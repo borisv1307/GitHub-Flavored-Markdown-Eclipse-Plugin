@@ -3,6 +3,8 @@ package preferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 
 import githubflavoredmarkdowneclipseplugin.Activator;
 
@@ -15,6 +17,14 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 
 	public PreferenceMonitor() {
 		store = activator.getDefault().getPreferenceStore();
+		store.addPropertyChangeListener(new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty() == "P_POPUP_SIZE") {
+					setPopupSize();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -24,6 +34,20 @@ public class PreferenceMonitor implements IPreferenceChangeListener {
 
 	public boolean formatTable() {
 		return store.getBoolean("P_TABLE");
+	}
+
+	public void setPopupSize() {
+		String size = store.getString("P_POPUP_SIZE");
+		if (size == "small") {
+			store.setValue("P_POPUP_WIDTH", Integer.toString(SMALL[0]));
+			store.setValue("P_POPUP_HEIGHT", Integer.toString(SMALL[1]));
+		} else if (size == "large") {
+			store.setValue("P_POPUP_WIDTH", Integer.toString(LARGE[0]));
+			store.setValue("P_POPUP_HEIGHT", Integer.toString(LARGE[1]));
+		} else {
+			store.setValue("P_POPUP_WIDTH", Integer.toString(MEDIUM[0]));
+			store.setValue("P_POPUP_HEIGHT", Integer.toString(MEDIUM[1]));
+		}
 	}
 
 	public int popupWidth() {
